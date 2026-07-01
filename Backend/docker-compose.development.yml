@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - "postgresql:/var/lib/postgresql/data"
+        
+  collabora-code:
+    image: chcommon.azurecr.io/doc-editor:1.5.0
+    ports:
+      - "9980:9980"
+    environment:
+      - extra_params=--o:ssl.enable=false --o:ssl.termination=false --o:security.enable_macros_execution=true --o:net.content_security_policy="frame-ancestors 'self' http://localhost:5233 http://192.168.6.119:5233 http://localhost:8080 http://localhost:8081"
+      - aliasgroup1=http://host.docker.internal:5233
+      - aliasgroup2=http://192.168.6.119:5233
+      - username=admin
+      - password=123456
+      - dictionaries=en_GB en_US th
+  
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+volumes:
+  postgresql:
+    driver: local

@@ -1,0 +1,123 @@
+# Visual Studio / Rider files
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# NuGet Packages
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+# except build/, which is used as an MSBuild target.
+!**/packages/build/
+# Uncomment if necessary
+#!**/packages/repositories.config
+
+# Visual Studio cache files
+# files ending in .cache can be ignored
+*.[Cc]ache
+# but keep track of directories ending in .cache
+!*.[Cc]ache/
+
+# Local application settings
+appsettings.Local.json
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+
+# Docker
+.env
+
+# Sonarqube analysis
+.sonarqube
+sonar-reports/
+postgresql/
+
+# Frontend dependencies and build artifacts
+Frontend/node_modules/
+Frontend/dist/
+Frontend/dist-ssr/
+Frontend/coverage/
+
+# Frontend environment files
+Frontend/.env
+Frontend/.env.local
+Frontend/.env.development.local
+Frontend/.env.test.local
+Frontend/.env.production.local
+
+# Claude Code configuration and files
+CLAUDE.md
+.claude/
+.serena/
+PRPs/
+*.prp
+*.prp.md
+/REQUIREMENT.md
+/REFACTOR.md
+AGENTS.md
+
+sonarqube_report*.html
+__pycache__/
+
+Tools/GHB.DP2.Tool.Migration/File/SuDocumentTemplate/

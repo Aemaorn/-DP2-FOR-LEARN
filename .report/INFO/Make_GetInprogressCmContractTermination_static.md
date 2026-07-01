@@ -1,0 +1,27 @@
+# Member 'GetInprogressCmContractTermination' does not access instance data and can be marked as static
+
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Severity** | INFO |
+| **Type** | CODE_SMELL |
+| **Rule** | external_roslyn:CA1822 |
+| **Status** | OPEN |
+| **Effort** | 0min |
+| **Tags** | None |
+| **Clean Code Attribute** | CONVENTIONAL |
+| **Created** | 2025-09-16T12:25:07+0000 |
+
+## Location
+
+- **File**: `Backend/GHB.DP2.Application/Features/ContractManagement/ContractTermination/GetList.cs`
+- **Line**: 169
+
+## Description
+
+Member 'GetInprogressCmContractTermination' does not access instance data and can be marked as static
+
+## Issue Key
+
+`2fd177ff-0431-44db-ad0e-123e971f0bac`

@@ -1,0 +1,285 @@
+@import 'tailwindcss';
+@import 'primeicons/primeicons.css';
+
+@theme {
+  --default-font-family: 'DB Heavent', 'ThaiSansNeue', 'ui-sans-serif';
+
+  --color-primary: #fe5000;
+  --color-primary-50: #fff1e8;
+  --color-primary-100: #ffe0cc;
+  --color-primary-200: #ffc299;
+  --color-primary-300: #ffa366;
+  --color-primary-400: #fe7733;
+  --color-primary-500: #fe5000;
+  --color-primary-600: #e54800;
+  --color-primary-700: #993000;
+  --color-primary-800: #732400;
+  --color-primary-900: #4d1800;
+  --color-secondary: #fcd6d3;
+  --color-secondary-50: #fffdfd;
+  --color-secondary-100: #fffbfb;
+  --color-secondary-200: #fef5f4;
+  --color-secondary-300: #feefed;
+  --color-secondary-400: #fde2e0;
+  --color-secondary-500: #fcd6d3;
+  --color-secondary-600: #e3c1be;
+  --color-secondary-700: #97807f;
+  --color-secondary-800: #71605f;
+  --color-secondary-900: #4c403f;
+}
+
+@layer base {
+  html {
+    font-size: 1.15rem;
+  }
+
+  @media (min-width: 2561px) {
+    html {
+      font-size: 1.25rem;
+    }
+  }
+
+  @media (min-width: 3841px) {
+    html {
+      font-size: 1.4rem;
+    }
+  }
+
+  p {
+    font-size: var(--text-xl);
+  }
+
+  h6 {
+    font-size: var(--text-3xl);
+  }
+
+  h5 {
+    font-size: var(--text-4xl);
+  }
+
+  h4 {
+    font-size: var(--text-5xl);
+  }
+
+  h3 {
+    font-size: var(--text-6xl);
+  }
+
+  h2 {
+    font-size: var(--text-7xl);
+  }
+
+  h1 {
+    font-size: var(--text-8xl);
+  }
+
+  label {
+    font-size: var(--text-xl);
+  }
+
+  small {
+    font-size: var(--text-lg);
+    line-height: 1;
+    margin-top: 0;
+    display: block;
+    min-height: 1.15rem;
+  }
+
+  html {
+    background: #f7f7f7;
+  }
+
+  :root {
+    --dp-font-family: 'DB Heavent', 'ThaiSansNeue', 'Segoe UI', sans-serif !important;
+    --dp-input-padding: 7.5px 21px 7.5px 21px !important;
+
+    .dp__theme_light {
+      --dp-primary-color: var(--color-primary-400) !important;
+      --dp-primary-disabled-color: #334155 !important;
+      --dp-border-color: var(--p-select-border-color, #cbd5e1) !important;
+      --dp-border-color-hover: var(--p-select-hover-border-color, #94a3b8) !important;
+      --dp-border-color-focus: var(--p-select-focus-border-color, var(--color-primary-400)) !important;
+      --dp-border-radius: var(--p-rounded-md, 6px) !important;
+      --dp-icon-color: var(--p-floatlabel-color) !important;
+    }
+
+  }
+
+  @layer components {
+
+    /* PrimeVue Style */
+    :root {
+      /* Float Label */
+      --p-floatlabel-focus-color: var(--color-gray-700) !important;
+      --p-floatlabel-invalid-color: var(--color-gray-500) !important;
+      --p-floatlabel-active-font-size: 20px !important;
+
+      /* InputText */
+      --p-inputtext-focus-border-color: var(--color-primary-400) !important;
+      --p-inputtext-invalid-placeholder-color: var(--color-gray-500) !important;
+      --p-inputtext-font-size: 1.15rem !important;
+
+      /* Datatable Header */
+      .p-datatable-column-header-content {
+        color: var(--color-primary-500);
+      }
+
+      .p-datatable-sort-badge {
+        display: none !important;
+      }
+
+      .p-card {
+        box-shadow:
+          0px 3px 6px rgba(3, 5, 12, 0.05),
+          0px 12px 24px rgba(3, 7, 24, 0.05) !important;
+      }
+    }
+
+    .p-inputtext,
+    .p-textarea,
+    .p-dropdown,
+    .p-multiselect,
+    .p-autocomplete,
+    .p-calendar input,
+    .p-inputnumber input,
+    .p-password input,
+    .p-chips input,
+    .p-cascadeselect,
+    .p-treeselect,
+    .p-datatable,
+    .p-button,
+    .p-selectbutton .p-button,
+    .p-togglebutton .p-button {
+      font-size: 1.15rem !important;
+    }
+
+    .p-dropdown-item,
+    .p-multiselect-item,
+    .p-autocomplete-item,
+    .p-cascadeselect-item,
+    .p-treeselect-item,
+    .p-menu-item,
+    .p-menuitem-link,
+    .p-listbox-item {
+      font-size: 1.15rem !important;
+    }
+
+    .p-floatlabel label {
+      max-width: 90%;
+      overflow-x: clip;
+      overflow-y: visible;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      pointer-events: none !important;
+      cursor: default;
+      background: transparent !important;
+    }
+
+    .p-floatlabel:has(input:focus) label,
+    .p-floatlabel:has(input.p-filled) label,
+    .p-floatlabel:has(textarea:focus) label,
+    .p-floatlabel:has(textarea.p-filled) label,
+    .p-floatlabel:has(.p-inputwrapper-focus) label,
+    .p-floatlabel:has(.p-inputwrapper-filled) label {
+      pointer-events: auto !important;
+    }
+
+    .p-floatlabel {
+      margin-bottom: 0.30rem;
+      isolation: isolate;
+    }
+
+    .p-floatlabel:has(input:focus) label,
+    .p-floatlabel:has(input.p-filled) label,
+    .p-floatlabel:has(textarea:focus) label,
+    .p-floatlabel:has(textarea.p-filled) label,
+    .p-floatlabel:has(.p-inputwrapper-focus) label,
+    .p-floatlabel:has(.p-inputwrapper-filled) label {
+      top: -0.8rem !important;
+    }
+
+    /* Fix Select dropdown overlay width and text wrapping */
+    .p-select-overlay {
+      min-width: auto !important;
+      max-width: 1170px !important;
+      width: auto !important;
+    }
+
+    .p-select-overlay .p-select-list-container {
+      max-width: 1170px !important;
+    }
+
+    .p-select-overlay .p-select-list {
+      max-width: 1170px !important;
+    }
+
+    .p-select-overlay .p-select-option {
+      white-space: pre-line !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+      word-break: break-word !important;
+      line-height: 1.5 !important;
+      padding: 0.75rem 1rem !important;
+      max-width: 1170px !important;
+    }
+
+    .p-select-overlay .p-select-option-label {
+      white-space: pre-line !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+      word-break: break-word !important;
+      display: block !important;
+      max-width: 100% !important;
+    }
+  }
+}
+
+.expand-enter-active,
+.expand-leave-active {
+  transition: height 0.3s ease;
+}
+
+.expand-enter-from,
+.expand-leave-to {
+  height: 0;
+  overflow: hidden;
+}
+
+.button-slide-enter-active,
+.button-slide-leave-active {
+  transition: all 0.3s ease;
+}
+
+.button-slide-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.button-slide-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.overflow-tooltip {
+  position: fixed;
+  z-index: 99999;
+  background: white;
+  color: #374151;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  max-width: 400px;
+  word-wrap: break-word;
+  pointer-events: none;
+  font-family: 'DB Heavent', 'ThaiSansNeue', 'Segoe UI', sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e5e7eb;
+  line-height: 1.4;
+}
+
+/* Datepicker focus - remove default outline, border color handles focus via --dp-border-color-focus */
+.dp__input:focus,
+.dp__input_readonly:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

@@ -1,0 +1,75 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>$(FrameworkVersion)</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <RuntimeIdentifiers>linux-x64;win-x64;osx-x64</RuntimeIdentifiers>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <!-- SonarQube analysis flag - set to true to enable SonarQube analysis -->
+        <EnableSonarQubeAnalysis Condition="'$(EnableSonarQubeAnalysis)' == ''">false</EnableSonarQubeAnalysis>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Scalar.AspNetCore" />
+
+        <PackageReference Include="Serilog.AspNetCore" />
+        <PackageReference Include="Serilog.Settings.Configuration" />
+        <PackageReference Include="Serilog.Sinks.PostgreSQL" />
+        <PackageReference Include="Serilog.Sinks.PostgreSQL.Configuration" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\GHB.DP2.Application\GHB.DP2.Application.csproj" />
+        <ProjectReference Include="..\GHB.DP2.ServiceDefaults\GHB.DP2.ServiceDefaults.csproj" />
+    </ItemGroup>
+
+    <!-- SonarQube analysis packages - only included when EnableSonarQubeAnalysis=true -->
+    <ItemGroup Condition="'$(EnableSonarQubeAnalysis)' == 'true'">
+        <PackageReference Include="SonarAnalyzer.CSharp">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <!-- Skip dotnet format during CI builds (ContinuousIntegrationBuild=true) to prevent SonarQube line mismatch -->
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(ContinuousIntegrationBuild)' != 'true'">
+        <Exec Command="dotnet format" />
+    </Target>
+
+    <!-- SonarQube analysis target - only runs when EnableSonarQubeAnalysis=true -->
+    <Target Name="SonarQubeAnalysis" Condition="'$(EnableSonarQubeAnalysis)' == 'true'">
+        <Message Text="SonarQube analysis is enabled. Running additional code quality checks..." Importance="high" />
+        <PropertyGroup>
+            <SonarQubeEnabled>true</SonarQubeEnabled>
+        </PropertyGroup>
+    </Target>
+
+    <!-- Fast build target - skips SonarQube analysis for faster builds -->
+    <Target Name="FastBuild" Condition="'$(EnableSonarQubeAnalysis)' != 'true'">
+        <Message Text="Fast build mode: SonarQube analysis is disabled for faster build times." Importance="high" />
+        <Message Text="To enable SonarQube analysis, set EnableSonarQubeAnalysis=true" Importance="normal" />
+    </Target>
+
+</Project>

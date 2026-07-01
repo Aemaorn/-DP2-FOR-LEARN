@@ -1,0 +1,57 @@
+enum PP002Status {
+  Draft = "Draft",
+  Rejected = "Rejected",
+  Edit = "Edit",
+  WaitingCommitteeApproval = "WaitingCommitteeApproval",
+  WaitingUnitApproval = "WaitingUnitApproval",
+  WaitingAssign = "WaitingAssign",
+  WaitingComment = "WaitingComment",
+  RejectToAssignee = "RejectToAssignee",
+  WaitingApproval = "WaitingApproval",
+  Approved = "Approved",
+}
+
+enum PP002DocumentTemplate {
+  TorBuyRentLte500k60 = 'TorBuyRentLte500k60',
+  TorBuyRentLte500k80 = 'TorBuyRentLte500k80',
+  TorHireLte500k60 = 'TorHireLte500k60',
+  TorHireLte500k80 = 'TorHireLte500k80',
+  TorBuyRentGt500kGen60 = 'TorBuyRentGt500kGen60',
+  TorBuyRentGt500kGen80 = 'TorBuyRentGt500kGen80',
+  TorBuyRentGt500kIt60 = 'TorBuyRentGt500kIt60',
+  TorBuyRentGt500kIt80 = 'TorBuyRentGt500kIt80',
+  TorHireMaintenance60 = 'TorHireMaintenance60',
+  TorHireMaintenance80 = 'TorHireMaintenance80',
+  TorHireDevelopment60 = 'TorHireDevelopment60',
+  TorHireDevelopment80 = 'TorHireDevelopment80',
+  TorBuyWithHire60 = 'TorBuyWithHire60',
+  TorBuyWithHire80 = 'TorBuyWithHire80',
+  TorHireWithHire60 = 'TorHireWithHire60',
+  TorHireWithHire80 = 'TorHireWithHire80',
+  TorBuyLicense60 = 'TorBuyLicense60',
+  TorBuyLicense80 = 'TorBuyLicense80',
+  TorRentCommCircuit60 = 'TorRentCommCircuit60',
+  TorRentCommCircuit80 = 'TorRentCommCircuit80',
+  TorHireConsultant60 = 'TorHireConsultant60',
+  TorHireConsultant80 = 'TorHireConsultant80',
+  TorRentComputer60 = 'TorRentComputer60',
+  TorRentComputer80 = 'TorRentComputer80',
+  TorHireCleaning60 = 'TorHireCleaning60',
+  TorHireCleaning80 = 'TorHireCleaning80',
+  TorHireSecurity60 = 'TorHireSecurity60',
+  TorHireSecurity80 = 'TorHireSecurity80',
+  TorRentVehicle60 = 'TorRentVehicle60',
+  TorRentVehicle80 = 'TorRentVehicle80',
+  TorHireRenovate60 = 'TorHireRenovate60',
+  TorHireRenovate80 = 'TorHireRenovate80',
+  TorHireGt500k60 = 'TorHireGt500k60',
+  TorHireGt500k80 = 'TorHireGt500k80',
+  TorHireConsultantCompany60 = 'TorHireConsultantCompany60',
+  TorHireConsultantCompany80 = 'TorHireConsultantCompany80'
+}
+
+
+export {
+  PP002Status,
+  PP002DocumentTemplate,
+}

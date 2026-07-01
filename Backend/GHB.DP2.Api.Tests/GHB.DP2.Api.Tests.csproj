@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>$(FrameworkVersion)</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="coverlet.collector">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+        <PackageReference Include="xunit"/>
+        <PackageReference Include="xunit.runner.visualstudio">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Moq"/>
+
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="Xunit"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\GHB.DP2.Api\GHB.DP2.Api.csproj"/>
+        <ProjectReference Include="..\GHB.DP2.Infrastructure\GHB.DP2.Infrastructure.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Templates\CreateComplexEmployeeDataWithAttributes.xlsx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Templates\CreateDataTypeTestData.xlsx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Templates\CreateEmployeeDataWithCustomHeaders.xlsx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Templates\CreateLargeDataSet.xlsx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Templates\CreateMixedQualityData.xlsx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Templates\CreateRealisticEmployeeData.xlsx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>

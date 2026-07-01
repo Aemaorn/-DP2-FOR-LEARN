@@ -1,0 +1,110 @@
+trigger:
+ branches:
+   include:
+     - main
+
+variables:
+  nodeVersion: '22.x'
+  buildConfiguration: 'Release'
+
+stages:
+- stage: BackendAnalysis
+  displayName: 'Backend SonarQube Analysis'
+  jobs:
+  - job: SonarQubeAnalysis
+    displayName: 'Run SonarQube Analysis for .NET Backend'
+    steps:
+    - task: CmdLine@2
+      displayName: 'Change directory to Backend'
+      inputs:
+        script: |
+          cd $(Build.SourcesDirectory)/Backend
+
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk'
+      inputs:
+        packageType: sdk
+        version: 9.x
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+
+    - task: CmdLine@2
+      displayName: "SonarQube preparation"
+      inputs:
+        script: |
+          dotnet tool install --global dotnet-sonarscanner
+          dotnet tool install --global dotnet-coverage
+
+          dotnet-sonarscanner begin /k:"$(ProjectName)" \
+            /d:sonar.host.url="$(SonarServerUrl)" \
+            /d:sonar.token=$(SonarQubeKey) \
+            /d:sonar.exclusions=**/Frontend/** \
+            /d:sonar.scanner.scanAll=false \
+            /d:sonar.dotnet.excludeTestProjects=true \
+            /d:sonar.cs.vscoveragexml.reportsPaths=$(Agent.TempDirectory)/dp_v2_coverage.xml
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore dependencies'
+      inputs:
+        command: 'restore'
+        projects: '$(Build.SourcesDirectory)/Backend/GHB.DP2.sln'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build projects'
+      inputs:
+        command: 'build'
+        projects: '$(Build.SourcesDirectory)/Backend/GHB.DP2.sln'
+        arguments: '--no-restore --configuration $(BuildConfiguration) /p:ContinuousIntegrationBuild=true'
+
+    - task: CmdLine@2
+      displayName: "Run tests"
+      inputs:
+        script: |
+          dotnet-coverage collect \
+            'dotnet test $(Build.SourcesDirectory)/Backend/GHB.DP2.sln --no-build --configuration $(BuildConfiguration)' \
+            -f xml \
+            -o '$(Agent.TempDirectory)/dp_v2_coverage.xml'
+
+    - task: CmdLine@2
+      displayName: "SonarQube finalize"
+      inputs:
+        script: |
+          cd $(Build.SourcesDirectory)/Backend
+          dotnet-sonarscanner end /d:sonar.token=$(SonarQubeKey)
+
+- stage: FrontendAnalysis
+  displayName: 'Frontend SonarQube Analysis'
+  jobs:
+  - job: SonarQubeAnalysis
+    displayName: 'Run SonarQube Analysis for Vue Frontend'
+    steps:
+    - task: NodeTool@0
+      displayName: 'Install Node.js'
+      inputs:
+        versionSpec: '$(nodeVersion)'
+
+    - task: CmdLine@2
+      displayName: 'Install SonarScanner for JS/TS'
+      inputs:
+        script: |
+          npm install -g sonarqube-scanner
+
+    - task: Npm@1
+      displayName: 'Install dependencies'
+      inputs:
+        command: 'install'
+        workingDir: 'Frontend'
+
+    - task: CmdLine@2
+      displayName: 'Run SonarQube Analysis'
+      inputs:
+        script: |
+          cd Frontend
+          sonar-scanner \
+            -Dsonar.projectKey="$(FrontendProjectName)" \
+            -Dsonar.projectName="$(FrontendProjectName)" \
+            -Dsonar.sources=./src \
+            -Dsonar.host.url="$(SonarServerUrl)" \
+            -Dsonar.token="$(SonarQubeDp2FrontendKey)" \
+            -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info \
+            -Dsonar.typescript.tsconfigPath=./tsconfig.json \
+            -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/*.test.ts

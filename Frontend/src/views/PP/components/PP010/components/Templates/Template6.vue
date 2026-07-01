@@ -1,0 +1,68 @@
+<script setup lang="ts">
+import { ContractDraftTemplate } from '@/enums/contractDraftt';
+import type { TContractDraftBody } from '@/views/PP/models/PP0010/ContractDraft';
+import { useContractDraftStore } from '@/views/PP/stores/PP0010/ContractDraft';
+import { defineAsyncComponent } from 'vue';
+
+type Props = {
+  disable?: boolean
+}
+
+const props = defineProps<Props>()
+
+const value = defineModel<TContractDraftBody>({
+  required: true,
+});
+
+const SelesAgreement = defineAsyncComponent(
+  (): Promise<typeof import('../Sub/SalesAgreement.vue')> => import('../Sub/SalesAgreement.vue')
+);
+const PartOfContract = defineAsyncComponent(
+  (): Promise<typeof import('../Sub/PartOfContract.vue')> => import('../Sub/PartOfContract.vue')
+);
+const Payment = defineAsyncComponent(
+  (): Promise<typeof import('../Sub/Payment.vue')> => import('../Sub/Payment.vue')
+);
+const Warranty = defineAsyncComponent(
+  (): Promise<typeof import('../Sub/Warranty.vue')> => import('../Sub/Warranty.vue')
+);
+const ContractPerformance = defineAsyncComponent(
+  (): Promise<typeof import('../Sub/ContractPerformance.vue')> => import('../Sub/ContractPerformance.vue')
+);
+const Mulct = defineAsyncComponent(
+  (): Promise<typeof import('../Sub/Mulct.vue')> => import('../Sub/Mulct.vue')
+);
+const AdvancePayment = defineAsyncComponent(
+  (): Promise<typeof import('../Sub/AdvancePayment.vue')> => import('../Sub/AdvancePayment.vue')
+);
+const RetentionPayment = defineAsyncComponent(
+  (): Promise<typeof import('../Sub/RetentionPayment.vue')> => import('../Sub/RetentionPayment.vue')
+);
+const TeminationInfoDuration = defineAsyncComponent(
+  (): Promise<typeof import('../Sub/TerminationInfoDuration.vue')> => import('../Sub/TerminationInfoDuration.vue')
+);
+const TeminationInfoDate = defineAsyncComponent(
+  (): Promise<typeof import('../Sub/TerminationInfoDate.vue')> => import('../Sub/TerminationInfoDate.vue')
+);
+
+const store = useContractDraftStore();
+</script>
+
+<template>
+  <div class="grid grid-rows-1 gap-5">
+    <SelesAgreement :body="value" :disable="props.disable" label="สัญญาข้อ 1 ข้อตกลง" />
+    <PartOfContract :dropdown="store.dropdown.attacementTypeOptions" :body="value" :disable="props.disable"
+      label="สัญญาข้อ 2 เอกสารอันเป็นส่วนหนึ่งของสัญญา" />
+    <ContractPerformance :body="value" :disable="props.disable" label="สัญญาข้อ 3 หลักประกันการปฏิบัติตามสัญญา" />
+    <Payment :body="value" :disable="props.disable" label="สัญญาข้อ 4 ค่าจ้างและการจ่ายเงิน" />
+    <AdvancePayment :body="value" :disable="props.disable" label="สัญญาข้อ 5 เงินค่าจ้างล่วงหน้า" />
+    <RetentionPayment :body="value" :disable="props.disable" label="สัญญาข้อ 6 การหักเงินประกันผลงาน" />
+    <TeminationInfoDuration :body="value" :disable="props.disable"
+      v-if="value.template != ContractDraftTemplate.CFormat016"
+      label="สัญญาข้อ 7 (ก) กำหนดเวลาแล้วเสร็จและสิทธิ์ของผู้ว่าจ้างในการบอกเลิกสัญญา" />
+    <TeminationInfoDate :body="value" :disable="props.disable" v-if="value.template == ContractDraftTemplate.CFormat016"
+      label="สัญญาข้อ 7 (ข) กำหนดเวลาแล้วเสร็จและสิทธิ์ของผู้ว่าจ้างในการบอกเลิกสัญญา" />
+    <Warranty :body="value" :disable="props.disable" label="สัญญาข้อ 8 ความรับผิดชอบในความชำรุดบกพร่องของงานจ้าง" />
+    <Mulct :body="value" :disable="props.disable" label="สัญญาข้อ 17 ค่าปรับ" />
+  </div>
+</template>

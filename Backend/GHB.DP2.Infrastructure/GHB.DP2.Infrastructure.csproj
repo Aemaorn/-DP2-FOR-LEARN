@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <!-- Suppress CS1591 for FastEndpoints generated code -->
+        <NoWarn>$(NoWarn);CS1591</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\GHB.DP2.Domain\GHB.DP2.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ClosedXML" />
+        <PackageReference Include="Codehard.FileService.Client" />
+        <PackageReference Include="EFCoreSecondLevelCacheInterceptor" />
+        <PackageReference Include="Codehard.Infrastructure.EntityFramework" />
+        <PackageReference Include="CommandLineParser" />
+        <PackageReference Include="FastEndpoints" />
+        <PackageReference Include="FastEndpoints.Generator">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="LdapForNet" />
+        <PackageReference Include="MailKit" />
+        <PackageReference Include="Microsoft.AspNetCore.Http" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+        <PackageReference Include="Microsoft.Extensions.Http.Resilience" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+        <PackageReference Include="StyleCop.Analyzers">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+        <PackageReference Include="ExcelDataReader" />
+        <PackageReference Include="ExcelDataReader.DataSet" />
+        <PackageReference Include="System.Text.Encoding.CodePages" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="EntityConfiguration\AnnouncementInfo\" />
+    </ItemGroup>
+
+</Project>

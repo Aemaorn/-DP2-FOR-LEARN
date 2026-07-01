@@ -1,0 +1,27 @@
+# Type name 'RpAuditAndRevenueAttachmentId' can have a method that normalizes (sanitizes) input
+
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Severity** | INFO |
+| **Type** | CODE_SMELL |
+| **Rule** | external_roslyn:AddNormalizeInputMethod |
+| **Status** | OPEN |
+| **Effort** | 0min |
+| **Tags** | None |
+| **Clean Code Attribute** | CONVENTIONAL |
+| **Created** | 2025-09-04T10:28:52+0000 |
+
+## Location
+
+- **File**: `Backend/GHB.DP2.Domain/Report/RpAuditAndRevenue/RpAuditAndRevenue.cs`
+- **Line**: 308
+
+## Description
+
+Type name 'RpAuditAndRevenueAttachmentId' can have a method that normalizes (sanitizes) input
+
+## Issue Key
+
+`5f42063a-36c7-4239-a975-31d13a99516b`

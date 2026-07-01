@@ -1,0 +1,986 @@
+import { defineStore } from 'pinia';
+import { computed, ref, type Ref } from 'vue';
+import type {
+  Pcm003Advance,
+  Pcm003Criteria,
+  Pcm003Detail,
+  Pcm003GlAccount,
+  Pcm003ListResponse,
+  Pcm003StatusCount,
+  Pcm003Vendor,
+  Pcm003VendorParcels,
+} from '@/models/PCM/pcm003';
+import procurementHelper from '@/helpers/procurement';
+import { HttpStatusCode } from 'axios';
+import Pcm003Constant from '@/constants/pcm003';
+import type { Option, OptionBadge } from '@/models/shared/option';
+import SharedService from '@/services/Shared/dropdown';
+import { AssignDepartmentCodeEnum, EGroupCode, EWorkProcess, OrganizationLevelEnum } from '@/enums/shared';
+import { isBranchOrganizationLevel } from '@/helpers/organization';
+import type { ParticipantsAcceptor } from '@/models/shared/participants';
+import type { Attachments } from '@/models/shared/uploadFile';
+import ToastHelper from '@/helpers/toast';
+import type { defaultAcceptorCriteria, OperationBody } from '@/models/shared/operations';
+import { OrganizationLevel, SectionProcessType } from '@/enums/operations';
+import { AcceptorStatus, AcceptorType } from '@/enums/participants';
+import { isCurrentPendingAcceptor } from '@/helpers/participants';
+import { useAuthenticationStore } from '../authentication';
+import { Pcm003Action, Pcm003Status } from '@/enums/pcm003';
+import { ArrayHelper } from '@/helpers/array';
+import router from '@/router';
+import { showConfirmDialogAsync, showReasonDialogAsync } from '@/helpers/dialog';
+import { ConfirmDialogType, ReasonDialogType } from '@/enums/dialog';
+import Pcm003Service from '@/services/PCM/PCM003';
+import operationService from '@/services/Shared/operations';
+import { DepartmentId } from '@/enums/businessUnit';
+import { PreProcurementStep } from '@/enums/preProcurement';
+
+const getDepartmentAsync = async (target: Ref<Option[]>): Promise<void> => {
+  const { data, status } = await SharedService.onGetBusinessUnitAsync(OrganizationLevelEnum.Department, undefined, true);
+
+  if (status === HttpStatusCode.Ok) {
+    target.value = data;
+  }
+};
+
+const getParameterByGroupCodeAsync = async (target: Ref<Array<Option>>, params: { groupCode: EGroupCode, parentCode?: string }, isDisabledLoad: boolean = true) => {
+  const { data, status } = await SharedService.onGetParameterByGroupCodeAsync(params.groupCode, params.parentCode, isDisabledLoad);
+
+  if (status === HttpStatusCode.Ok) {
+    target.value = data;
+  }
+};
+
+export const usePcm003ListStore = defineStore('pcm003ListStore', () => {
+  const { Pcm003StatusName, Pcm003StatusColor } = Pcm003Constant;
+
+  const initCriteria = {
+    pageNumber: 1,
+    pageSize: 10,
+    sort: [],
+    workProcess: EWorkProcess.InProcess,
+    status: Pcm003Status.All,
+    budgetYear: new Date().getFullYear() + 543,
+  } as Pcm003Criteria;
+  const criteria = ref<Pcm003Criteria>(structuredClone(initCriteria));
+  const statusOptionBadge = ref([] as OptionBadge[]);
+  const statusCount = ref<Pcm003StatusCount>({} as Pcm003StatusCount);
+  const dataResponse = ref<Pcm003ListResponse>({} as Pcm003ListResponse);
+  const departmentDropdown = ref<Option[]>([] as Option[]);
+
+  const getDepartmentDDLAsync = async (): Promise<void> => {
+    await getDepartmentAsync(departmentDropdown);
+  };
+
+  const onInitStatusCriteriaPCM003 = () => {
+    return procurementHelper.pcm003StatusAttributes(statusCount.value);
+  };
+
+  const getDataList = async (): Promise<void> => {
+    const { data, status } = await Pcm003Service.getListAsync(criteria.value);
+
+    if (status === HttpStatusCode.Ok) {
+      dataResponse.value = data;
+
+      getStatusCount(data.statusCount);
+    }
+  };
+
+  const getStatusCount = (count: Pcm003StatusCount): void => {
+    const statusOptions = Object.entries(Pcm003Status).map(([, value]) => ({
+      label: Pcm003StatusName(value),
+      value: value,
+      bgColorClass: Pcm003StatusColor(value).bgColorClass,
+      textColorClass: Pcm003StatusColor(value).textColorClass,
+      count: getCount(count, value),
+    } as OptionBadge));
+
+    statusOptionBadge.value = statusOptions;
+  };
+
+  const onResetCriteria = () => {
+    criteria.value = structuredClone(initCriteria);
+  };
+
+  const getCount = (countAll: Pcm003StatusCount, status: Pcm003Status): number => {
+    let count = 0;
+    const convertStatus = (status[0]?.toLowerCase() ?? '') + status.slice(1);
+    count = countAll[convertStatus as keyof Pcm003StatusCount];
+
+    return count;
+  };
+
+  const exportExcelAsync = async (): Promise<void> => {
+    const { data, status } = await Pcm003Service.exportExcelAsync(criteria.value);
+
+    if (status !== HttpStatusCode.Ok) {
+      ToastHelper.error('ดึงข้อมูลเอกสาร', 'ไม่พบเอกสารที่ต้องการ');
+      return;
+    }
+
+    const monthRangeMap: Record<number, string> = { 1: 'ม.ค.-มี.ค.', 2: 'เม.ย.-มิ.ย.', 3: 'ก.ค.-ก.ย.', 4: 'ต.ค.-ธ.ค.' };
+    const quarterLabel = criteria.value.quarter ? `ที่_${criteria.value.quarter}_(${monthRangeMap[criteria.value.quarter]})` : '';
+    const yearLabel = criteria.value.budgetYear ? `_${criteria.value.budgetYear}` : '';
+    const now = new Date();
+    const dateStr = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
+    const fileName = `รายงานประกาศผู้ชนะรายไตรมาส${quarterLabel}${yearLabel}_${dateStr}.xlsx`;
+    const url = window.URL.createObjectURL(data);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove();
+  };
+
+  const onDeleteByIdAsync = async (id: string) => {
+    if (!await showConfirmDialogAsync(ConfirmDialogType.Delete)) return;
+
+    const { status } = await Pcm003Service.deleteAsync(id);
+
+    if (status === HttpStatusCode.NoContent) {
+      ToastHelper.deletedMessageToast();
+
+      await getDataList();
+    }
+  };
+
+  const onChangePageSize = (pageNumber: number, pageSize: number) => {
+    criteria.value = {
+      ...criteria.value,
+      pageNumber,
+      pageSize,
+    }
+  };
+
+  return {
+    criteria,
+    dataResponse,
+    statusOptionBadge,
+    departmentDropdown,
+    onInitStatusCriteriaPCM003,
+    getDataList,
+    getDepartmentDDLAsync,
+    onResetCriteria,
+    onDeleteByIdAsync,
+    onChangePageSize,
+    exportExcelAsync,
+  };
+});
+
+export const usePcm003DetailStore = defineStore('pcm003DetailStore', () => {
+  const authenStore = useAuthenticationStore();
+  const cloneAccountingAcceptors = ref<Array<ParticipantsAcceptor>>([]);
+  const isCurrentUserAccountingSegmentMember = ref<boolean>(false);
+
+  const initBody = {
+    p79Clause2Date: new Date(),
+    budgetYear: (new Date().getUTCFullYear() + 543),
+    subject: "รายงานความเห็นชอบ.............................................",
+    procurementReasonItem1: "โดยวิธี...............เนื่องจากเป็นการจัดซื้อจ้างสินค้า ที่มีวงเงินในการจัดซื้อจ้างครั้งหนึ่งไม่เกินวงเงิน 500,000 บาท ตามกฎกระทรวง (กำหนดวงเงินการจัดซื้อจัดจ้างพัสดุโดยวิธีเฉพาะเจาะจง วงเงินการจัดซื้อจัดจ้าง ที่ไม่ทำข้อตกลงเป็นหนังสือและวงเงินการจัดซื้อจัดจ้างในการแต่งตั้งผู้ตรวจรับพัสดุ พ.ศ.2560)",
+    procurementReasonItem2: "ในการดำเนินการครั้งนี้มีความจำเป็นเร่งด่วนที่เกิดขึ้นโดยไม่ได้คาดหมายไว้และไม่อาจดำเนินการตามปกติได้ทัน จึงต้องจัดซื้อจัดจ้างเป็นการเร่งด่วน เพื่อบรรเทาความเดือดร้อนให้ผู้ประสบอุทกภัยได้ทันเวลา และเพื่อไม่ให้เกิดความเสียหายแก่ธนาคาร (เอกสารแนบ)",
+    isAdvance: true,
+    advance: { advancePaymentMethodCode: 'PaymentMethod002' } as Pcm003Advance,
+    vendors: [
+      {
+        sequence: 1,
+        vendorType: '0',
+        vendorParcels: [
+          {
+            sequence: 1,
+            quantity: 0,
+            unitPrice: 0,
+            totalPrice: 0,
+            totalPriceVat: 0,
+          },
+        ] as Array<Pcm003VendorParcels>,
+      }] as Pcm003Vendor[],
+    glAccounts: [
+      {
+        sequence: 1,
+        amount: 0,
+      } as Pcm003GlAccount,
+    ] as Pcm003GlAccount[],
+    attachments: [] as Attachments[],
+    acceptors: [] as ParticipantsAcceptor[],
+    acceptanceConfirmers: [] as ParticipantsAcceptor[],
+    steps: [PreProcurementStep.P79Clause2],
+    status: Pcm003Status.Draft,
+    departmentCode: authenStore.profile.departmentCode,
+  } as Pcm003Detail;
+
+  const { addSequence } = ArrayHelper();
+
+  const detail = ref<Pcm003Detail>(structuredClone(initBody));
+
+  const departmentDropdown = ref<Option[]>([] as Option[]);
+  const supplyMethodDropdown = ref<Option[]>([] as Option[]);
+  const supplyMethodTypeDropdown = ref<Option[]>([] as Option[]);
+  const supplyMethidSpecialTypeDropdown = ref<Option[]>([] as Option[]);
+  const expenseItemW119DropDown = ref<Option[]>([] as Option[]);
+  const paymentMethodDropDown = ref<Option[]>([] as Option[]);
+  const bankDropDown = ref<Option[]>([] as Option[]);
+  const vatTypeDropDown = ref<Option[]>([] as Option[]);
+  const unitOfMeasureDropDown = ref<Option[]>([] as Option[]);
+  const invoiceDocumentTypeDropDown = ref<Option[]>([] as Option[]);
+  const solIdDropDown = ref<Option[]>([] as Option[]);
+  const budgetTypeDropDown = ref<Option[]>([] as Option[]);
+  const glAccountDropDown = ref<Option[]>([] as Option[]);
+  const assignDepartmentDDL = ref<Option[]>([]);
+
+  const onGetDropdownAsync = async () => {
+    await Promise.all([
+      getParameterByGroupCodeAsync(supplyMethodDropdown, { groupCode: EGroupCode.SMethod }),
+      getParameterByGroupCodeAsync(budgetTypeDropDown, { groupCode: EGroupCode.BudgetTyp }),
+      getParameterByGroupCodeAsync(glAccountDropDown, { groupCode: EGroupCode.GLAcc }),
+      getParameterByGroupCodeAsync(solIdDropDown, { groupCode: EGroupCode.SolId }),
+      getParameterByGroupCodeAsync(invoiceDocumentTypeDropDown, { groupCode: EGroupCode.InvoiceDocType }),
+      getParameterByGroupCodeAsync(supplyMethodTypeDropdown, { groupCode: EGroupCode.SMethodType }),
+      getParameterByGroupCodeAsync(bankDropDown, { groupCode: EGroupCode.Bank }),
+      getParameterByGroupCodeAsync(expenseItemW119DropDown, { groupCode: EGroupCode.ExpenseItemW119 }),
+      getParameterByGroupCodeAsync(paymentMethodDropDown, { groupCode: EGroupCode.PaymentMethod }),
+      getParameterByGroupCodeAsync(vatTypeDropDown, { groupCode: EGroupCode.VATType }),
+      getParameterByGroupCodeAsync(unitOfMeasureDropDown, { groupCode: EGroupCode.UnitOfMea }),
+    ]);
+  };
+
+  const getDepartmentDDLAsync = async (): Promise<void> => {
+    await getDepartmentAsync(departmentDropdown);
+  };
+
+  const getSupplyMethodSpecialTypeDDLAsync = async (parentCode: string): Promise<void> => {
+    await getParameterByGroupCodeAsync(supplyMethidSpecialTypeDropdown, { groupCode: EGroupCode.SMethod, parentCode });
+  };
+
+  const getByIdAsync = async (id: string, isDisabledLoad: boolean = false): Promise<void> => {
+    const { data, status } = await Pcm003Service.getByIdAsync(id, isDisabledLoad);
+
+    if (status === HttpStatusCode.Ok) {
+      detail.value = data;
+
+      if (!detail.value.acceptanceConfirmers) {
+        detail.value.acceptanceConfirmers = [];
+      }
+
+      if (
+        detail.value.id &&
+        detail.value.status === Pcm003Status.WaitingDisbursementDate &&
+        detail.value.acceptanceConfirmers.length === 0 &&
+        !isBranchOrganizationLevel(detail.value.departmentOrganizationLevel)
+      ) {
+        const { data: members, status: membersStatus } = await operationService.getSegmentAccountingMembersAsync(true);
+        if (membersStatus === HttpStatusCode.Ok && members.some((m): boolean => m.userId === authenStore.profile.id)) {
+          detail.value.acceptanceConfirmers = [{
+            sequence: 1,
+            userId: authenStore.profile.id,
+            fullName: authenStore.profile.name,
+            positionName: authenStore.profile.positionName,
+            acceptorType: AcceptorType.AccountingConfirmer,
+            status: AcceptorStatus.Draft,
+          } as ParticipantsAcceptor];
+        }
+      }
+
+      isCurrentUserAccountingSegmentMember.value = false;
+
+      if (
+        detail.value.id &&
+        [Pcm003Status.WaitingAccountingApproval, Pcm003Status.WaitingDisbursementDate].includes(detail.value.status) &&
+        authenStore.profile &&
+        !isBranchOrganizationLevel(detail.value.departmentOrganizationLevel)
+      ) {
+        const { data: accountingMembers, status: accountingStatus } =
+          await operationService.getSegmentAccountingMembersAsync(true);
+
+        if (accountingStatus === HttpStatusCode.Ok) {
+          isCurrentUserAccountingSegmentMember.value =
+            accountingMembers?.some((m): boolean => m.userId === authenStore.profile.id) ?? false;
+
+          if (
+            detail.value.status === Pcm003Status.WaitingAccountingApproval &&
+            isCurrentUserAccountingSegmentMember.value &&
+            !(detail.value.acceptors ?? []).some((a): boolean => a.acceptorType === AcceptorType.AccountingOperator) &&
+            !(detail.value.acceptors ?? []).some((a): boolean => a.acceptorType === AcceptorType.AccountingApprover && a.userId === authenStore.profile.id)
+          ) {
+            if (!detail.value.acceptors) {
+              detail.value.acceptors = [];
+            }
+            detail.value.acceptors.push({
+              sequence: 1,
+              userId: authenStore.profile.id,
+              fullName: authenStore.profile.name,
+              positionName: authenStore.profile.positionName,
+              acceptorType: AcceptorType.AccountingOperator,
+              status: AcceptorStatus.Draft,
+            } as ParticipantsAcceptor);
+          }
+        }
+      }
+
+      cloneAccountingAcceptors.value = detail.value.acceptors?.filter(
+        a => a.acceptorType === AcceptorType.AccountingApprover || a.acceptorType === AcceptorType.AccountingOperator
+      ) || [];
+    }
+  };
+
+  const onResetBody = () => {
+    detail.value = {
+      p79Clause2Date: new Date(),
+      budgetYear: (new Date().getUTCFullYear() + 543),
+      subject: "รายงานความเห็นชอบ...................................................................",
+      procurementReasonItem1: "โดยวิธี...............เนื่องจากเป็นการจัดซื้อจ้างสินค้า ที่มีวงเงินในการจัดซื้อจ้างครั้งหนึ่งไม่เกินวงเงิน 500,000 บาท ตามกฎกระทรวง (กำหนดวงเงินการจัดซื้อจัดจ้างพัสดุโดยวิธีเฉพาะเจาะจง วงเงินการจัดซื้อจัดจ้าง ที่ไม่ทำข้อตกลงเป็นหนังสือและวงเงินการจัดซื้อจัดจ้างในการแต่งตั้งผู้ตรวจรับพัสดุ พ.ศ.2560)",
+      procurementReasonItem2: "ในการดำเนินการครั้งนี้มีความจำเป็นเร่งด่วนที่เกิดขึ้นโดยไม่ได้คาดหมายไว้และไม่อาจดำเนินการตามปกติได้ทัน จึงต้องจัดซื้อจัดจ้างเป็นการเร่งด่วน เพื่อบรรเทาความเดือดร้อนให้ผู้ประสบอุทกภัยได้ทันเวลา และเพื่อไม้ให้เกิดความเสียหายแก่ธนาคาร (เอกสารแนบ)",
+      isAdvance: true,
+      advance: { advancePaymentMethodCode: 'PaymentMethod002' } as Pcm003Advance,
+      vendors: [
+        {
+          sequence: 1,
+          vendorType: '0',
+          vendorParcels: [
+            {
+              sequence: 1,
+              quantity: 0,
+              unitPrice: 0,
+              totalPrice: 0,
+              totalPriceVat: 0,
+            },
+          ] as Array<Pcm003VendorParcels>,
+        }] as Pcm003Vendor[],
+      glAccounts: [
+        {
+          sequence: 1,
+          amount: 0,
+        } as Pcm003GlAccount,
+      ] as Pcm003GlAccount[],
+      attachments: [] as Attachments[],
+      acceptors: [] as ParticipantsAcceptor[],
+      steps: [PreProcurementStep.P79Clause2],
+      status: Pcm003Status.Draft,
+      departmentCode: authenStore.profile.departmentCode,
+    } as Pcm003Detail;
+  }
+
+  const addVendors = () => {
+    detail.value.vendors = addSequence(detail.value.vendors, {
+      vendorType: '0',
+      vendorParcels: [
+        {
+          sequence: 1,
+          quantity: 0,
+          unitPrice: 0,
+          totalPrice: 0,
+          totalPriceVat: 0,
+        }
+      ] as Array<Pcm003VendorParcels>,
+    } as Pcm003Vendor);
+  };
+
+  const addParcelToVendor = (vendorIndex: number) => {
+    const vendor = detail.value.vendors?.[vendorIndex];
+    if (!vendor) return;
+
+    vendor.vendorParcels = addSequence(vendor.vendorParcels, {
+      sequence: vendor.vendorParcels.length + 1,
+      quantity: 0,
+      unitPrice: 0,
+      totalPrice: 0,
+      totalPriceVat: 0,
+    } as Pcm003VendorParcels);
+  };
+
+  const addGLAccount = () => {
+    detail.value.glAccounts = addSequence(detail.value.glAccounts, {
+      amount: 0,
+    } as Pcm003GlAccount);
+  };
+
+  const limitBudget = 500000;
+
+  function calculateTotalVendorParcelsPrice(): number {
+    return detail.value.vendors.reduce((vendorAcc, vendor) => {
+      const vendorTotal = vendor.vendorParcels.reduce((parcelAcc, parcel) => {
+        return parcelAcc + (parcel.totalPriceVat || 0);
+      }, 0);
+      return vendorAcc + vendorTotal;
+    }, 0);
+  }
+
+  function calculateTotalGlAccountAmount(): number {
+    return detail.value.glAccounts.reduce((acc, glAccount) => {
+      return acc + (glAccount.amount || 0);
+    }, 0);
+  }
+
+  function validateGlAccountAmount(): boolean {
+    const totalVendorParcels = Math.round(calculateTotalVendorParcelsPrice() * 100) / 100;
+    const totalGlAccounts = Math.round(calculateTotalGlAccountAmount() * 100) / 100;
+
+    if (totalGlAccounts !== totalVendorParcels) {
+      ToastHelper.glAccountExceedsTotalPriceMessageToast();
+      return false;
+    }
+    return true;
+  }
+
+  const createAsync = async () => {
+    detail.value.budget = calculateTotalPriceVat({ ...detail.value, budget: 0 });
+    if (detail.value.budget > limitBudget) {
+      ToastHelper.overBudget79W2MessageToast();
+      return;
+    }
+
+    if (!validateGlAccountAmount()) {
+      return;
+    }
+
+    const { data, status } = await Pcm003Service.createAsync(detail.value);
+
+    if (status == HttpStatusCode.Created) {
+      ToastHelper.createdMessageToast();
+      router.replace({ name: 'pcm003Detail', params: { id: data } });
+      await getByIdAsync(data);
+
+      if (!detail.value.acceptors || detail.value.acceptors.length === 0) {
+        await getMergedAcceptorsAsync(detail.value.departmentCode, detail.value.budget, detail.value.supplyMethodCode, detail.value.supplyMethodSpecialTypeCode);
+      }
+    }
+  };
+
+  const updateAsync = async (id: string, isShowToast: boolean = true): Promise<void> => {
+    detail.value.budget = calculateTotalPriceVat({ ...detail.value, budget: 0 });
+    if (detail.value.budget > limitBudget) {
+      ToastHelper.overBudget79W2MessageToast();
+      return;
+    }
+
+    if (!validateGlAccountAmount()) {
+      return;
+    }
+
+    const payload = {
+      ...detail.value,
+      userId: authenStore.profile.id,
+    }
+
+    const { status, data } = await Pcm003Service.updateAsync(id, payload);
+
+    if (status == HttpStatusCode.Ok) {
+      if (isShowToast) ToastHelper.updatedMessageToast();
+
+      if (data?.newApprovalRequestDocumentFileId) {
+        detail.value.approvalRequestDocumentId = data.newApprovalRequestDocumentFileId;
+      }
+      if (data?.newWinnerAnnounceDocumentFileId) {
+        detail.value.winnerAnnounceDocumentId = data.newWinnerAnnounceDocumentFileId;
+      }
+
+      await getByIdAsync(id, true);
+    }
+  };
+
+  function calculateTotalPriceVat(detail: Pcm003Detail): number {
+    return detail.vendors.reduce((vendorAcc, vendor) => {
+      const vendorTotal = vendor.vendorParcels.reduce((parcelAcc, parcel) => {
+        return parcelAcc + parcel.totalPriceVat;
+      }, 0);
+      return vendorAcc + vendorTotal;
+    }, 0);
+  }
+
+  const onSendApprovalAsync = async () => {
+    if (detail.value.acceptors?.length == 0) {
+      ToastHelper.approvalAtLeastMessageToast();
+
+      return;
+    }
+
+    if (!validateGlAccountAmount()) {
+      return;
+    }
+
+    if (!await showConfirmDialogAsync(ConfirmDialogType.SendApprove) || !detail.value.id) return;
+
+    if (!detail.value.acceptors?.find(x => x.acceptorType === AcceptorType.AccountingApprover)) {
+      await getDefaultDisbursementAcceptor(detail.value.budget)
+    }
+
+    const payload = {
+      ...detail.value,
+      status: Pcm003Status.WaitingApproval,
+      userId: authenStore.profile.id,
+    }
+
+    const resp = await Pcm003Service.updateAsync(detail.value.id, payload);
+
+    if (resp.status === HttpStatusCode.Ok) {
+
+      const { status } = await Pcm003Service.actionAsync(detail.value.id, {
+        action: Pcm003Action.RequestApproval,
+      });
+
+      if (status === HttpStatusCode.Ok) {
+        ToastHelper.sendApproveConfirmMessageToast();
+
+        await getByIdAsync(detail.value.id, true);
+      }
+    }
+  };
+
+  const onUpsertAttachments = async () => {
+    if (!detail.value.id) return;
+
+    const { status } = await Pcm003Service.attachmentsAsync(detail.value.id, detail.value.attachments);
+
+    if (status === HttpStatusCode.Ok) {
+      ToastHelper.updatedMessageToast();
+
+      await getByIdAsync(detail.value.id);
+    }
+  };
+
+  const onUpsertAttachmentsFromExpenseDisbursement = async (id: string, attachments: Attachments[]) => {
+    const { status } = await Pcm003Service.attachmentsAsync(id, attachments);
+
+    if (status === HttpStatusCode.Ok) {
+      ToastHelper.updatedMessageToast();
+    }
+  };
+
+  const onRecallAsync = async () => {
+    if (!await showConfirmDialogAsync(ConfirmDialogType.Edit) || !detail.value.id) return;
+
+    const { status } = await Pcm003Service.actionAsync(detail.value.id, {
+      action: Pcm003Action.Edit,
+    });
+
+    if (status === HttpStatusCode.Ok) {
+      ToastHelper.recallEditMessageToast();
+
+      await getByIdAsync(detail.value.id);
+    }
+  };
+
+  const onRejectedAsync = async () => {
+    const res = await showReasonDialogAsync(ReasonDialogType.Reject);
+
+    if (!res.isConfirm || !detail.value.id) return;
+
+    const { status } = await Pcm003Service.actionAsync(detail.value.id, {
+      action: Pcm003Action.RejectedAcceptor,
+      remark: res.reason,
+    });
+
+    if (status === HttpStatusCode.Ok) {
+      ToastHelper.sendEditMessageToast();
+
+      await getByIdAsync(detail.value.id);
+    }
+  };
+
+  const onApprovedAsync = async () => {
+    let dialogType: ReasonDialogType;
+
+    if (isAccountingApproveReject.value) {
+      dialogType = ReasonDialogType.Confirm;
+    } else if (isLastApprover.value && isLastAccountingApprover.value) {
+      dialogType = ReasonDialogType.Approve;
+    } else {
+      dialogType = ReasonDialogType.Accepted;
+    }
+
+    const res = await showReasonDialogAsync(dialogType);
+
+    if (!res.isConfirm || !detail.value.id) return;
+
+    const { status } = await Pcm003Service.actionAsync(detail.value.id, {
+      action: Pcm003Action.ApprovedAcceptor,
+      remark: res.reason,
+    });
+
+    if (status === HttpStatusCode.Ok) {
+      ToastHelper.approvedMessageToast();
+
+      await getByIdAsync(detail.value.id);
+    }
+  };
+
+  const getJorporSegmentManagerApproveAsync = async (assignSegmentCode?: string): Promise<OperationBody | null> => {
+    const { data, status } = assignSegmentCode === AssignDepartmentCodeEnum.SegmentJorPorOther ?
+      await operationService.getSegmentOtherManagerAsync()
+      : await operationService.getSegmentITManagerAsync();
+
+    if (status === HttpStatusCode.Ok && data) {
+      return data;
+    }
+
+    return null;
+  };
+
+  const getMergedAcceptorsAsync = async (
+    departmentId: string,
+    budget: number,
+    supplyMethodCode?: string,
+    supplyMethodSpecialTypeCode?: string
+  ): Promise<void> => {
+    const hasAssignSegmentCode = !!detail.value.assignSegmentCode;
+
+    const segmentManager = hasAssignSegmentCode
+      ? await getJorporSegmentManagerApproveAsync(detail.value.assignSegmentCode)
+      : null;
+
+    // userId ที่ใช้ค้นหา: ใช้ของ segment manager ถ้ามี ถ้าไม่มีให้ใช้ user login
+    const criteria: defaultAcceptorCriteria = {
+      supplyMethodCode,
+      supplyMethodSpecialTypeCode,
+      processType: SectionProcessType.PurchaseOrder,
+      budget,
+      userId: segmentManager?.userId ?? authenStore.profile.id,
+      skipCurrentEmployee: false,
+    };
+
+    let acceptors: any[] = [];
+    const { status, data } = await Pcm003Service.getOperationsDefaultAcceptorAsync(criteria);
+    if (status === HttpStatusCode.Ok) {
+      acceptors = data;
+    }
+
+    const toAcceptors = (items: any[]): ParticipantsAcceptor[] =>
+      Array.from(new Map(items.map(item => [item.userId, item])).values())
+        .map((acceptor, index) => ({
+          sequence: index + 1,
+          userId: acceptor.userId,
+          fullName: acceptor.fullName,
+          positionName: acceptor.fullPositionName,
+          departmentName: acceptor.businessUnitName,
+          acceptorType: AcceptorType.Approver,
+          status: AcceptorStatus.Draft,
+        } as ParticipantsAcceptor));
+
+    const nonApproverAcceptors = (detail.value.acceptors ?? [])
+      .filter((a): boolean => a.acceptorType !== AcceptorType.Approver);
+
+    // 2. ไม่ระบุ assignSegmentCode → แสดงทุกคนจาก getOperationsDefaultAcceptorAsync
+    if (!hasAssignSegmentCode) {
+      detail.value.acceptors = [...toAcceptors(acceptors), ...nonApproverAcceptors];
+      return;
+    }
+
+    // 1. ระบุ assignSegmentCode → เอาคนสุดท้าย 1 คนจาก getOperationsDefaultAcceptorAsync
+    const lastAcceptor = acceptors[acceptors.length - 1];
+    const mergedAcceptors: any[] = [];
+
+    // 1.2 ไม่ใช่ จพ. → รวม default department approver ก่อน
+    if (departmentId !== DepartmentId.JorPor) {
+      const { status, data } = await operationService.getOperationsDefaultDepartmentAsync(OrganizationLevel.Department);
+      if (status === HttpStatusCode.Ok) {
+        mergedAcceptors.push(...data);
+      }
+    }
+
+    if (lastAcceptor) {
+      mergedAcceptors.push(lastAcceptor);
+    }
+
+    detail.value.acceptors = [...toAcceptors(mergedAcceptors), ...nonApproverAcceptors];
+  };
+
+  const getDefaultDisbursementAcceptor = async (budget: number): Promise<void> => {
+    if (isBranchOrganizationLevel(detail.value.departmentOrganizationLevel)) return;
+
+    const { data: defaultExpense, status: defaultStatus } =
+      await operationService.getDefaultExpenseDisbursementAsync();
+
+    if (defaultStatus === HttpStatusCode.Ok) {
+      const params = {
+        processType: SectionProcessType.ExpenseDisbursement,
+        budget: budget,
+        userId: defaultExpense.userId,
+        supplyMethodCode: "SectionApprover001",
+        skipCurrentEmployee: false,
+      } as defaultAcceptorCriteria;
+
+      const { data: acceptorList, status: acceptorStatus } =
+        await operationService.getOperationsDefaultAcceptorAsync(params);
+
+      if (acceptorStatus === HttpStatusCode.Ok) {
+        if (detail.value.acceptors && detail.value.acceptors.length > 0) {
+          detail.value.acceptors = detail.value.acceptors.filter(
+            a => a.acceptorType !== AcceptorType.AccountingApprover
+          );
+
+          acceptorList.forEach(item =>
+            detail.value.acceptors?.push({
+              acceptorType: AcceptorType.AccountingApprover,
+              fullName: item.fullName,
+              positionName: item.fullPositionName,
+              sequence: detail.value.acceptors?.length + 1,
+              status: AcceptorStatus.Pending,
+              userId: item.userId,
+              departmentName: item.businessUnitName,
+            })
+          );
+
+          if (cloneAccountingAcceptors.value.length == 0) {
+            cloneAccountingAcceptors.value = detail.value.acceptors?.filter(
+              a => a.acceptorType === AcceptorType.AccountingApprover || a.acceptorType === AcceptorType.AccountingOperator
+            ) || [];
+          }
+        }
+      }
+    }
+  };
+
+  const removeVendorList = (index: number) => {
+    detail.value.vendors.splice(index, 1);
+
+    onResetOrderNoVendorList();
+  };
+
+  const onResetOrderNoVendorList = () => {
+    if (detail.value.vendors && detail.value.vendors.length > 0) {
+      detail.value.vendors.forEach((data, index) => {
+        data.sequence = index + 1;
+      });
+    }
+  };
+
+  const removeGlAccount = (index: number) => {
+    detail.value.glAccounts.splice(index, 1);
+
+    onResetOrderNoGlAccountList();
+  };
+
+  const onResetOrderNoGlAccountList = () => {
+    if (detail.value.glAccounts && detail.value.glAccounts.length > 0) {
+      detail.value.glAccounts.forEach((data, index) => {
+        data.sequence = index + 1;
+      });
+    }
+  };
+
+  const removeParcelFromVendor = (vendorIndex: number, parcelIndex: number) => {
+    const vendor = detail.value.vendors[vendorIndex];
+    if (!vendor) return;
+
+    vendor.vendorParcels.splice(parcelIndex, 1);
+
+    vendor.vendorParcels.forEach((item, idx) => {
+      item.sequence = idx + 1;
+    });
+  };
+
+  const isEdit = computed(() => {
+    return (detail.value.status === Pcm003Status.Draft ||
+      detail.value.status === Pcm003Status.Edit ||
+      detail.value.status === Pcm003Status.Rejected) && detail.value.departmentCode === authenStore.profile.departmentCode;;
+  });
+
+  const isCanRecall = computed(() =>
+    authenStore.profile.departmentCode === detail.value.departmentCode &&
+    detail.value.acceptors?.filter(a => a.acceptorType === AcceptorType.Approver).every(a => a.status === AcceptorStatus.Pending) &&
+    detail.value.status === Pcm003Status.WaitingApproval);
+
+  const isApproveReject = computed(() => {
+    if (!detail.value.acceptors) return false;
+    const status = detail.value.status == Pcm003Status.WaitingApproval;
+    const checkQue = isCurrentPendingAcceptor(detail.value.acceptors, authenStore.profile.id, AcceptorType.Approver);
+    return status && checkQue;
+  });
+
+  const isLastApprover = computed(() => detail.value.acceptors?.filter(f => f.acceptorType === AcceptorType.Approver && f.status === AcceptorStatus.Pending).length === 1);
+  const isLastAccountingApprover = computed(() =>
+    detail.value.acceptors?.filter(f =>
+      (f.acceptorType === AcceptorType.AccountingApprover || f.acceptorType === AcceptorType.AccountingOperator) &&
+      f.status === AcceptorStatus.Pending
+    ).length === 1
+  );
+
+  const isAccountingCanAssign = computed(() => {
+    const accountingAcceptors = detail.value.acceptors?.filter(a =>
+      a.acceptorType === AcceptorType.AccountingApprover || a.acceptorType === AcceptorType.AccountingOperator
+    );
+    if (!accountingAcceptors || accountingAcceptors.length === 0) return false;
+
+    const status = [Pcm003Status.WaitingAccountingApproval].includes(detail.value.status);
+    const currentUser = accountingAcceptors.find(a => (a.delegateeUserId ? a.delegateeUserId : a.userId) === authenStore.profile.id);
+
+    if (!currentUser) return false;
+
+    const firstPending = accountingAcceptors
+      .filter(s => s.status === AcceptorStatus.Pending)
+      .sort((a, b) => {
+        const typeA = a.acceptorType === AcceptorType.AccountingOperator ? 0 : 1;
+        const typeB = b.acceptorType === AcceptorType.AccountingOperator ? 0 : 1;
+        if (typeA !== typeB) return typeA - typeB;
+        return a.sequence - b.sequence;
+      })[0];
+
+    const isCurrentUserFirstPending = firstPending != null &&
+      (firstPending.delegateeUserId ? firstPending.delegateeUserId : firstPending.userId) === authenStore.profile.id;
+    const allAccountPending = accountingAcceptors.every(s => s.status === AcceptorStatus.Pending || s.status === AcceptorStatus.Draft);
+
+    return status && (isCurrentUserFirstPending || allAccountPending);
+  });
+
+  const isAccountingMember = computed(() => {
+    if (!detail.value.acceptors) return false;
+    if (detail.value.status !== Pcm003Status.WaitingAccountingApproval) return false;
+
+    if (
+      isBranchOrganizationLevel(detail.value.departmentOrganizationLevel) &&
+      authenStore.profile.departmentCode === detail.value.departmentCode
+    ) {
+      return true;
+    }
+
+    const accountingAcceptors = detail.value.acceptors.filter(a =>
+      a.acceptorType === AcceptorType.AccountingApprover || a.acceptorType === AcceptorType.AccountingOperator
+    );
+
+    const currentUser = accountingAcceptors.find(a =>
+      (a.delegateeUserId ? a.delegateeUserId : a.userId) === authenStore.profile.id
+    );
+
+    return currentUser != null;
+  });
+
+  const isAccountingBranch = computed(() => {
+    return detail.value.status === Pcm003Status.WaitingAccountingApproval &&
+      isBranchOrganizationLevel(detail.value.departmentOrganizationLevel) &&
+      authenStore.profile.departmentCode === detail.value.departmentCode;
+  });
+
+  const isBranchOrZoneDepartment = computed((): boolean => {
+    return isBranchOrganizationLevel(detail.value.departmentOrganizationLevel) ||
+      isBranchOrganizationLevel(authenStore.profile.departmentOrganizationLevel);
+  });
+
+  const saveAcceptorsAsync = async (id: string): Promise<void> => {
+    const payload = { ...detail.value, userId: authenStore.profile.id };
+    const { status } = await Pcm003Service.updateAsync(id, payload);
+    if (status === HttpStatusCode.Ok) {
+      ToastHelper.updatedMessageToast();
+      await getByIdAsync(id);
+    }
+  };
+
+  const getReviewDocumentAsync = async (id: string, documentType: string): Promise<string> => {
+    const { data, status } = await Pcm003Service.getReviewDocumentAsync(id, documentType);
+    if (status === HttpStatusCode.Ok) {
+      return data;
+    }
+
+    ToastHelper.error("ไม่สามารถดึงเอกสารได้", "เกิดข้อผิดพลาดในการดึงเอกสารการตรวจสอบ");
+    return '';
+  };
+
+  const getAssignDepartmentDDLAsync = async (): Promise<void> => {
+    const { data, status } = await SharedService.onGetParameterByGroupCodeAsync(EGroupCode.AssignDept);
+
+    if (status === HttpStatusCode.Ok) {
+      assignDepartmentDDL.value = data;
+    }
+  };
+
+  const isAccountingApproveReject = computed(() => {
+    const isAcceptor = detail.value.acceptors?.some(a =>
+      (a.delegateeUserId ? a.delegateeUserId : a.userId) === authenStore.profile.id &&
+      (a.acceptorType === AcceptorType.AccountingApprover || a.acceptorType === AcceptorType.AccountingOperator)
+    );
+    const status = detail.value.status == Pcm003Status.WaitingAccountingApproval;
+
+    return isAcceptor && status;
+  });
+
+  const canConfirm = computed((): boolean => {
+    const isWaitingDisbursement = detail.value.status == Pcm003Status.WaitingDisbursementDate;
+    const isAcceptanceConfirmer = detail.value.acceptanceConfirmers?.some(
+      (a): boolean => (a.delegateeUserId ? a.delegateeUserId : a.userId) === authenStore.profile.id
+    ) ?? false;
+
+    return isWaitingDisbursement && isAcceptanceConfirmer;
+  });
+
+  const onConfirmDisbursementAsync = async () => {
+
+    if (!await showConfirmDialogAsync(ConfirmDialogType.ConfirmData) || !detail.value.id) return;
+
+    const payload = {
+      ...detail.value,
+      status: Pcm003Status.Paid,
+      userId: authenStore.profile.id,
+    }
+
+    const resp = await Pcm003Service.updateAsync(detail.value.id, payload);
+
+    if (resp.status === HttpStatusCode.Ok) {
+      const { status } = await Pcm003Service.actionAsync(detail.value.id, {
+        action: Pcm003Action.ConfirmDisbursement,
+      });
+
+      if (status === HttpStatusCode.Ok) {
+        ToastHelper.confirmMessageToast();
+
+        await getByIdAsync(detail.value.id);
+      }
+    }
+  };
+
+  return {
+    detail,
+    cloneAccountingAcceptors,
+    departmentDropdown,
+    supplyMethodDropdown,
+    supplyMethodTypeDropdown,
+    supplyMethidSpecialTypeDropdown,
+    expenseItemW119DropDown,
+    paymentMethodDropDown,
+    vatTypeDropDown,
+    unitOfMeasureDropDown,
+    invoiceDocumentTypeDropDown,
+    bankDropDown,
+    solIdDropDown,
+    budgetTypeDropDown,
+    glAccountDropDown,
+    assignDepartmentDDL,
+    isAccountingApproveReject,
+    canConfirm,
+    isAccountingCanAssign,
+    isAccountingMember,
+    isAccountingBranch,
+    isBranchOrZoneDepartment,
+    onConfirmDisbursementAsync,
+    getDefaultDisbursementAcceptor,
+    getAssignDepartmentDDLAsync,
+    onUpsertAttachmentsFromExpenseDisbursement,
+    getByIdAsync,
+    getJorporSegmentManagerApproveAsync,
+    getMergedAcceptorsAsync,
+    addVendors,
+    addParcelToVendor,
+    addGLAccount,
+    removeVendorList,
+    removeParcelFromVendor,
+    removeGlAccount,
+    isEdit,
+    isApproveReject,
+    updateAsync,
+    createAsync,
+    getDepartmentDDLAsync,
+    getSupplyMethodSpecialTypeDDLAsync,
+    onGetDropdownAsync,
+    onResetBody,
+    onSendApprovalAsync,
+    onRecallAsync,
+    onRejectedAsync,
+    onApprovedAsync,
+    isCanRecall,
+    isLastApprover,
+    isLastAccountingApprover,
+    onUpsertAttachments,
+    getReviewDocumentAsync,
+    saveAcceptorsAsync,
+    isCurrentUserAccountingSegmentMember,
+  };
+});

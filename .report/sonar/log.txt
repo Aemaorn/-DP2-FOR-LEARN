@@ -1,0 +1,1107 @@
+2025-11-25T08:45:32.3423462Z ##[section]Starting: SonarQube finalize
+2025-11-25T08:45:32.3431428Z ==============================================================================
+2025-11-25T08:45:32.3431527Z Task         : Command line
+2025-11-25T08:45:32.3431575Z Description  : Run a command line script using Bash on Linux and macOS and cmd.exe on Windows
+2025-11-25T08:45:32.3431646Z Version      : 2.250.1
+2025-11-25T08:45:32.3431699Z Author       : Microsoft Corporation
+2025-11-25T08:45:32.3431749Z Help         : https://docs.microsoft.com/azure/devops/pipelines/tasks/utility/command-line
+2025-11-25T08:45:32.3431829Z ==============================================================================
+2025-11-25T08:45:32.5249227Z Generating script.
+2025-11-25T08:45:32.5256371Z ========================== Starting Command Output ===========================
+2025-11-25T08:45:32.5270665Z [command]/usr/bin/bash --noprofile --norc /home/codehard/azure-agent/_work/_temp/5fd5d56c-7239-4475-a732-24b112cc2a2f.sh
+2025-11-25T08:45:32.5865028Z SonarScanner for .NET 11.0
+2025-11-25T08:45:32.5868560Z Using the .NET Core version of the Scanner for .NET
+2025-11-25T08:45:32.6638471Z Post-processing started.
+2025-11-25T08:45:34.7237483Z 08:45:34.723  WARNING: File '/home/codehard/azure-agent/_work/2/s/Backend/.dockerignore' does not exist.
+2025-11-25T08:45:34.8077644Z 08:45:34.806  Using Java found in Analysis Config: /home/codehard/.sonar/cache/4086cc7cb2d9e7810141f255063caad10a8a018db5e6b47fa5394c506ab65bff/OpenJDK17U-jre_x64_linux_hotspot_17.0.13_11.tar.gz_extracted/jdk-17.0.13+11-jre/bin/java
+2025-11-25T08:45:35.2796737Z 08:45:35.279  INFO: Starting SonarScanner Engine...
+2025-11-25T08:45:35.2797454Z 08:45:35.279  INFO: Java 17.0.13 Eclipse Adoptium (64-bit)
+2025-11-25T08:45:36.0700514Z 08:45:36.069  INFO: Load global settings
+2025-11-25T08:45:36.1549978Z 08:45:36.154  INFO: Load global settings (done) | time=85ms
+2025-11-25T08:45:36.1575759Z 08:45:36.157  INFO: Server id: 4F833BF3-AZauRByjft399GYW5GQH
+2025-11-25T08:45:36.1663695Z 08:45:36.165  INFO: Loading required plugins
+2025-11-25T08:45:36.1664903Z 08:45:36.166  INFO: Load plugins index
+2025-11-25T08:45:36.1799119Z 08:45:36.179  INFO: Load plugins index (done) | time=13ms
+2025-11-25T08:45:36.1799603Z 08:45:36.179  INFO: Load/download plugins
+2025-11-25T08:45:36.2083284Z 08:45:36.207  INFO: Load/download plugins (done) | time=28ms
+2025-11-25T08:45:36.4966021Z 08:45:36.495  INFO: Process project properties
+2025-11-25T08:45:36.5471888Z 08:45:36.546  INFO: Process project properties (done) | time=51ms
+2025-11-25T08:45:36.5575220Z 08:45:36.557  INFO: Project key: DP2_Api
+2025-11-25T08:45:36.5575963Z 08:45:36.557  INFO: Base dir: /home/codehard/azure-agent/_work/2/s
+2025-11-25T08:45:36.5576268Z 08:45:36.557  INFO: Working dir: /home/codehard/azure-agent/_work/2/.sonarqube/out/.sonar
+2025-11-25T08:45:36.5677842Z 08:45:36.567  INFO: Load project settings for component key: 'DP2_Api'
+2025-11-25T08:45:36.5821792Z 08:45:36.581  INFO: Load project settings for component key: 'DP2_Api' (done) | time=14ms
+2025-11-25T08:45:36.6256212Z 08:45:36.625  INFO: Load quality profiles
+2025-11-25T08:45:36.6803881Z 08:45:36.679  INFO: Load quality profiles (done) | time=55ms
+2025-11-25T08:45:36.6970183Z 08:45:36.696  INFO: Auto-configuring with CI 'Azure DevOps'
+2025-11-25T08:45:36.7212372Z 08:45:36.72  INFO: Load active rules
+2025-11-25T08:45:37.0291379Z 08:45:37.028  INFO: Load active rules (done) | time=307ms
+2025-11-25T08:45:37.0336050Z 08:45:37.033  INFO: Load analysis cache
+2025-11-25T08:45:37.0482935Z 08:45:37.047  INFO: Load analysis cache (404) | time=15ms
+2025-11-25T08:45:37.1168546Z 08:45:37.116  INFO: Preprocessing files...
+2025-11-25T08:45:37.7464911Z 08:45:37.745  INFO: 3 languages detected in 1304 preprocessed files
+2025-11-25T08:45:37.7465484Z 08:45:37.745  INFO: 0 files ignored because of inclusion/exclusion patterns
+2025-11-25T08:45:37.7465734Z 08:45:37.746  INFO: 6 files ignored because of scm ignore settings
+2025-11-25T08:45:37.7489267Z 08:45:37.748  INFO: Loading plugins for detected languages
+2025-11-25T08:45:37.7495066Z 08:45:37.749  INFO: Load/download plugins
+2025-11-25T08:45:37.7523928Z 08:45:37.752  INFO: Load/download plugins (done) | time=3ms
+2025-11-25T08:45:37.8265777Z 08:45:37.826  INFO: Executing phase 2 project builders
+2025-11-25T08:45:38.0750799Z 08:45:38.074  INFO: Executing phase 2 project builders (done) | time=249ms
+2025-11-25T08:45:38.0818465Z 08:45:38.081  INFO: Load project repositories
+2025-11-25T08:45:38.1831326Z 08:45:38.182  INFO: Load project repositories (done) | time=101ms
+2025-11-25T08:45:38.1957052Z 08:45:38.195  INFO: Indexing files...
+2025-11-25T08:45:38.1957467Z 08:45:38.195  INFO: Project configuration:
+2025-11-25T08:45:38.1962074Z 08:45:38.195  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:38.1977577Z 08:45:38.197  INFO: Indexing files of module 'GHB.DP2.Infrastructure'
+2025-11-25T08:45:38.1977952Z 08:45:38.197  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Infrastructure
+2025-11-25T08:45:38.2009402Z 08:45:38.2  INFO:   Source paths: Configurations/ActiveDirectoryConfiguration.cs, Configuration...
+2025-11-25T08:45:38.2009891Z 08:45:38.2  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:40.6983603Z 08:45:40.697  INFO: Indexing files of module 'GHB.DP2.Api.Tests'
+2025-11-25T08:45:40.6984298Z 08:45:40.697  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Api.Tests
+2025-11-25T08:45:40.6984563Z 08:45:40.697  INFO:   Test paths: JsonFlattenTests.cs, Models/ComplexEmployee.cs, Models/DataType...
+2025-11-25T08:45:40.6984758Z 08:45:40.697  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:40.7018444Z 08:45:40.701  INFO: Indexing files of module 'GHB.DP2.Application'
+2025-11-25T08:45:40.7019267Z 08:45:40.701  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Application
+2025-11-25T08:45:40.7032933Z 08:45:40.703  INFO:   Source paths: Authorization/RequirePermissionAttribute.cs, CommandHandler/S...
+2025-11-25T08:45:40.7033449Z 08:45:40.703  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:40.9675650Z 08:45:40.967  INFO: Indexing files of module 'GHB.DP2.Infrastructure'
+2025-11-25T08:45:40.9676417Z 08:45:40.967  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Infrastructure
+2025-11-25T08:45:40.9676826Z 08:45:40.967  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:40.9677273Z 08:45:40.967  INFO: Indexing files of module 'GHB.DP2.Infrastructure'
+2025-11-25T08:45:40.9678078Z 08:45:40.967  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Infrastructure
+2025-11-25T08:45:40.9678774Z 08:45:40.967  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:40.9679060Z 08:45:40.967  INFO: Indexing files of module 'GHB.DP2.SourceGenerators'
+2025-11-25T08:45:40.9679371Z 08:45:40.967  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.SourceGenerators
+2025-11-25T08:45:40.9682107Z 08:45:40.967  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:40.9686696Z 08:45:40.968  INFO: Indexing files of module 'GHB.DP2.ServiceDefaults'
+2025-11-25T08:45:40.9687520Z 08:45:40.968  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.ServiceDefaults
+2025-11-25T08:45:40.9688044Z 08:45:40.968  INFO:   Source paths: Extensions.cs
+2025-11-25T08:45:40.9688654Z 08:45:40.968  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:40.9692209Z 08:45:40.968  INFO: Indexing files of module 'GHB.DP2.Domain'
+2025-11-25T08:45:40.9692886Z 08:45:40.969  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Domain
+2025-11-25T08:45:40.9693096Z 08:45:40.969  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:40.9696876Z 08:45:40.969  INFO: Indexing files of module 'GHB.DP2.Api'
+2025-11-25T08:45:40.9697362Z 08:45:40.969  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Api
+2025-11-25T08:45:40.9697633Z 08:45:40.969  INFO:   Source paths: Configurations/CorsConfiguration.cs, Configurations/EmailServ...
+2025-11-25T08:45:40.9697868Z 08:45:40.969  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:40.9726540Z 08:45:40.972  INFO: Indexing files of module 'GHB.DP2.ServiceDefaults'
+2025-11-25T08:45:40.9727045Z 08:45:40.972  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.ServiceDefaults
+2025-11-25T08:45:40.9728517Z 08:45:40.972  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:40.9728958Z 08:45:40.972  INFO: Indexing files of module 'GHB.DP2.Domain'
+2025-11-25T08:45:40.9729459Z 08:45:40.972  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Domain
+2025-11-25T08:45:40.9732860Z 08:45:40.973  INFO:   Source paths: Common/AcceptorInfo.cs, Common/ActivityInfo.cs, Common/Assign...
+2025-11-25T08:45:40.9733144Z 08:45:40.973  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0352634Z 08:45:41.034  INFO: Indexing files of module 'GHB.DP2.SourceGenerators'
+2025-11-25T08:45:41.0353243Z 08:45:41.034  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.SourceGenerators
+2025-11-25T08:45:41.0353595Z 08:45:41.034  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0353949Z 08:45:41.034  INFO: Indexing files of module 'GHB.DP2.SourceGenerators'
+2025-11-25T08:45:41.0354494Z 08:45:41.034  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.SourceGenerators
+2025-11-25T08:45:41.0354682Z 08:45:41.035  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0355505Z 08:45:41.035  INFO: Indexing files of module 'GHB.DP2.Api'
+2025-11-25T08:45:41.0355850Z 08:45:41.035  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Api
+2025-11-25T08:45:41.0356097Z 08:45:41.035  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0358546Z 08:45:41.035  INFO: Indexing files of module 'GHB.DP2.Domain'
+2025-11-25T08:45:41.0359057Z 08:45:41.035  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Domain
+2025-11-25T08:45:41.0359288Z 08:45:41.035  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0361437Z 08:45:41.035  INFO: Indexing files of module 'GHB.DP2.SourceGenerators'
+2025-11-25T08:45:41.0361884Z 08:45:41.036  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.SourceGenerators
+2025-11-25T08:45:41.0362162Z 08:45:41.036  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0362895Z 08:45:41.036  INFO: Indexing files of module 'GHB.DP2.Application'
+2025-11-25T08:45:41.0363231Z 08:45:41.036  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Application
+2025-11-25T08:45:41.0363489Z 08:45:41.036  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0365969Z 08:45:41.036  INFO: Indexing files of module 'GHB.DP2.SourceGenerators'
+2025-11-25T08:45:41.0366267Z 08:45:41.036  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.SourceGenerators
+2025-11-25T08:45:41.0366517Z 08:45:41.036  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0369957Z 08:45:41.036  INFO: Indexing files of module 'GHB.DP2.Domain'
+2025-11-25T08:45:41.0370587Z 08:45:41.036  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Domain
+2025-11-25T08:45:41.0371186Z 08:45:41.036  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0375235Z 08:45:41.037  INFO: Indexing files of module 'GHB.DP2.SourceGenerators'
+2025-11-25T08:45:41.0375563Z 08:45:41.037  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.SourceGenerators
+2025-11-25T08:45:41.0375844Z 08:45:41.037  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0379103Z 08:45:41.037  INFO: Indexing files of module 'GHB.DP2.Infrastructure'
+2025-11-25T08:45:41.0379613Z 08:45:41.037  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Infrastructure
+2025-11-25T08:45:41.0379850Z 08:45:41.037  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0381026Z 08:45:41.037  INFO: Indexing files of module 'GHB.DP2.ServiceDefaults'
+2025-11-25T08:45:41.0381317Z 08:45:41.038  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.ServiceDefaults
+2025-11-25T08:45:41.0382453Z 08:45:41.038  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0383807Z 08:45:41.038  INFO: Indexing files of module 'GHB.DP2.SourceGenerators'
+2025-11-25T08:45:41.0384147Z 08:45:41.038  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.SourceGenerators
+2025-11-25T08:45:41.0386875Z 08:45:41.038  INFO:   Source paths: ActivityInfoAugmentGenerator.cs, SoftDeleteAugmentGenerator.c...
+2025-11-25T08:45:41.0387171Z 08:45:41.038  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0405307Z 08:45:41.04  INFO: Indexing files of module 'GHB.DP2.AppHost'
+2025-11-25T08:45:41.0405629Z 08:45:41.04  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.AppHost
+2025-11-25T08:45:41.0405938Z 08:45:41.04  INFO:   Source paths: AppHost.cs, appsettings.Development.json, appsettings.json, P...
+2025-11-25T08:45:41.0406308Z 08:45:41.04  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0415490Z 08:45:41.041  INFO: Indexing files of module 'GHB.DP2.SourceGenerators'
+2025-11-25T08:45:41.0415943Z 08:45:41.041  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.SourceGenerators
+2025-11-25T08:45:41.0416147Z 08:45:41.041  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0418955Z 08:45:41.041  INFO: Indexing files of module 'GHB.DP2.ServiceDefaults'
+2025-11-25T08:45:41.0419429Z 08:45:41.041  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.ServiceDefaults
+2025-11-25T08:45:41.0419681Z 08:45:41.041  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0423770Z 08:45:41.042  INFO: Indexing files of module 'GHB.DP2.Domain'
+2025-11-25T08:45:41.0424797Z 08:45:41.042  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Domain
+2025-11-25T08:45:41.0425276Z 08:45:41.042  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0427779Z 08:45:41.042  INFO: Indexing files of module 'GHB.DP2.Domain.Tests'
+2025-11-25T08:45:41.0428151Z 08:45:41.042  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Domain.Tests
+2025-11-25T08:45:41.0428399Z 08:45:41.042  INFO:   Test paths: AnnouncementPlanFormatTests.cs
+2025-11-25T08:45:41.0428567Z 08:45:41.042  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0436794Z 08:45:41.043  INFO: Indexing files of module 'GHB.DP2.Domain'
+2025-11-25T08:45:41.0437705Z 08:45:41.043  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Domain
+2025-11-25T08:45:41.0438168Z 08:45:41.043  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0438663Z 08:45:41.043  INFO: Indexing files of module 'GHB.DP2.Application'
+2025-11-25T08:45:41.0439269Z 08:45:41.043  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Application
+2025-11-25T08:45:41.0439522Z 08:45:41.043  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0440679Z 08:45:41.043  INFO: Indexing files of module 'GHB.DP2.Infrastructure'
+2025-11-25T08:45:41.0441036Z 08:45:41.043  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Infrastructure
+2025-11-25T08:45:41.0441278Z 08:45:41.043  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0443786Z 08:45:41.044  INFO: Indexing files of module 'GHB.DP2.Domain'
+2025-11-25T08:45:41.0444769Z 08:45:41.044  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Domain
+2025-11-25T08:45:41.0445213Z 08:45:41.044  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0446196Z 08:45:41.044  INFO: Indexing files of module 'GHB.DP2.Application'
+2025-11-25T08:45:41.0446476Z 08:45:41.044  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Application
+2025-11-25T08:45:41.0447028Z 08:45:41.044  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0448916Z 08:45:41.044  INFO: Indexing files of module 'GHB.DP2.Api'
+2025-11-25T08:45:41.0449253Z 08:45:41.044  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s/Backend/GHB.DP2.Api
+2025-11-25T08:45:41.0449454Z 08:45:41.044  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0451856Z 08:45:41.045  INFO: Indexing files of module 'DP2_Api'
+2025-11-25T08:45:41.0452476Z 08:45:41.045  INFO:   Base dir: /home/codehard/azure-agent/_work/2/s
+2025-11-25T08:45:41.0455306Z 08:45:41.045  INFO:   Excluded sources: **/Frontend/**
+2025-11-25T08:45:41.0462117Z 08:45:41.045  INFO: 1187 files indexed
+2025-11-25T08:45:41.0475738Z 08:45:41.047  INFO: Quality profile for cs: Sonar way
+2025-11-25T08:45:41.0476116Z 08:45:41.047  INFO: Quality profile for docker: Sonar way
+2025-11-25T08:45:41.0476349Z 08:45:41.047  INFO: Quality profile for json: Sonar way
+2025-11-25T08:45:41.0476784Z 08:45:41.047  INFO: ------------- Run sensors on module GHB.DP2.Infrastructure
+2025-11-25T08:45:41.0852213Z 08:45:41.084  INFO: Load metrics repository
+2025-11-25T08:45:41.1038928Z 08:45:41.103  INFO: Load metrics repository (done) | time=19ms
+2025-11-25T08:45:41.3107918Z 08:45:41.31  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:41.3114398Z 08:45:41.311  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:41.3119208Z 08:45:41.311  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:41.3119539Z 08:45:41.311  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=2ms
+2025-11-25T08:45:41.3119694Z 08:45:41.311  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:41.3392150Z 08:45:41.338  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.3433966Z 08:45:41.343  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.3443653Z 08:45:41.344  INFO: Sensor Java Config Sensor [iac] (done) | time=32ms
+2025-11-25T08:45:41.3443836Z 08:45:41.344  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:41.3465173Z 08:45:41.346  INFO: Sensor C# Project Type Information [csharp] (done) | time=3ms
+2025-11-25T08:45:41.3465532Z 08:45:41.346  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:41.3536616Z 08:45:41.353  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:41.3537066Z 08:45:41.353  INFO: Language version: CSharp13
+2025-11-25T08:45:41.3537322Z 08:45:41.353  INFO: Concurrent execution: enabled
+2025-11-25T08:45:41.3537597Z 08:45:41.353  INFO: Sensor C# Analysis Log [csharp] (done) | time=7ms
+2025-11-25T08:45:41.3537875Z 08:45:41.353  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:41.3563980Z 08:45:41.354  INFO: Sensor C# Method Declarations [csharp] (done) | time=1ms
+2025-11-25T08:45:41.3564379Z 08:45:41.354  INFO: Sensor C# Telemetry [csharp]
+2025-11-25T08:45:41.3589175Z 08:45:41.358  INFO: Sensor C# Telemetry [csharp] (done) | time=4ms
+2025-11-25T08:45:41.3589602Z 08:45:41.358  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:41.3598480Z 08:45:41.359  INFO: Sensor C# Properties [csharp] (done) | time=1ms
+2025-11-25T08:45:41.3598774Z 08:45:41.359  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:41.4408787Z 08:45:41.44  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.4409214Z 08:45:41.44  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.4409401Z 08:45:41.44  INFO: Sensor IaC Docker Sensor [iac] (done) | time=81ms
+2025-11-25T08:45:41.4435255Z 08:45:41.443  INFO: ------------- Run sensors on module GHB.DP2.Api
+2025-11-25T08:45:41.4675881Z 08:45:41.466  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:41.4676816Z 08:45:41.466  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:41.4677101Z 08:45:41.467  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:41.4677283Z 08:45:41.467  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:41.4677445Z 08:45:41.467  INFO: Sensor IaC CloudFormation Sensor [iac]
+2025-11-25T08:45:41.4769026Z 08:45:41.476  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.4769512Z 08:45:41.476  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.4770242Z 08:45:41.476  INFO: Sensor IaC CloudFormation Sensor [iac] (done) | time=10ms
+2025-11-25T08:45:41.4770501Z 08:45:41.476  INFO: Sensor IaC AzureResourceManager Sensor [iac]
+2025-11-25T08:45:41.5159187Z 08:45:41.515  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.5159652Z 08:45:41.515  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.5159928Z 08:45:41.515  INFO: Sensor IaC AzureResourceManager Sensor [iac] (done) | time=39ms
+2025-11-25T08:45:41.5160217Z 08:45:41.515  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:41.5169349Z 08:45:41.516  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.5169684Z 08:45:41.516  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.5169917Z 08:45:41.516  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:41.5170139Z 08:45:41.516  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:41.5171309Z 08:45:41.517  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:41.5171955Z 08:45:41.517  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:41.5183172Z 08:45:41.518  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:41.5183404Z 08:45:41.518  INFO: Language version: CSharp13
+2025-11-25T08:45:41.5183624Z 08:45:41.518  INFO: Concurrent execution: enabled
+2025-11-25T08:45:41.5183776Z 08:45:41.518  INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+2025-11-25T08:45:41.5183941Z 08:45:41.518  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:41.5190928Z 08:45:41.518  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:41.5191264Z 08:45:41.518  INFO: Sensor C# Telemetry [csharp]
+2025-11-25T08:45:41.5195634Z 08:45:41.519  INFO: Sensor C# Telemetry [csharp] (done) | time=1ms
+2025-11-25T08:45:41.5195895Z 08:45:41.519  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:41.5200067Z 08:45:41.519  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:41.5200308Z 08:45:41.519  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:41.5253489Z 08:45:41.524  INFO: 1 source file to be analyzed
+2025-11-25T08:45:41.6607188Z 08:45:41.66  INFO: 1/1 source file has been analyzed
+2025-11-25T08:45:41.6607717Z 08:45:41.66  INFO: Sensor IaC Docker Sensor [iac] (done) | time=141ms
+2025-11-25T08:45:41.6612741Z 08:45:41.661  INFO: ------------- Run sensors on module GHB.DP2.Infrastructure
+2025-11-25T08:45:41.6819502Z 08:45:41.681  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:41.6820974Z 08:45:41.681  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:41.6821221Z 08:45:41.681  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:41.6821409Z 08:45:41.681  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:41.6821564Z 08:45:41.681  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:41.6829297Z 08:45:41.682  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.6829647Z 08:45:41.682  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.6829968Z 08:45:41.682  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:41.6830303Z 08:45:41.682  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:41.6831661Z 08:45:41.683  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:41.6831979Z 08:45:41.683  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:41.6852130Z 08:45:41.684  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:41.6852534Z 08:45:41.685  INFO: Language version: CSharp13
+2025-11-25T08:45:41.6852735Z 08:45:41.685  INFO: Concurrent execution: enabled
+2025-11-25T08:45:41.6852885Z 08:45:41.685  INFO: Sensor C# Analysis Log [csharp] (done) | time=2ms
+2025-11-25T08:45:41.6853054Z 08:45:41.685  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:41.6857825Z 08:45:41.685  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:41.6858052Z 08:45:41.685  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:41.6859220Z 08:45:41.685  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:41.6859451Z 08:45:41.685  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:41.6907174Z 08:45:41.69  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.6907380Z 08:45:41.69  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.6907608Z 08:45:41.69  INFO: Sensor IaC Docker Sensor [iac] (done) | time=5ms
+2025-11-25T08:45:41.6911253Z 08:45:41.69  INFO: ------------- Run sensors on module GHB.DP2.Domain
+2025-11-25T08:45:41.7115320Z 08:45:41.711  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:41.7116474Z 08:45:41.711  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:41.7116964Z 08:45:41.711  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:41.7117295Z 08:45:41.711  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=1ms
+2025-11-25T08:45:41.7117560Z 08:45:41.711  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:41.7141283Z 08:45:41.713  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.7141613Z 08:45:41.713  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.7141943Z 08:45:41.713  INFO: Sensor Java Config Sensor [iac] (done) | time=2ms
+2025-11-25T08:45:41.7142182Z 08:45:41.714  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:41.7144399Z 08:45:41.714  INFO: Sensor C# Project Type Information [csharp] (done) | time=1ms
+2025-11-25T08:45:41.7144661Z 08:45:41.714  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:41.7189479Z 08:45:41.718  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:41.7190071Z 08:45:41.718  INFO: Language version: CSharp13
+2025-11-25T08:45:41.7190317Z 08:45:41.718  INFO: Concurrent execution: enabled
+2025-11-25T08:45:41.7190476Z 08:45:41.718  INFO: Sensor C# Analysis Log [csharp] (done) | time=4ms
+2025-11-25T08:45:41.7190634Z 08:45:41.718  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:41.7196327Z 08:45:41.719  INFO: Sensor C# Method Declarations [csharp] (done) | time=1ms
+2025-11-25T08:45:41.7197094Z 08:45:41.719  INFO: Sensor C# Telemetry [csharp]
+2025-11-25T08:45:41.7199223Z 08:45:41.719  INFO: Sensor C# Telemetry [csharp] (done) | time=0ms
+2025-11-25T08:45:41.7199460Z 08:45:41.719  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:41.7202085Z 08:45:41.72  INFO: Sensor C# Properties [csharp] (done) | time=1ms
+2025-11-25T08:45:41.7202276Z 08:45:41.72  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:41.7273086Z 08:45:41.726  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.7274280Z 08:45:41.726  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.7274681Z 08:45:41.726  INFO: Sensor IaC Docker Sensor [iac] (done) | time=6ms
+2025-11-25T08:45:41.7277626Z 08:45:41.727  INFO: ------------- Run sensors on module GHB.DP2.Domain
+2025-11-25T08:45:41.7538045Z 08:45:41.753  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:41.7539144Z 08:45:41.753  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:41.7539576Z 08:45:41.753  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:41.7539765Z 08:45:41.753  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:41.7539922Z 08:45:41.753  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:41.7547680Z 08:45:41.754  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.7547904Z 08:45:41.754  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.7551105Z 08:45:41.754  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:41.7551750Z 08:45:41.754  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:41.7552041Z 08:45:41.755  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:41.7552280Z 08:45:41.755  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:41.7597079Z 08:45:41.759  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:41.7597417Z 08:45:41.759  INFO: Language version: CSharp13
+2025-11-25T08:45:41.7597670Z 08:45:41.759  INFO: Concurrent execution: enabled
+2025-11-25T08:45:41.7597923Z 08:45:41.759  INFO: Sensor C# Analysis Log [csharp] (done) | time=4ms
+2025-11-25T08:45:41.7598180Z 08:45:41.759  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:41.7603203Z 08:45:41.759  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:41.7603661Z 08:45:41.759  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:41.7605843Z 08:45:41.76  INFO: Sensor C# Properties [csharp] (done) | time=1ms
+2025-11-25T08:45:41.7606119Z 08:45:41.76  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:41.7650017Z 08:45:41.764  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.7650339Z 08:45:41.764  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.7650571Z 08:45:41.764  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:41.7652224Z 08:45:41.765  INFO: ------------- Run sensors on module GHB.DP2.Domain
+2025-11-25T08:45:41.7829549Z 08:45:41.782  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:41.7830414Z 08:45:41.782  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:41.7830757Z 08:45:41.782  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:41.7830950Z 08:45:41.782  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:41.7831191Z 08:45:41.782  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:41.7839040Z 08:45:41.783  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.7839420Z 08:45:41.783  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.7839781Z 08:45:41.783  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:41.7840043Z 08:45:41.783  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:41.7841038Z 08:45:41.784  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:41.7841839Z 08:45:41.784  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:41.7879105Z 08:45:41.787  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:41.7879548Z 08:45:41.787  INFO: Language version: CSharp13
+2025-11-25T08:45:41.7883464Z 08:45:41.787  INFO: Concurrent execution: enabled
+2025-11-25T08:45:41.7884680Z 08:45:41.787  INFO: Sensor C# Analysis Log [csharp] (done) | time=4ms
+2025-11-25T08:45:41.7885053Z 08:45:41.787  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:41.7885349Z 08:45:41.788  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:41.7885605Z 08:45:41.788  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:41.7885864Z 08:45:41.788  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:41.7886390Z 08:45:41.788  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:41.7930746Z 08:45:41.792  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.7931016Z 08:45:41.792  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.7931184Z 08:45:41.792  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:41.7936021Z 08:45:41.793  INFO: ------------- Run sensors on module GHB.DP2.SourceGenerators
+2025-11-25T08:45:41.8158073Z 08:45:41.815  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:41.8158843Z 08:45:41.815  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:41.8159614Z 08:45:41.815  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:41.8159885Z 08:45:41.815  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:41.8160052Z 08:45:41.815  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:41.8166670Z 08:45:41.816  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.8166957Z 08:45:41.816  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.8167121Z 08:45:41.816  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:41.8168117Z 08:45:41.816  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:41.8170359Z 08:45:41.816  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:41.8172217Z 08:45:41.816  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:41.8172410Z 08:45:41.817  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:41.8172771Z 08:45:41.817  INFO: Language version: CSharp13
+2025-11-25T08:45:41.8173162Z 08:45:41.817  INFO: Concurrent execution: enabled
+2025-11-25T08:45:41.8173578Z 08:45:41.817  INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+2025-11-25T08:45:41.8173908Z 08:45:41.817  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:41.8174113Z 08:45:41.817  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:41.8174281Z 08:45:41.817  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:41.8175694Z 08:45:41.817  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:41.8175861Z 08:45:41.817  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:41.8213774Z 08:45:41.821  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.8214336Z 08:45:41.821  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.8215195Z 08:45:41.821  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:41.8216410Z 08:45:41.821  INFO: ------------- Run sensors on module GHB.DP2.Domain
+2025-11-25T08:45:41.8407862Z 08:45:41.839  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:41.8408997Z 08:45:41.84  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:41.8409341Z 08:45:41.84  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:41.8410552Z 08:45:41.84  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:41.8410863Z 08:45:41.84  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:41.8419709Z 08:45:41.841  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.8420107Z 08:45:41.841  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.8420381Z 08:45:41.841  INFO: Sensor Java Config Sensor [iac] (done) | time=2ms
+2025-11-25T08:45:41.8420596Z 08:45:41.841  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:41.8420781Z 08:45:41.841  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:41.8420950Z 08:45:41.841  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:41.8452414Z 08:45:41.844  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:41.8452653Z 08:45:41.844  INFO: Language version: CSharp13
+2025-11-25T08:45:41.8452880Z 08:45:41.844  INFO: Concurrent execution: enabled
+2025-11-25T08:45:41.8455136Z 08:45:41.844  INFO: Sensor C# Analysis Log [csharp] (done) | time=3ms
+2025-11-25T08:45:41.8455344Z 08:45:41.844  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:41.8455507Z 08:45:41.845  INFO: Sensor C# Method Declarations [csharp] (done) | time=1ms
+2025-11-25T08:45:41.8455662Z 08:45:41.845  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:41.8457411Z 08:45:41.845  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:41.8457572Z 08:45:41.845  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:41.8494249Z 08:45:41.849  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.8494617Z 08:45:41.849  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.8494788Z 08:45:41.849  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:41.8498620Z 08:45:41.849  INFO: ------------- Run sensors on module GHB.DP2.SourceGenerators
+2025-11-25T08:45:41.8669796Z 08:45:41.866  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:41.8670636Z 08:45:41.866  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:41.8670914Z 08:45:41.866  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:41.8671095Z 08:45:41.866  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:41.8671244Z 08:45:41.866  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:41.8677057Z 08:45:41.867  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.8677419Z 08:45:41.867  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.8677739Z 08:45:41.867  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:41.8678648Z 08:45:41.867  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:41.8680294Z 08:45:41.867  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:41.8680567Z 08:45:41.867  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:41.8684918Z 08:45:41.868  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:41.8685133Z 08:45:41.868  INFO: Language version: CSharp13
+2025-11-25T08:45:41.8685349Z 08:45:41.868  INFO: Concurrent execution: enabled
+2025-11-25T08:45:41.8685619Z 08:45:41.868  INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+2025-11-25T08:45:41.8685781Z 08:45:41.868  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:41.8686410Z 08:45:41.868  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:41.8686586Z 08:45:41.868  INFO: Sensor C# Telemetry [csharp]
+2025-11-25T08:45:41.8690681Z 08:45:41.868  INFO: Sensor C# Telemetry [csharp] (done) | time=0ms
+2025-11-25T08:45:41.8690964Z 08:45:41.868  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:41.8691526Z 08:45:41.869  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:41.8691969Z 08:45:41.869  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:41.8727607Z 08:45:41.872  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.8727883Z 08:45:41.872  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.8728145Z 08:45:41.872  INFO: Sensor IaC Docker Sensor [iac] (done) | time=3ms
+2025-11-25T08:45:41.8730887Z 08:45:41.872  INFO: ------------- Run sensors on module GHB.DP2.Infrastructure
+2025-11-25T08:45:41.8897688Z 08:45:41.889  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:41.8898730Z 08:45:41.889  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:41.8899207Z 08:45:41.889  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:41.8899485Z 08:45:41.889  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=1ms
+2025-11-25T08:45:41.8899732Z 08:45:41.889  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:41.8908492Z 08:45:41.89  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.8908987Z 08:45:41.89  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.8909245Z 08:45:41.89  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:41.8909431Z 08:45:41.89  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:41.8913436Z 08:45:41.89  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:41.8913810Z 08:45:41.891  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:41.8926494Z 08:45:41.892  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:41.8926829Z 08:45:41.892  INFO: Language version: CSharp13
+2025-11-25T08:45:41.8927075Z 08:45:41.892  INFO: Concurrent execution: enabled
+2025-11-25T08:45:41.8927345Z 08:45:41.892  INFO: Sensor C# Analysis Log [csharp] (done) | time=2ms
+2025-11-25T08:45:41.8927770Z 08:45:41.892  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:41.8932891Z 08:45:41.892  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:41.8933226Z 08:45:41.892  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:41.8933382Z 08:45:41.893  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:41.8933524Z 08:45:41.893  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:41.8987506Z 08:45:41.898  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.8987940Z 08:45:41.898  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.8988871Z 08:45:41.898  INFO: Sensor IaC Docker Sensor [iac] (done) | time=6ms
+2025-11-25T08:45:41.8994770Z 08:45:41.899  INFO: ------------- Run sensors on module GHB.DP2.Application
+2025-11-25T08:45:41.9239124Z 08:45:41.923  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:41.9240367Z 08:45:41.923  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:41.9240642Z 08:45:41.923  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:41.9240939Z 08:45:41.923  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:41.9241141Z 08:45:41.923  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:41.9269146Z 08:45:41.926  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.9269540Z 08:45:41.926  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.9269693Z 08:45:41.926  INFO: Sensor Java Config Sensor [iac] (done) | time=3ms
+2025-11-25T08:45:41.9269879Z 08:45:41.926  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:41.9272006Z 08:45:41.927  INFO: Sensor C# Project Type Information [csharp] (done) | time=1ms
+2025-11-25T08:45:41.9272174Z 08:45:41.927  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:41.9285704Z 08:45:41.928  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:41.9286009Z 08:45:41.928  INFO: Language version: CSharp13
+2025-11-25T08:45:41.9286209Z 08:45:41.928  INFO: Concurrent execution: enabled
+2025-11-25T08:45:41.9287047Z 08:45:41.928  INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+2025-11-25T08:45:41.9287266Z 08:45:41.928  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:41.9288899Z 08:45:41.928  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:41.9289210Z 08:45:41.928  INFO: Sensor C# Telemetry [csharp]
+2025-11-25T08:45:41.9290620Z 08:45:41.928  INFO: Sensor C# Telemetry [csharp] (done) | time=0ms
+2025-11-25T08:45:41.9290929Z 08:45:41.928  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:41.9294667Z 08:45:41.929  INFO: Sensor C# Properties [csharp] (done) | time=1ms
+2025-11-25T08:45:41.9295007Z 08:45:41.929  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:41.9349995Z 08:45:41.934  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.9350337Z 08:45:41.934  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.9350487Z 08:45:41.934  INFO: Sensor IaC Docker Sensor [iac] (done) | time=5ms
+2025-11-25T08:45:41.9353832Z 08:45:41.935  INFO: ------------- Run sensors on module GHB.DP2.ServiceDefaults
+2025-11-25T08:45:41.9525045Z 08:45:41.952  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:41.9525853Z 08:45:41.952  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:41.9526096Z 08:45:41.952  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:41.9526603Z 08:45:41.952  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=1ms
+2025-11-25T08:45:41.9526765Z 08:45:41.952  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:41.9531952Z 08:45:41.952  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.9532462Z 08:45:41.953  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.9532730Z 08:45:41.953  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:41.9533012Z 08:45:41.953  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:41.9535973Z 08:45:41.953  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:41.9536249Z 08:45:41.953  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:41.9540262Z 08:45:41.953  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:41.9540490Z 08:45:41.953  INFO: Language version: CSharp13
+2025-11-25T08:45:41.9540743Z 08:45:41.953  INFO: Concurrent execution: enabled
+2025-11-25T08:45:41.9540989Z 08:45:41.953  INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+2025-11-25T08:45:41.9541266Z 08:45:41.953  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:41.9543037Z 08:45:41.954  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:41.9543793Z 08:45:41.954  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:41.9543997Z 08:45:41.954  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:41.9544156Z 08:45:41.954  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:41.9590924Z 08:45:41.958  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.9591252Z 08:45:41.958  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.9591417Z 08:45:41.958  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:41.9594187Z 08:45:41.959  INFO: ------------- Run sensors on module GHB.DP2.Domain
+2025-11-25T08:45:41.9799339Z 08:45:41.979  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:41.9800259Z 08:45:41.979  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:41.9800500Z 08:45:41.979  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:41.9800690Z 08:45:41.979  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:41.9800850Z 08:45:41.979  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:41.9811468Z 08:45:41.98  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.9812012Z 08:45:41.98  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.9812188Z 08:45:41.981  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:41.9812354Z 08:45:41.981  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:41.9814197Z 08:45:41.981  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:41.9814519Z 08:45:41.981  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:41.9843978Z 08:45:41.984  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:41.9844230Z 08:45:41.984  INFO: Language version: CSharp13
+2025-11-25T08:45:41.9844391Z 08:45:41.984  INFO: Concurrent execution: enabled
+2025-11-25T08:45:41.9844552Z 08:45:41.984  INFO: Sensor C# Analysis Log [csharp] (done) | time=3ms
+2025-11-25T08:45:41.9844710Z 08:45:41.984  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:41.9849824Z 08:45:41.984  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:41.9850082Z 08:45:41.984  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:41.9850276Z 08:45:41.984  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:41.9850439Z 08:45:41.984  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:41.9892343Z 08:45:41.988  INFO: 0 source files to be analyzed
+2025-11-25T08:45:41.9892580Z 08:45:41.988  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:41.9893403Z 08:45:41.988  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:41.9895222Z 08:45:41.989  INFO: ------------- Run sensors on module GHB.DP2.Infrastructure
+2025-11-25T08:45:42.0053301Z 08:45:42.004  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.0054254Z 08:45:42.004  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.0054673Z 08:45:42.004  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.0054857Z 08:45:42.004  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.0055011Z 08:45:42.004  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.0060344Z 08:45:42.005  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.0060507Z 08:45:42.005  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.0060693Z 08:45:42.005  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.0060870Z 08:45:42.005  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.0061035Z 08:45:42.006  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.0061199Z 08:45:42.006  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.0072800Z 08:45:42.007  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.0073059Z 08:45:42.007  INFO: Language version: CSharp13
+2025-11-25T08:45:42.0073225Z 08:45:42.007  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.0073441Z 08:45:42.007  INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+2025-11-25T08:45:42.0073606Z 08:45:42.007  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.0077780Z 08:45:42.007  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.0078010Z 08:45:42.007  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.0078167Z 08:45:42.007  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.0078380Z 08:45:42.007  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.0164000Z 08:45:42.016  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.0164327Z 08:45:42.016  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.0164490Z 08:45:42.016  INFO: Sensor IaC Docker Sensor [iac] (done) | time=8ms
+2025-11-25T08:45:42.0167439Z 08:45:42.016  INFO: ------------- Run sensors on module GHB.DP2.SourceGenerators
+2025-11-25T08:45:42.0317368Z 08:45:42.031  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.0318241Z 08:45:42.031  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.0318497Z 08:45:42.031  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.0318677Z 08:45:42.031  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=1ms
+2025-11-25T08:45:42.0318860Z 08:45:42.031  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.0325191Z 08:45:42.032  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.0325631Z 08:45:42.032  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.0325870Z 08:45:42.032  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.0326109Z 08:45:42.032  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.0328733Z 08:45:42.032  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.0329111Z 08:45:42.032  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.0333072Z 08:45:42.033  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.0333310Z 08:45:42.033  INFO: Language version: CSharp13
+2025-11-25T08:45:42.0333462Z 08:45:42.033  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.0333621Z 08:45:42.033  INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+2025-11-25T08:45:42.0334190Z 08:45:42.033  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.0335860Z 08:45:42.033  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.0336120Z 08:45:42.033  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.0339098Z 08:45:42.033  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.0339398Z 08:45:42.033  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.0379560Z 08:45:42.037  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.0379766Z 08:45:42.037  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.0380136Z 08:45:42.037  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.0382810Z 08:45:42.038  INFO: ------------- Run sensors on module GHB.DP2.SourceGenerators
+2025-11-25T08:45:42.0733675Z 08:45:42.072  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.0734920Z 08:45:42.072  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.0735347Z 08:45:42.072  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.0735622Z 08:45:42.072  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.0735785Z 08:45:42.072  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.0740084Z 08:45:42.073  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.0740341Z 08:45:42.073  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.0740609Z 08:45:42.073  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.0740874Z 08:45:42.073  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.0741132Z 08:45:42.073  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.0741366Z 08:45:42.074  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.0744494Z 08:45:42.074  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.0744686Z 08:45:42.074  INFO: Language version: CSharp13
+2025-11-25T08:45:42.0744882Z 08:45:42.074  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.0745043Z 08:45:42.074  INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+2025-11-25T08:45:42.0745212Z 08:45:42.074  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.0746404Z 08:45:42.074  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.0746942Z 08:45:42.074  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.0747993Z 08:45:42.074  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.0748393Z 08:45:42.074  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.0784588Z 08:45:42.078  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.0784880Z 08:45:42.078  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.0785043Z 08:45:42.078  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.0787976Z 08:45:42.078  INFO: ------------- Run sensors on module GHB.DP2.Api.Tests
+2025-11-25T08:45:42.0945518Z 08:45:42.094  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.0946445Z 08:45:42.094  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.0946703Z 08:45:42.094  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.0946917Z 08:45:42.094  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=1ms
+2025-11-25T08:45:42.0947073Z 08:45:42.094  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.0950887Z 08:45:42.094  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.0951162Z 08:45:42.094  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.0951404Z 08:45:42.095  INFO: Sensor Java Config Sensor [iac] (done) | time=0ms
+2025-11-25T08:45:42.0952021Z 08:45:42.095  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.0952845Z 08:45:42.095  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.0953007Z 08:45:42.095  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.0956043Z 08:45:42.095  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.0956216Z 08:45:42.095  INFO: Language version: CSharp13
+2025-11-25T08:45:42.0956381Z 08:45:42.095  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.0956541Z 08:45:42.095  INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+2025-11-25T08:45:42.0956700Z 08:45:42.095  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.0995677Z 08:45:42.099  INFO: Sensor C# Method Declarations [csharp] (done) | time=4ms
+2025-11-25T08:45:42.0995987Z 08:45:42.099  INFO: Sensor C# Telemetry [csharp]
+2025-11-25T08:45:42.0997018Z 08:45:42.099  INFO: Sensor C# Telemetry [csharp] (done) | time=0ms
+2025-11-25T08:45:42.0997179Z 08:45:42.099  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.0998016Z 08:45:42.099  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.0998264Z 08:45:42.099  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.1039115Z 08:45:42.103  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.1039579Z 08:45:42.103  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.1039870Z 08:45:42.103  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.1042181Z 08:45:42.104  INFO: ------------- Run sensors on module GHB.DP2.Api
+2025-11-25T08:45:42.1183834Z 08:45:42.117  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.1184661Z 08:45:42.117  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.1184915Z 08:45:42.117  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.1185119Z 08:45:42.117  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.1185277Z 08:45:42.117  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.1190987Z 08:45:42.118  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.1191224Z 08:45:42.118  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.1193238Z 08:45:42.118  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.1194581Z 08:45:42.118  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.1195189Z 08:45:42.119  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1195362Z 08:45:42.119  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.1195532Z 08:45:42.119  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.1195679Z 08:45:42.119  INFO: Language version: CSharp13
+2025-11-25T08:45:42.1195819Z 08:45:42.119  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.1195973Z 08:45:42.119  INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+2025-11-25T08:45:42.1196145Z 08:45:42.119  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.1199443Z 08:45:42.119  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1199780Z 08:45:42.119  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.1200035Z 08:45:42.119  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1200293Z 08:45:42.119  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.1235958Z 08:45:42.123  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.1236160Z 08:45:42.123  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.1236359Z 08:45:42.123  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.1238683Z 08:45:42.123  INFO: ------------- Run sensors on module GHB.DP2.Api
+2025-11-25T08:45:42.1388710Z 08:45:42.138  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.1389649Z 08:45:42.138  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.1390427Z 08:45:42.138  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.1390612Z 08:45:42.138  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.1390818Z 08:45:42.138  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.1393714Z 08:45:42.139  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.1393885Z 08:45:42.139  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.1394638Z 08:45:42.139  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.1394880Z 08:45:42.139  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.1395160Z 08:45:42.139  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1395410Z 08:45:42.139  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.1399165Z 08:45:42.139  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.1399322Z 08:45:42.139  INFO: Language version: CSharp13
+2025-11-25T08:45:42.1399484Z 08:45:42.139  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.1399638Z 08:45:42.139  INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1399804Z 08:45:42.139  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.1403225Z 08:45:42.14  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1403501Z 08:45:42.14  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.1404207Z 08:45:42.14  INFO: Sensor C# Properties [csharp] (done) | time=1ms
+2025-11-25T08:45:42.1404351Z 08:45:42.14  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.1438251Z 08:45:42.143  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.1438474Z 08:45:42.143  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.1438705Z 08:45:42.143  INFO: Sensor IaC Docker Sensor [iac] (done) | time=3ms
+2025-11-25T08:45:42.1440586Z 08:45:42.143  INFO: ------------- Run sensors on module GHB.DP2.SourceGenerators
+2025-11-25T08:45:42.1576873Z 08:45:42.157  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.1577601Z 08:45:42.157  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.1578346Z 08:45:42.157  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.1578536Z 08:45:42.157  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=1ms
+2025-11-25T08:45:42.1578696Z 08:45:42.157  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.1585347Z 08:45:42.158  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.1585701Z 08:45:42.158  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.1585857Z 08:45:42.158  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.1586044Z 08:45:42.158  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.1586200Z 08:45:42.158  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1586360Z 08:45:42.158  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.1589847Z 08:45:42.158  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.1590102Z 08:45:42.158  INFO: Language version: CSharp13
+2025-11-25T08:45:42.1590281Z 08:45:42.158  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.1590441Z 08:45:42.158  INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1590608Z 08:45:42.158  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.1590771Z 08:45:42.158  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1590920Z 08:45:42.158  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.1593206Z 08:45:42.159  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1593729Z 08:45:42.159  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.1630174Z 08:45:42.162  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.1630421Z 08:45:42.162  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.1630631Z 08:45:42.162  INFO: Sensor IaC Docker Sensor [iac] (done) | time=3ms
+2025-11-25T08:45:42.1633440Z 08:45:42.163  INFO: ------------- Run sensors on module GHB.DP2.ServiceDefaults
+2025-11-25T08:45:42.1763807Z 08:45:42.175  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.1764664Z 08:45:42.175  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.1764917Z 08:45:42.175  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.1765102Z 08:45:42.175  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.1765272Z 08:45:42.175  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.1770621Z 08:45:42.176  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.1770921Z 08:45:42.176  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.1771634Z 08:45:42.176  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.1772092Z 08:45:42.176  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.1773971Z 08:45:42.177  INFO: Sensor C# Project Type Information [csharp] (done) | time=1ms
+2025-11-25T08:45:42.1774186Z 08:45:42.177  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.1776152Z 08:45:42.177  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.1776301Z 08:45:42.177  INFO: Language version: CSharp13
+2025-11-25T08:45:42.1776456Z 08:45:42.177  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.1776616Z 08:45:42.177  INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1776776Z 08:45:42.177  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.1778011Z 08:45:42.177  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1778339Z 08:45:42.177  INFO: Sensor C# Telemetry [csharp]
+2025-11-25T08:45:42.1779241Z 08:45:42.177  INFO: Sensor C# Telemetry [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1779421Z 08:45:42.177  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.1780270Z 08:45:42.177  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1780843Z 08:45:42.177  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.1816241Z 08:45:42.181  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.1816441Z 08:45:42.181  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.1816648Z 08:45:42.181  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.1820272Z 08:45:42.181  INFO: ------------- Run sensors on module GHB.DP2.Application
+2025-11-25T08:45:42.1953485Z 08:45:42.194  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.1954161Z 08:45:42.194  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.1954409Z 08:45:42.194  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.1954602Z 08:45:42.195  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.1954764Z 08:45:42.195  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.1961539Z 08:45:42.195  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.1961731Z 08:45:42.196  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.1961891Z 08:45:42.196  INFO: Sensor Java Config Sensor [iac] (done) | time=2ms
+2025-11-25T08:45:42.1962053Z 08:45:42.196  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.1965406Z 08:45:42.196  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1966214Z 08:45:42.196  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.1969561Z 08:45:42.196  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.1969850Z 08:45:42.196  INFO: Language version: CSharp13
+2025-11-25T08:45:42.1970002Z 08:45:42.196  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.1970159Z 08:45:42.196  INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1970316Z 08:45:42.196  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.1970485Z 08:45:42.196  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1970643Z 08:45:42.196  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.1971517Z 08:45:42.197  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.1971972Z 08:45:42.197  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.2007247Z 08:45:42.2  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.2007459Z 08:45:42.2  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.2007875Z 08:45:42.2  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.2010110Z 08:45:42.2  INFO: ------------- Run sensors on module GHB.DP2.Domain.Tests
+2025-11-25T08:45:42.2146764Z 08:45:42.214  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.2147685Z 08:45:42.214  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.2147964Z 08:45:42.214  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.2148146Z 08:45:42.214  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=1ms
+2025-11-25T08:45:42.2148293Z 08:45:42.214  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.2240973Z 08:45:42.223  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.2241506Z 08:45:42.223  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.2241709Z 08:45:42.223  INFO: Sensor Java Config Sensor [iac] (done) | time=9ms
+2025-11-25T08:45:42.2241956Z 08:45:42.223  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.2242230Z 08:45:42.223  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.2242385Z 08:45:42.223  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.2246670Z 08:45:42.224  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.2247682Z 08:45:42.224  INFO: Language version: CSharp13
+2025-11-25T08:45:42.2247963Z 08:45:42.224  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.2248379Z 08:45:42.224  INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+2025-11-25T08:45:42.2249341Z 08:45:42.224  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.2249669Z 08:45:42.224  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.2249961Z 08:45:42.224  INFO: Sensor C# Telemetry [csharp]
+2025-11-25T08:45:42.2250253Z 08:45:42.224  INFO: Sensor C# Telemetry [csharp] (done) | time=0ms
+2025-11-25T08:45:42.2250522Z 08:45:42.224  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.2250805Z 08:45:42.224  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.2251081Z 08:45:42.224  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.2290708Z 08:45:42.228  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.2291150Z 08:45:42.228  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.2291377Z 08:45:42.228  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.2294783Z 08:45:42.229  INFO: ------------- Run sensors on module GHB.DP2.Domain
+2025-11-25T08:45:42.2434865Z 08:45:42.243  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.2435985Z 08:45:42.243  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.2436931Z 08:45:42.243  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.2437250Z 08:45:42.243  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.2437522Z 08:45:42.243  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.2440531Z 08:45:42.243  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.2441406Z 08:45:42.243  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.2441776Z 08:45:42.243  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.2441946Z 08:45:42.244  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.2442468Z 08:45:42.244  INFO: Sensor C# Project Type Information [csharp] (done) | time=1ms
+2025-11-25T08:45:42.2442771Z 08:45:42.244  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.2475060Z 08:45:42.247  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.2475448Z 08:45:42.247  INFO: Language version: CSharp13
+2025-11-25T08:45:42.2475738Z 08:45:42.247  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.2476019Z 08:45:42.247  INFO: Sensor C# Analysis Log [csharp] (done) | time=3ms
+2025-11-25T08:45:42.2476290Z 08:45:42.247  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.2476597Z 08:45:42.247  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.2476874Z 08:45:42.247  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.2479548Z 08:45:42.247  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.2479867Z 08:45:42.247  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.2511956Z 08:45:42.251  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.2512207Z 08:45:42.251  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.2512371Z 08:45:42.251  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.2516556Z 08:45:42.251  INFO: ------------- Run sensors on module GHB.DP2.ServiceDefaults
+2025-11-25T08:45:42.2665393Z 08:45:42.266  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.2666449Z 08:45:42.266  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.2666830Z 08:45:42.266  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.2667100Z 08:45:42.266  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.2667753Z 08:45:42.266  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.2671698Z 08:45:42.267  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.2671942Z 08:45:42.267  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.2675826Z 08:45:42.267  INFO: Sensor Java Config Sensor [iac] (done) | time=2ms
+2025-11-25T08:45:42.2676080Z 08:45:42.267  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.2676334Z 08:45:42.267  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.2676500Z 08:45:42.267  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.2682260Z 08:45:42.268  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.2682512Z 08:45:42.268  INFO: Language version: CSharp13
+2025-11-25T08:45:42.2682656Z 08:45:42.268  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.2682803Z 08:45:42.268  INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+2025-11-25T08:45:42.2682974Z 08:45:42.268  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.2683561Z 08:45:42.268  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.2683841Z 08:45:42.268  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.2684384Z 08:45:42.268  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.2684726Z 08:45:42.268  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.2724514Z 08:45:42.272  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.2725155Z 08:45:42.272  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.2725353Z 08:45:42.272  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.2727425Z 08:45:42.272  INFO: ------------- Run sensors on module GHB.DP2.SourceGenerators
+2025-11-25T08:45:42.2861733Z 08:45:42.285  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.2862375Z 08:45:42.285  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.2862711Z 08:45:42.285  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.2865274Z 08:45:42.285  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.2866357Z 08:45:42.285  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.2871352Z 08:45:42.286  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.2871667Z 08:45:42.286  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.2871986Z 08:45:42.286  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.2872293Z 08:45:42.286  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.2872595Z 08:45:42.286  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.2872885Z 08:45:42.286  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.2877335Z 08:45:42.287  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.2877646Z 08:45:42.287  INFO: Language version: CSharp13
+2025-11-25T08:45:42.2877845Z 08:45:42.287  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.2878009Z 08:45:42.287  INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+2025-11-25T08:45:42.2878169Z 08:45:42.287  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.2882545Z 08:45:42.288  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.2882732Z 08:45:42.288  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.2883538Z 08:45:42.288  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.2883920Z 08:45:42.288  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.2918065Z 08:45:42.291  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.2918427Z 08:45:42.291  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.2918706Z 08:45:42.291  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.2920107Z 08:45:42.291  INFO: ------------- Run sensors on module GHB.DP2.AppHost
+2025-11-25T08:45:42.3056242Z 08:45:42.305  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.3057335Z 08:45:42.305  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.3057803Z 08:45:42.305  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.3058149Z 08:45:42.305  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=1ms
+2025-11-25T08:45:42.3058444Z 08:45:42.305  INFO: Sensor IaC CloudFormation Sensor [iac]
+2025-11-25T08:45:42.3069397Z 08:45:42.306  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.3069676Z 08:45:42.306  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.3071716Z 08:45:42.306  INFO: Sensor IaC CloudFormation Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.3072840Z 08:45:42.307  INFO: Sensor IaC AzureResourceManager Sensor [iac]
+2025-11-25T08:45:42.3082524Z 08:45:42.307  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.3082703Z 08:45:42.307  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.3082891Z 08:45:42.308  INFO: Sensor IaC AzureResourceManager Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.3083055Z 08:45:42.308  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.3090602Z 08:45:42.308  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.3091569Z 08:45:42.308  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.3092069Z 08:45:42.308  INFO: Sensor Java Config Sensor [iac] (done) | time=0ms
+2025-11-25T08:45:42.3092363Z 08:45:42.308  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.3093581Z 08:45:42.309  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3093863Z 08:45:42.309  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.3095278Z 08:45:42.309  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.3095559Z 08:45:42.309  INFO: Language version: CSharp13
+2025-11-25T08:45:42.3095785Z 08:45:42.309  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.3096177Z 08:45:42.309  INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3096430Z 08:45:42.309  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.3098838Z 08:45:42.309  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3099095Z 08:45:42.309  INFO: Sensor C# Telemetry [csharp]
+2025-11-25T08:45:42.3100983Z 08:45:42.31  INFO: Sensor C# Telemetry [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3101183Z 08:45:42.31  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.3103197Z 08:45:42.31  INFO: Sensor C# Properties [csharp] (done) | time=1ms
+2025-11-25T08:45:42.3103629Z 08:45:42.31  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.3142557Z 08:45:42.313  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.3142793Z 08:45:42.314  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.3142952Z 08:45:42.314  INFO: Sensor IaC Docker Sensor [iac] (done) | time=3ms
+2025-11-25T08:45:42.3146673Z 08:45:42.314  INFO: ------------- Run sensors on module GHB.DP2.ServiceDefaults
+2025-11-25T08:45:42.3268262Z 08:45:42.326  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.3269026Z 08:45:42.326  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.3269300Z 08:45:42.326  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.3269483Z 08:45:42.326  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.3269640Z 08:45:42.326  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.3273951Z 08:45:42.327  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.3274615Z 08:45:42.327  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.3274802Z 08:45:42.327  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.3274978Z 08:45:42.327  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.3275870Z 08:45:42.327  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3276045Z 08:45:42.327  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.3284910Z 08:45:42.328  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.3285115Z 08:45:42.328  INFO: Language version: CSharp13
+2025-11-25T08:45:42.3285278Z 08:45:42.328  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.3285914Z 08:45:42.328  INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+2025-11-25T08:45:42.3286077Z 08:45:42.328  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.3286247Z 08:45:42.328  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3286408Z 08:45:42.328  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.3289130Z 08:45:42.328  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3290044Z 08:45:42.328  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.3327662Z 08:45:42.332  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.3328003Z 08:45:42.332  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.3328164Z 08:45:42.332  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.3330822Z 08:45:42.332  INFO: ------------- Run sensors on module GHB.DP2.Application
+2025-11-25T08:45:42.3447968Z 08:45:42.344  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.3448677Z 08:45:42.344  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.3448992Z 08:45:42.344  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.3449192Z 08:45:42.344  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.3449349Z 08:45:42.344  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.3453272Z 08:45:42.345  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.3453596Z 08:45:42.345  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.3453758Z 08:45:42.345  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.3453918Z 08:45:42.345  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.3454472Z 08:45:42.345  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3454639Z 08:45:42.345  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.3458487Z 08:45:42.345  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.3458761Z 08:45:42.345  INFO: Language version: CSharp13
+2025-11-25T08:45:42.3459015Z 08:45:42.345  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.3459258Z 08:45:42.345  INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3459480Z 08:45:42.345  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.3460478Z 08:45:42.345  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3460647Z 08:45:42.345  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.3461238Z 08:45:42.346  INFO: Sensor C# Properties [csharp] (done) | time=1ms
+2025-11-25T08:45:42.3461383Z 08:45:42.346  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.3491545Z 08:45:42.348  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.3491866Z 08:45:42.349  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.3492088Z 08:45:42.349  INFO: Sensor IaC Docker Sensor [iac] (done) | time=2ms
+2025-11-25T08:45:42.3494568Z 08:45:42.349  INFO: ------------- Run sensors on module GHB.DP2.Domain
+2025-11-25T08:45:42.3609319Z 08:45:42.36  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.3609953Z 08:45:42.36  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.3610658Z 08:45:42.36  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.3610954Z 08:45:42.36  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.3611115Z 08:45:42.36  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.3617238Z 08:45:42.361  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.3617582Z 08:45:42.361  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.3627678Z 08:45:42.361  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.3628103Z 08:45:42.361  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.3628275Z 08:45:42.361  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3628454Z 08:45:42.361  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.3648144Z 08:45:42.364  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.3649018Z 08:45:42.364  INFO: Language version: CSharp13
+2025-11-25T08:45:42.3649432Z 08:45:42.364  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.3649722Z 08:45:42.364  INFO: Sensor C# Analysis Log [csharp] (done) | time=3ms
+2025-11-25T08:45:42.3649999Z 08:45:42.364  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.3655385Z 08:45:42.364  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3655902Z 08:45:42.364  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.3656084Z 08:45:42.364  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3656227Z 08:45:42.364  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.3689778Z 08:45:42.368  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.3690036Z 08:45:42.368  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.3690353Z 08:45:42.368  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.3693547Z 08:45:42.369  INFO: ------------- Run sensors on module GHB.DP2.SourceGenerators
+2025-11-25T08:45:42.3819556Z 08:45:42.381  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.3820555Z 08:45:42.381  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.3821047Z 08:45:42.381  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.3821298Z 08:45:42.381  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.3821453Z 08:45:42.381  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.3829304Z 08:45:42.382  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.3829627Z 08:45:42.382  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.3829794Z 08:45:42.382  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.3829956Z 08:45:42.382  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.3830117Z 08:45:42.382  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3830274Z 08:45:42.382  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.3833614Z 08:45:42.383  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.3833856Z 08:45:42.383  INFO: Language version: CSharp13
+2025-11-25T08:45:42.3834026Z 08:45:42.383  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.3834237Z 08:45:42.383  INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+2025-11-25T08:45:42.3834398Z 08:45:42.383  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.3834550Z 08:45:42.383  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3834709Z 08:45:42.383  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.3837946Z 08:45:42.383  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.3838575Z 08:45:42.383  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.3870669Z 08:45:42.386  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.3870984Z 08:45:42.386  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.3871642Z 08:45:42.386  INFO: Sensor IaC Docker Sensor [iac] (done) | time=3ms
+2025-11-25T08:45:42.3873302Z 08:45:42.387  INFO: ------------- Run sensors on module GHB.DP2.Application
+2025-11-25T08:45:42.3992468Z 08:45:42.398  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.3993592Z 08:45:42.398  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.3994047Z 08:45:42.398  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.3994383Z 08:45:42.398  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.3994680Z 08:45:42.398  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.4000782Z 08:45:42.399  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.4001304Z 08:45:42.399  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.4001602Z 08:45:42.399  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.4001915Z 08:45:42.399  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.4002217Z 08:45:42.399  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.4002978Z 08:45:42.399  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.4003693Z 08:45:42.4  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.4003973Z 08:45:42.4  INFO: Language version: CSharp13
+2025-11-25T08:45:42.4004668Z 08:45:42.4  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.4005028Z 08:45:42.4  INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+2025-11-25T08:45:42.4005254Z 08:45:42.4  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.4005492Z 08:45:42.4  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.4005636Z 08:45:42.4  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.4007166Z 08:45:42.4  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.4007478Z 08:45:42.4  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.4041076Z 08:45:42.403  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.4041401Z 08:45:42.403  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.4041713Z 08:45:42.404  INFO: Sensor IaC Docker Sensor [iac] (done) | time=3ms
+2025-11-25T08:45:42.4045400Z 08:45:42.404  INFO: ------------- Run sensors on module GHB.DP2.Infrastructure
+2025-11-25T08:45:42.4169684Z 08:45:42.416  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.4170630Z 08:45:42.416  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.4170920Z 08:45:42.416  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.4171275Z 08:45:42.416  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.4171523Z 08:45:42.416  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.4173976Z 08:45:42.417  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.4174196Z 08:45:42.417  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.4174459Z 08:45:42.417  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.4174628Z 08:45:42.417  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.4174801Z 08:45:42.417  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.4174964Z 08:45:42.417  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.4187481Z 08:45:42.418  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.4188218Z 08:45:42.418  INFO: Language version: CSharp13
+2025-11-25T08:45:42.4188542Z 08:45:42.418  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.4188820Z 08:45:42.418  INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+2025-11-25T08:45:42.4189103Z 08:45:42.418  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.4189375Z 08:45:42.418  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.4189645Z 08:45:42.418  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.4189908Z 08:45:42.418  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.4190152Z 08:45:42.418  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.4225762Z 08:45:42.422  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.4226159Z 08:45:42.422  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.4226364Z 08:45:42.422  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.4227908Z 08:45:42.422  INFO: ------------- Run sensors on module GHB.DP2.SourceGenerators
+2025-11-25T08:45:42.4364354Z 08:45:42.435  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.4365294Z 08:45:42.435  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.4365547Z 08:45:42.435  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.4366238Z 08:45:42.435  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.4366404Z 08:45:42.435  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.4369033Z 08:45:42.436  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.4369340Z 08:45:42.436  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.4370237Z 08:45:42.436  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.4370665Z 08:45:42.436  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.4371593Z 08:45:42.436  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.4371965Z 08:45:42.437  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.4375667Z 08:45:42.437  INFO: Roslyn version: 4.14.0.0
+2025-11-25T08:45:42.4375906Z 08:45:42.437  INFO: Language version: CSharp13
+2025-11-25T08:45:42.4376126Z 08:45:42.437  INFO: Concurrent execution: enabled
+2025-11-25T08:45:42.4376287Z 08:45:42.437  INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+2025-11-25T08:45:42.4376444Z 08:45:42.437  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.4378318Z 08:45:42.437  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.4378661Z 08:45:42.437  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.4378971Z 08:45:42.437  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.4379218Z 08:45:42.437  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.4419265Z 08:45:42.441  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.4419764Z 08:45:42.441  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.4420040Z 08:45:42.441  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.4421509Z 08:45:42.441  INFO: ------------- Run sensors on module DP2_Api
+2025-11-25T08:45:42.4551546Z 08:45:42.454  INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2025-11-25T08:45:42.4552684Z 08:45:42.454  INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2025-11-25T08:45:42.4553092Z 08:45:42.454  INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2025-11-25T08:45:42.4553388Z 08:45:42.454  INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2025-11-25T08:45:42.4553641Z 08:45:42.454  INFO: Sensor Java Config Sensor [iac]
+2025-11-25T08:45:42.4558387Z 08:45:42.455  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.4558710Z 08:45:42.455  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.4559034Z 08:45:42.455  INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+2025-11-25T08:45:42.4559329Z 08:45:42.455  INFO: Sensor C# Project Type Information [csharp]
+2025-11-25T08:45:42.4559630Z 08:45:42.455  INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+2025-11-25T08:45:42.4559911Z 08:45:42.455  INFO: Sensor C# Analysis Log [csharp]
+2025-11-25T08:45:42.4580529Z 08:45:42.457  INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+2025-11-25T08:45:42.4580806Z 08:45:42.457  INFO: Sensor C# Method Declarations [csharp]
+2025-11-25T08:45:42.4580980Z 08:45:42.457  INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+2025-11-25T08:45:42.4581140Z 08:45:42.457  INFO: Sensor C# Properties [csharp]
+2025-11-25T08:45:42.4581292Z 08:45:42.457  INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2025-11-25T08:45:42.4581458Z 08:45:42.457  INFO: Sensor IaC Docker Sensor [iac]
+2025-11-25T08:45:42.4595824Z 08:45:42.459  INFO: 0 source files to be analyzed
+2025-11-25T08:45:42.4596184Z 08:45:42.459  INFO: 0/0 source files have been analyzed
+2025-11-25T08:45:42.4596649Z 08:45:42.459  INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+2025-11-25T08:45:42.4596947Z 08:45:42.459  INFO: Sensor TextAndSecretsSensor [text]
+2025-11-25T08:45:42.4597652Z 08:45:42.459  INFO: Available processors: 10
+2025-11-25T08:45:42.4597931Z 08:45:42.459  INFO: Using 10 threads for analysis.
+2025-11-25T08:45:42.7973821Z 08:45:42.796  INFO: The property "sonar.tests" is not set. To improve the analysis accuracy, we categorize a file as a test file if any of the following is true:
+2025-11-25T08:45:42.7974370Z   * The filename starts with "test"
+2025-11-25T08:45:42.7974555Z   * The filename contains "test." or "tests."
+2025-11-25T08:45:42.7974817Z   * Any directory in the file path is named: "doc", "docs", "test" or "tests"
+2025-11-25T08:45:42.7975128Z   * Any directory in the file path has a name ending in "test" or "tests"
+2025-11-25T08:45:42.7975239Z 
+2025-11-25T08:45:42.8135770Z 08:45:42.813  INFO: Using git CLI to retrieve untracked files
+2025-11-25T08:45:42.8161073Z 08:45:42.815  WARNING: WARN: Analyzing only language associated files, make sure to run the analysis inside a git repository to make use of inclusions specified via "sonar.text.inclusions"
+2025-11-25T08:45:43.2082179Z 08:45:43.207  INFO: 1174 source files to be analyzed
+2025-11-25T08:45:44.4636331Z 08:45:44.463  INFO: 1174/1174 source files have been analyzed
+2025-11-25T08:45:44.4648083Z 08:45:44.464  INFO: Sensor TextAndSecretsSensor [text] (done) | time=2005ms
+2025-11-25T08:45:44.4657153Z 08:45:44.465  INFO: ------------- Run sensors on project
+2025-11-25T08:45:44.6035258Z 08:45:44.603  INFO: Sensor C# Telemetry processor [csharp]
+2025-11-25T08:45:44.6054078Z 08:45:44.605  INFO: Sensor C# Telemetry processor [csharp] (done) | time=3ms
+2025-11-25T08:45:44.6054295Z 08:45:44.605  INFO: Sensor C# [csharp]
+2025-11-25T08:45:44.6148117Z 08:45:44.614  INFO: Importing results from 8 proto files in '/home/codehard/azure-agent/_work/2/.sonarqube/out/28/output-cs'
+2025-11-25T08:45:44.9576608Z 08:45:44.957  INFO: Importing results from 8 proto files in '/home/codehard/azure-agent/_work/2/.sonarqube/out/9/output-cs'
+2025-11-25T08:45:44.9642362Z 08:45:44.963  INFO: Importing results from 8 proto files in '/home/codehard/azure-agent/_work/2/.sonarqube/out/7/output-cs'
+2025-11-25T08:45:45.0117598Z 08:45:45.011  INFO: Importing results from 8 proto files in '/home/codehard/azure-agent/_work/2/.sonarqube/out/23/output-cs'
+2025-11-25T08:45:45.1937942Z 08:45:45.193  INFO: Importing results from 8 proto files in '/home/codehard/azure-agent/_work/2/.sonarqube/out/13/output-cs'
+2025-11-25T08:45:45.2604296Z 08:45:45.259  INFO: Importing results from 8 proto files in '/home/codehard/azure-agent/_work/2/.sonarqube/out/2/output-cs'
+2025-11-25T08:45:45.3239174Z 08:45:45.323  INFO: Importing results from 8 proto files in '/home/codehard/azure-agent/_work/2/.sonarqube/out/22/output-cs'
+2025-11-25T08:45:45.3261823Z 08:45:45.325  INFO: Importing results from 8 proto files in '/home/codehard/azure-agent/_work/2/.sonarqube/out/41/output-cs'
+2025-11-25T08:45:45.3807622Z 08:45:45.38  INFO: Importing results from 8 proto files in '/home/codehard/azure-agent/_work/2/.sonarqube/out/43/output-cs'
+2025-11-25T08:45:45.3812295Z 08:45:45.381  INFO: Importing results from 8 proto files in '/home/codehard/azure-agent/_work/2/.sonarqube/out/18/output-cs'
+2025-11-25T08:45:45.4136950Z 08:45:45.413  INFO: Importing results from 8 proto files in '/home/codehard/azure-agent/_work/2/.sonarqube/out/8/output-cs'
+2025-11-25T08:45:45.5243511Z 08:45:45.523  ERROR: Error during SonarScanner Engine execution
+2025-11-25T08:45:45.5244169Z java.lang.IllegalArgumentException: Line 238 is out of range for file Backend/GHB.DP2.Application/Features/Procurement/ExpenseDisbursement/Update.cs. File has 237 lines.
+2025-11-25T08:45:45.5244516Z 	at org.sonar.api.utils.Preconditions.checkArgument(Preconditions.java:43)
+2025-11-25T08:45:45.5244866Z 	at org.sonar.scanner.DefaultFileLinesContext.checkLineRange(DefaultFileLinesContext.java:63)
+2025-11-25T08:45:45.5245181Z 	at org.sonar.scanner.DefaultFileLinesContext.setIntValue(DefaultFileLinesContext.java:56)
+2025-11-25T08:45:45.5245491Z 	at org.sonarsource.dotnet.shared.plugins.protobuf.MetricsImporter.consumeFor(MetricsImporter.java:81)
+2025-11-25T08:45:45.5245814Z 	at org.sonarsource.dotnet.shared.plugins.protobuf.MetricsImporter.consumeFor(MetricsImporter.java:38)
+2025-11-25T08:45:45.5246514Z 	at org.sonarsource.dotnet.shared.plugins.protobuf.ProtobufImporter.consume(ProtobufImporter.java:70)
+2025-11-25T08:45:45.5246737Z 	at org.sonarsource.dotnet.shared.plugins.protobuf.RawProtobufImporter.accept(RawProtobufImporter.java:46)
+2025-11-25T08:45:45.5246965Z 	at org.sonarsource.dotnet.shared.plugins.ProtobufDataImporter.parseProtobuf(ProtobufDataImporter.java:104)
+2025-11-25T08:45:45.5247177Z 	at org.sonarsource.dotnet.shared.plugins.ProtobufDataImporter.importResults(ProtobufDataImporter.java:79)
+2025-11-25T08:45:45.5247405Z 	at org.sonarsource.dotnet.shared.plugins.sensors.DotNetSensor.importResults(DotNetSensor.java:104)
+2025-11-25T08:45:45.5247787Z 	at org.sonarsource.dotnet.shared.plugins.sensors.DotNetSensor.execute(DotNetSensor.java:82)
+2025-11-25T08:45:45.5248002Z 	at org.sonar.scanner.sensor.AbstractSensorWrapper.analyse(AbstractSensorWrapper.java:64)
+2025-11-25T08:45:45.5248209Z 	at org.sonar.scanner.sensor.ProjectSensorsExecutor.execute(ProjectSensorsExecutor.java:54)
+2025-11-25T08:45:45.5248429Z 	at org.sonar.scanner.scan.SpringProjectScanContainer.doAfterStart(SpringProjectScanContainer.java:181)
+2025-11-25T08:45:45.5248647Z 	at org.sonar.core.platform.SpringComponentContainer.startComponents(SpringComponentContainer.java:227)
+2025-11-25T08:45:45.5248855Z 	at org.sonar.core.platform.SpringComponentContainer.execute(SpringComponentContainer.java:206)
+2025-11-25T08:45:45.5249071Z 	at org.sonar.scanner.bootstrap.SpringScannerContainer.doAfterStart(SpringScannerContainer.java:339)
+2025-11-25T08:45:45.5249301Z 	at org.sonar.core.platform.SpringComponentContainer.startComponents(SpringComponentContainer.java:227)
+2025-11-25T08:45:45.5249511Z 	at org.sonar.core.platform.SpringComponentContainer.execute(SpringComponentContainer.java:206)
+2025-11-25T08:45:45.5249724Z 	at org.sonar.scanner.bootstrap.SpringGlobalContainer.doAfterStart(SpringGlobalContainer.java:142)
+2025-11-25T08:45:45.5249930Z 	at org.sonar.core.platform.SpringComponentContainer.startComponents(SpringComponentContainer.java:227)
+2025-11-25T08:45:45.5250268Z 	at org.sonar.core.platform.SpringComponentContainer.execute(SpringComponentContainer.java:206)
+2025-11-25T08:45:45.5250555Z 	at org.sonar.scanner.bootstrap.ScannerMain.runScannerEngine(ScannerMain.java:151)
+2025-11-25T08:45:45.5250998Z 	at org.sonar.scanner.bootstrap.ScannerMain.run(ScannerMain.java:66)
+2025-11-25T08:45:45.5251202Z 	at org.sonar.scanner.bootstrap.ScannerMain.main(ScannerMain.java:52)
+2025-11-25T08:45:45.5251479Z 
+2025-11-25T08:45:45.5610294Z 08:45:45.56  The scanner engine did not complete successfully
+2025-11-25T08:45:45.5611128Z 08:45:45.56  Post-processing failed. Exit code: 1
+2025-11-25T08:45:45.5708108Z 
+2025-11-25T08:45:45.5728248Z ##[error]Bash exited with code '1'.
+2025-11-25T08:45:45.5774796Z ##[section]Finishing: SonarQube finalize

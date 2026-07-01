@@ -1,0 +1,388 @@
+trigger:
+  branches:
+    exclude:
+      - '*'
+
+variables:
+  buildConfiguration: 'Release'
+  nodeVersion: '22.x'
+  # Note: AZURE_DEVOPS_PAT should be defined in the pipeline variables UI
+  # with the value of your Personal Access Token
+
+resources:
+  repositories:
+    - repository: self
+      checkout: self
+      options:
+        clean: true
+
+# Add a PowerShell script to detect which components have changed
+stages:
+- stage: DetectChanges
+  displayName: 'Detect Changed Components'
+  jobs:
+  - job: DetectChanges
+    displayName: 'Detect Changed Files'
+    steps:
+    - checkout: self
+      fetchDepth: '0'  # Fetch all history to compare changes
+
+    - task: Bash@3
+      name: SetChangedVars
+      displayName: 'Detect Changed Components'
+      inputs:
+        targetType: 'inline'
+        script: |
+          #!/bin/bash
+          # For PR builds, compare with target branch
+          if [ "$BUILD_REASON" == "PullRequest" ]; then
+            echo "PR build detected. Comparing with target branch..."
+
+            # Print all available environment variables for debugging
+            echo "Available environment variables:"
+            env | sort
+
+            # Get the target branch name, removing any refs/heads/ prefix
+            if [ -n "$SYSTEM_PULLREQUEST_TARGETBRANCH" ]; then
+              TARGET_BRANCH=$(echo "$SYSTEM_PULLREQUEST_TARGETBRANCH" | sed 's|refs/heads/||')
+              echo "Target branch: $TARGET_BRANCH"
+            else
+              # Fallback to main if target branch is not available
+              TARGET_BRANCH="main"
+              echo "Target branch not found, using default: $TARGET_BRANCH"
+            fi
+
+            # Make sure we have the latest from origin
+            echo "Fetching from origin..."
+            git fetch origin
+
+            # List all branches for debugging
+            echo "Available branches:"
+            git branch -a
+
+            # Try different ways to get changed files
+            echo "Trying to get changed files..."
+            if git rev-parse --verify origin/$TARGET_BRANCH >/dev/null 2>&1; then
+              echo "Using origin/$TARGET_BRANCH as base"
+              CHANGED_FILES=$(git diff --name-only origin/$TARGET_BRANCH HEAD)
+            elif git rev-parse --verify $TARGET_BRANCH >/dev/null 2>&1; then
+              echo "Using $TARGET_BRANCH as base"
+              CHANGED_FILES=$(git diff --name-only $TARGET_BRANCH HEAD)
+            else
+              echo "Could not find target branch, comparing with HEAD~10"
+              CHANGED_FILES=$(git diff --name-only HEAD~10 HEAD)
+            fi
+          # For manual builds, compare with the last commit
+          else
+            echo "Manual build detected. Comparing with last commit..."
+
+            # Make sure we have the latest from origin
+            echo "Fetching from origin..."
+            git fetch origin
+
+            # Try to get the last commit
+            if git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+              echo "Comparing with previous commit"
+              CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+            else
+              echo "No previous commit found, this might be the first commit"
+              # Assume all files have changed
+              CHANGED_FILES=$(find . -type f -not -path "*/\.*" -not -path "*/node_modules/*" -not -path "*/bin/*" -not -path "*/obj/*" | sed 's|^./||')
+            fi
+
+            # If no files changed (e.g., first build), assume all components changed
+            if [ -z "$CHANGED_FILES" ]; then
+              echo "No changed files detected. Assuming all components changed."
+              CHANGED_FILES=$(find . -type f -not -path "*/\.*" -not -path "*/node_modules/*" -not -path "*/bin/*" -not -path "*/obj/*" | sed 's|^./||')
+            fi
+          fi
+
+          echo "Changed files:"
+          echo "$CHANGED_FILES" | while read -r file; do
+            echo "  $file"
+          done
+
+          # Check if Backend files changed
+          BACKEND_CHANGED=$(echo "$CHANGED_FILES" | grep -E "^Backend/|^Scripts/" || true)
+          if [ -n "$BACKEND_CHANGED" ]; then
+            echo "Backend changes detected."
+            echo "##vso[task.setvariable variable=backendChanged;isOutput=true]true"
+          else
+            echo "No Backend changes detected."
+            echo "##vso[task.setvariable variable=backendChanged;isOutput=true]false"
+          fi
+
+          # Check if Frontend files changed
+          FRONTEND_CHANGED=$(echo "$CHANGED_FILES" | grep -E "^Frontend/|^Scripts/" || true)
+          if [ -n "$FRONTEND_CHANGED" ]; then
+            echo "Frontend changes detected."
+            echo "##vso[task.setvariable variable=frontendChanged;isOutput=true]true"
+          else
+            echo "No Frontend changes detected."
+            echo "##vso[task.setvariable variable=frontendChanged;isOutput=true]false"
+          fi
+
+- stage: Backend
+  displayName: 'Backend Build and Test'
+  dependsOn: DetectChanges
+  condition: or(eq(dependencies.DetectChanges.outputs['DetectChanges.SetChangedVars.backendChanged'], 'true'), failed('DetectChanges'))
+  jobs:
+  - job: BuildAndTest
+    displayName: 'Build and Test .NET Backend'
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Install .NET SDK'
+      inputs:
+        packageType: 'sdk'
+        version: 9.x
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+
+    - task: CmdLine@2
+      displayName: "SonarQube preparation"
+      inputs:
+        script: |
+          dotnet tool install --global dotnet-sonarscanner
+          dotnet tool install --global dotnet-coverage
+
+          dotnet-sonarscanner begin /k:"$(ProjectName)" \
+            /d:sonar.host.url="$(SonarServerUrl)" \
+            /d:sonar.token=$(SonarQubeKey) \
+            /d:sonar.exclusions=**/Frontend/** \
+            /d:sonar.scanner.scanAll=false \
+            /d:sonar.dotnet.excludeTestProjects=true \
+            /d:sonar.cs.vscoveragexml.reportsPaths=$(Agent.TempDirectory)/dp_v2_coverage.xml
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore NuGet packages'
+      inputs:
+        command: 'restore'
+        projects: 'Backend/GHB.DP2.sln'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build solution'
+      inputs:
+        command: 'build'
+        projects: 'Backend/GHB.DP2.sln'
+        arguments: '--configuration $(buildConfiguration) --no-restore /p:ContinuousIntegrationBuild=true /verbosity:minimal /clp:NoSummary'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Run tests'
+      inputs:
+        command: 'test'
+        projects: 'Backend/**/*Tests.csproj'
+        arguments: '--configuration $(buildConfiguration) --no-build --verbosity normal'
+
+    - task: CmdLine@2
+      displayName: "SonarQube finalize"
+      inputs:
+        script: |
+          cd $(Build.SourcesDirectory)/Backend
+          dotnet-sonarscanner end /d:sonar.token=$(SonarQubeKey)
+
+    - task: UsePythonVersion@0
+      displayName: 'Install Python'
+      inputs:
+        versionSpec: '3.10'
+        addToPath: true
+
+    - task: Bash@3
+      displayName: 'Install Dependencies'
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Install Python dependencies
+          python -m pip install --upgrade pip
+          pip install requests fpdf2
+
+          # Install curl if needed
+          if ! command -v curl &> /dev/null; then
+            echo "Installing curl..."
+            sudo apt-get update
+            sudo apt-get install -y curl
+          fi
+
+          # Try to install Azure CLI without sudo if possible
+          echo "Checking if Azure CLI is already installed..."
+          if ! command -v az &> /dev/null; then
+            echo "Azure CLI not found. Attempting installation without sudo..."
+
+            # Create a directory for Azure CLI installation
+            mkdir -p $HOME/bin
+
+            # Download and install Azure CLI using pip (no sudo required)
+            echo "Installing Azure CLI using pip..."
+            pip install azure-cli
+
+            # Add to PATH if needed
+            export PATH=$PATH:$HOME/.local/bin
+
+            # Verify installation
+            if command -v az &> /dev/null; then
+              echo "Azure CLI installed successfully using pip"
+            else
+              echo "Azure CLI installation using pip failed. Will continue without it."
+              echo "You may need to manually add comments to PRs."
+            fi
+          else
+            echo "Azure CLI is already installed"
+          fi
+
+          # Verify Azure CLI installation
+          az --version || echo "Azure CLI not available, continuing anyway..."
+
+    - task: Bash@3
+      displayName: 'Generate SonarQube Issues Report'
+      inputs:
+        filePath: 'Scripts/generate_sonar_report.sh'
+        arguments: '--project "$(ProjectName)" --username "$(SonarQubeUsername)" --password ''$(SonarQubePassword)'''
+      #condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+
+    # For PR builds
+    - task: Bash@3
+      displayName: 'Upload Report and Add to PR'
+      inputs:
+        filePath: 'Scripts/attach_to_azure_pr_with_upload.sh'
+        arguments: '--organization "$(System.TeamFoundationCollectionUri)" --project "$(System.TeamProject)" --pr-id "$(System.PullRequest.PullRequestId)"'
+      env:
+        AZURE_DEVOPS_PAT: $(AZURE_DEVOPS_PAT)
+      condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+
+- stage: Frontend
+  displayName: 'Frontend Build and Test'
+  dependsOn: DetectChanges
+  condition: or(eq(dependencies.DetectChanges.outputs['DetectChanges.SetChangedVars.frontendChanged'], 'true'), failed('DetectChanges'))
+  jobs:
+  - job: BuildAndTest
+    displayName: 'Build and Test Vue Frontend'
+    steps:
+    - task: NodeTool@0
+      displayName: 'Install Node.js'
+      inputs:
+        versionSpec: '$(nodeVersion)'
+
+    - task: CmdLine@2
+      displayName: 'Install SonarScanner for JS/TS'
+      inputs:
+        script: |
+          npm install -g sonarqube-scanner
+
+    - task: Npm@1
+      displayName: 'Install dependencies'
+      inputs:
+        command: 'install'
+        workingDir: 'Frontend'
+
+    - task: Npm@1
+      displayName: 'Run linting'
+      inputs:
+        command: 'custom'
+        workingDir: 'Frontend'
+        customCommand: 'run lint'
+
+    - task: Npm@1
+      displayName: 'Run type check'
+      inputs:
+        command: 'custom'
+        workingDir: 'Frontend'
+        customCommand: 'run type-check'
+
+    - task: Npm@1
+      displayName: 'Build frontend'
+      inputs:
+        command: 'custom'
+        workingDir: 'Frontend'
+        customCommand: 'run build'
+
+    - task: Bash@3
+      displayName: 'Run SonarQube Analysis'
+      inputs:
+        targetType: 'inline'
+        script: |
+          cd Frontend
+
+          # Print variables for debugging (masking the token)
+          echo "Frontend Project Name: ${FRONTEND_PROJECT_NAME}"
+          echo "SonarQube Server URL: ${SONAR_SERVER_URL}"
+
+          # Run SonarQube scanner with properly escaped variables
+          sonar-scanner \
+            -Dsonar.projectKey="${FRONTEND_PROJECT_NAME}" \
+            -Dsonar.projectName="${FRONTEND_PROJECT_NAME}" \
+            -Dsonar.sources=./src \
+            -Dsonar.host.url="${SONAR_SERVER_URL}" \
+            -Dsonar.token="${SONAR_QUBE_DP2_FRONTEND_KEY}" \
+            -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info \
+            -Dsonar.typescript.tsconfigPath=./tsconfig.json \
+            -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/*.test.ts
+      env:
+        FRONTEND_PROJECT_NAME: $(FrontendProjectName)
+        SONAR_SERVER_URL: $(SonarServerUrl)
+        SONAR_QUBE_DP2_FRONTEND_KEY: $(SonarQubeDp2FrontendKey)
+
+    - task: UsePythonVersion@0
+      displayName: 'Install Python'
+      inputs:
+        versionSpec: '3.10'
+        addToPath: true
+
+    - task: Bash@3
+      displayName: 'Install Dependencies'
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Install Python dependencies
+          python -m pip install --upgrade pip
+          pip install requests fpdf2
+
+          # Install curl if needed
+          if ! command -v curl &> /dev/null; then
+            echo "Installing curl..."
+            sudo apt-get update
+            sudo apt-get install -y curl
+          fi
+
+          # Try to install Azure CLI without sudo if possible
+          echo "Checking if Azure CLI is already installed..."
+          if ! command -v az &> /dev/null; then
+            echo "Azure CLI not found. Attempting installation without sudo..."
+
+            # Create a directory for Azure CLI installation
+            mkdir -p $HOME/bin
+
+            # Download and install Azure CLI using pip (no sudo required)
+            echo "Installing Azure CLI using pip..."
+            pip install azure-cli
+
+            # Add to PATH if needed
+            export PATH=$PATH:$HOME/.local/bin
+
+            # Verify installation
+            if command -v az &> /dev/null; then
+              echo "Azure CLI installed successfully using pip"
+            else
+              echo "Azure CLI installation using pip failed. Will continue without it."
+              echo "You may need to manually add comments to PRs."
+            fi
+          else
+            echo "Azure CLI is already installed"
+          fi
+
+          # Verify Azure CLI installation
+          az --version || echo "Azure CLI not available, continuing anyway..."
+
+    - task: Bash@3
+      displayName: 'Generate SonarQube Issues Report'
+      inputs:
+        filePath: 'Scripts/generate_sonar_report.sh'
+        arguments: '--project "$(FrontendProjectName)" --username "$(SonarQubeUsername)" --password ''$(SonarQubePassword)'''
+      #condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+
+    # For PR builds
+    - task: Bash@3
+      displayName: 'Upload Report and Add to PR'
+      inputs:
+        filePath: 'Scripts/attach_to_azure_pr_with_upload.sh'
+        arguments: '--organization "$(System.TeamFoundationCollectionUri)" --project "$(System.TeamProject)" --pr-id "$(System.PullRequest.PullRequestId)"'
+      env:
+        AZURE_DEVOPS_PAT: $(AZURE_DEVOPS_PAT)
+      condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))

@@ -1,0 +1,229 @@
+# SonarQube Analysis Pipeline
+# This pipeline runs SonarQube analysis with the EnableSonarQubeAnalysis flag
+# It can be triggered manually or by specific conditions to keep regular builds fast
+
+trigger: none  # Manual trigger only
+
+pr: none  # Don't run on PRs by default
+
+parameters:
+- name: runBackendAnalysis
+  displayName: 'Run Backend SonarQube Analysis'
+  type: boolean
+  default: true
+
+- name: runFrontendAnalysis
+  displayName: 'Run Frontend SonarQube Analysis'
+  type: boolean
+  default: true
+
+- name: targetBranch
+  displayName: 'Target Branch (for PR analysis)'
+  type: string
+  default: 'main'
+
+variables:
+  buildConfiguration: 'Release'
+  nodeVersion: '22.x'
+  # Enable SonarQube analysis flag
+  enableSonarQubeAnalysis: 'true'
+
+stages:
+- stage: BackendSonarQubeAnalysis
+  displayName: 'Backend SonarQube Analysis'
+  condition: eq('${{ parameters.runBackendAnalysis }}', true)
+  jobs:
+  - job: SonarQubeAnalysis
+    displayName: 'Run SonarQube Analysis for .NET Backend'
+    steps:
+    - checkout: self
+      fetchDepth: '0'  # Fetch all history for better analysis
+
+    - task: UseDotNet@2
+      displayName: 'Install .NET SDK'
+      inputs:
+        packageType: 'sdk'
+        version: 9.x
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+
+    - task: CmdLine@2
+      displayName: "Install SonarQube Tools"
+      inputs:
+        script: |
+          dotnet tool install --global dotnet-sonarscanner
+          dotnet tool install --global dotnet-coverage
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore NuGet packages'
+      inputs:
+        command: 'restore'
+        projects: 'Backend/**/*.csproj'
+        arguments: '/p:EnableSonarQubeAnalysis=$(enableSonarQubeAnalysis)'
+
+    - task: CmdLine@2
+      displayName: "Run dotnet format before analysis"
+      inputs:
+        script: |
+          cd $(Build.SourcesDirectory)/Backend
+          dotnet format GHB.DP2.sln --no-restore || true
+
+    - task: CmdLine@2
+      displayName: "SonarQube Begin Analysis"
+      inputs:
+        script: |
+          cd $(Build.SourcesDirectory)/Backend
+          dotnet-sonarscanner begin /k:"$(ProjectName)" \
+            /d:sonar.host.url="$(SonarServerUrl)" \
+            /d:sonar.token=$(SonarQubeKey) \
+            /d:sonar.exclusions=**/Frontend/** \
+            /d:sonar.scanner.scanAll=false \
+            /d:sonar.dotnet.excludeTestProjects=true \
+            /d:sonar.cs.vscoveragexml.reportsPaths=$(Agent.TempDirectory)/dp_v2_coverage.xml
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Clean solution'
+      inputs:
+        command: 'custom'
+        custom: 'clean'
+        projects: 'Backend/**/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build solution with SonarQube Analysis'
+      inputs:
+        command: 'build'
+        projects: 'Backend/**/*.csproj'
+        arguments: '--configuration $(buildConfiguration) --no-restore --no-incremental /p:ContinuousIntegrationBuild=true /p:EnableSonarQubeAnalysis=$(enableSonarQubeAnalysis)'
+
+    - task: CmdLine@2
+      displayName: "Run tests with coverage"
+      inputs:
+        script: |
+          cd $(Build.SourcesDirectory)/Backend
+          dotnet-coverage collect \
+            'dotnet test GHB.DP2.sln --no-build --configuration $(buildConfiguration) /p:EnableSonarQubeAnalysis=$(enableSonarQubeAnalysis)' \
+            -f xml \
+            -o '$(Agent.TempDirectory)/dp_v2_coverage.xml'
+
+    - task: CmdLine@2
+      displayName: "SonarQube End Analysis"
+      inputs:
+        script: |
+          cd $(Build.SourcesDirectory)/Backend
+          dotnet-sonarscanner end /d:sonar.token=$(SonarQubeKey)
+
+    - task: UsePythonVersion@0
+      displayName: 'Install Python'
+      inputs:
+        versionSpec: '3.10'
+        addToPath: true
+
+    - task: Bash@3
+      displayName: 'Install Dependencies'
+      inputs:
+        targetType: 'inline'
+        script: |
+          python -m pip install --upgrade pip
+          pip install requests fpdf2
+
+    - task: Bash@3
+      displayName: 'Generate SonarQube Issues Report'
+      inputs:
+        filePath: 'Scripts/generate_sonar_report.sh'
+        arguments: '--project "$(ProjectName)" --username "$(SonarQubeUsername)" --password ''$(SonarQubePassword)'''
+
+- stage: FrontendSonarQubeAnalysis
+  displayName: 'Frontend SonarQube Analysis'
+  condition: eq('${{ parameters.runFrontendAnalysis }}', true)
+  jobs:
+  - job: SonarQubeAnalysis
+    displayName: 'Run SonarQube Analysis for Vue Frontend'
+    steps:
+    - checkout: self
+      fetchDepth: '0'  # Fetch all history for better analysis
+
+    - task: NodeTool@0
+      displayName: 'Install Node.js'
+      inputs:
+        versionSpec: '$(nodeVersion)'
+
+    - task: CmdLine@2
+      displayName: 'Install SonarScanner for JS/TS'
+      inputs:
+        script: |
+          npm install -g sonarqube-scanner
+
+    - task: Npm@1
+      displayName: 'Install dependencies'
+      inputs:
+        command: 'install'
+        workingDir: 'Frontend'
+
+    - task: Npm@1
+      displayName: 'Run linting'
+      inputs:
+        command: 'custom'
+        workingDir: 'Frontend'
+        customCommand: 'run lint'
+
+    - task: Npm@1
+      displayName: 'Run type check'
+      inputs:
+        command: 'custom'
+        workingDir: 'Frontend'
+        customCommand: 'run type-check'
+
+    - task: Npm@1
+      displayName: 'Build frontend'
+      inputs:
+        command: 'custom'
+        workingDir: 'Frontend'
+        customCommand: 'run build'
+
+    - task: Npm@1
+      displayName: 'Run tests with coverage'
+      inputs:
+        command: 'custom'
+        workingDir: 'Frontend'
+        customCommand: 'run test:coverage'
+      continueOnError: true  # Continue even if tests fail
+
+    - task: Bash@3
+      displayName: 'Run SonarQube Analysis'
+      inputs:
+        targetType: 'inline'
+        script: |
+          cd Frontend
+          sonar-scanner \
+            -Dsonar.projectKey="${FRONTEND_PROJECT_NAME}" \
+            -Dsonar.projectName="${FRONTEND_PROJECT_NAME}" \
+            -Dsonar.sources=./src \
+            -Dsonar.host.url="${SONAR_SERVER_URL}" \
+            -Dsonar.token="${SONAR_QUBE_DP2_FRONTEND_KEY}" \
+            -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info \
+            -Dsonar.typescript.tsconfigPath=./tsconfig.json \
+            -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/*.test.ts
+      env:
+        FRONTEND_PROJECT_NAME: $(FrontendProjectName)
+        SONAR_SERVER_URL: $(SonarServerUrl)
+        SONAR_QUBE_DP2_FRONTEND_KEY: $(SonarQubeDp2FrontendKey)
+
+    - task: UsePythonVersion@0
+      displayName: 'Install Python'
+      inputs:
+        versionSpec: '3.10'
+        addToPath: true
+
+    - task: Bash@3
+      displayName: 'Install Dependencies'
+      inputs:
+        targetType: 'inline'
+        script: |
+          python -m pip install --upgrade pip
+          pip install requests fpdf2
+
+    - task: Bash@3
+      displayName: 'Generate SonarQube Issues Report'
+      inputs:
+        filePath: 'Scripts/generate_sonar_report.sh'
+        arguments: '--project "$(FrontendProjectName)" --username "$(SonarQubeUsername)" --password ''$(SonarQubePassword)'''

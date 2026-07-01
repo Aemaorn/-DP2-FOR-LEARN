@@ -1,0 +1,90 @@
+services:
+  # frontend:
+  #   container_name: dp2-frontend
+  #   image: ghbrepo.azurecr.io/ghb-dp2-frontend:latest
+  #   build:
+  #     context: ./Frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:80"
+  #   depends_on:
+  #     - backend
+  
+  # backend:
+  #   container_name: dp2-api
+  #   image: ghbrepo.azurecr.io/ghb-dp2-api:latest
+  #   build:
+  #     context: ./Backend
+  #     dockerfile: ./GHB.DP2.Api/Dockerfile
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     ASPNETCORE_ENVIRONMENT: "Development"
+  #     ASPNETCORE_URLS: "http://+:8080"
+  #     ConnectionStrings__DefaultConnection: "Server=postgres;Port=5432;Database=GHB.DP2;User Id=postgres;Password=postgres;"
+  #     FileService__ServiceUrl: "https://file-service.ch-core.staging.codehard.co.th"
+  #     FileService__TenantId: "631a4d99-c00c-43b7-a805-a310dd5f5c82"
+  #     FileService__ApiKey: "fs_chcorefileStaging_TVGb87sZB5RHcqJr2aMFgXt4U3"
+  #     ActiveDirectory__Server: "127.0.0.1"
+  #     ActiveDirectory__Port: "389"
+  #     ActiveDirectory__DomainName: "example.com"
+  #     ActiveDirectory__BaseDn: "dc=example,dc=com"
+  #     Jwt__Secret: "JPFXD2IXdYXC5HkMI1ZWpUOrvfQLo8zeWWzLUvSodlA="
+  #     Jwt__AccessTokenValidity: "3600000"
+  #     Jwt__RefreshTokenValidity: "604800000"
+  #   depends_on:
+  #     - postgres
+
+  postgresql_init:
+    image: busybox
+    volumes:
+      - "postgresql_ghb_log:/var/log/postgres"
+    command: chown -R 999:999 /var/log/postgres
+    
+  postgres:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - "./postgresql_vanilla:/var/lib/postgresql/data"
+
+  postgres_hardening_ghb:
+    container_name: psql-hardening-ghb
+    image: ghbrepo.azurecr.io/ghb-postgresql:1.0.0
+    ports:
+      - "54320:5432"
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+    command: ["postgres",
+      "-c", "logging_collector=on",
+      "-c", "log_destination=csvlog",
+      "-c", "log_directory=/var/log/postgres",
+      "-c", "log_filename=postgresql-%Y%m%d.log",
+      "-c", "log_truncate_on_rotation=on",
+      "-c", "log_rotation_age=1d",
+      "-c", "log_rotation_size=0",
+      "-c", "syslog_sequence_numbers=on",
+      "-c", "syslog_split_messages=on",
+      "-c", "syslog_ident=ghb-dp-db",
+      "-c", "log_connections=on",
+      "-c", "log_disconnections=on",
+      "-c", "log_error_verbosity=verbose",
+      "-c", "log_line_prefix=%m [%p]: [%l-1] db=%d,user=%u,app=%a,client=%h ",
+      "-c", "log_statement=ddl",
+      "-c", "shared_preload_libraries=pgaudit,set_user",
+      "-c", "shared_buffers=1GB",
+      "-c", "pgaudit.log=ddl,write"]
+    volumes:
+      - "./postgresql:/var/lib/postgresql/data"
+      - "postgresql_ghb_log:/var/log/postgres"
+    depends_on:
+      postgresql_init:
+        condition: service_completed_successfully
+
+volumes:
+  postgresql_ghb_log:
+    driver: local

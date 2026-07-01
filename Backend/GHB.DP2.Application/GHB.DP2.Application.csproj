@@ -1,0 +1,144 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>$(FrameworkVersion)</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <!-- Suppress CS1591 for FastEndpoints generated code -->
+        <NoWarn>$(NoWarn);CS1591</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="GHB.DP2.Api.Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Features\Procurement\PurchaseOrderApproval\CreateEntrepreneurs.cs" />
+      <Compile Update="EventHandlers\SenEmail\Templateds\PlanAnnouncementTemplate.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>PlanAnnouncementTemplate.tt</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ClosedXML" />
+        <PackageReference Include="Codehard.Functional" />
+        <PackageReference Include="Codehard.OdtKit" />
+        <PackageReference Include="DocumentFormat.OpenXml" />
+        <PackageReference Include="FastEndpoints.Generator">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="FastEndpoints.Security" />
+        <PackageReference Include="FastEndpoints.Swagger" />
+        <PackageReference Include="Hangfire" />
+        <PackageReference Include="Hangfire.AspNetCore" />
+        <PackageReference Include="Hangfire.Dashboard.Basic.Authentication" />
+        <PackageReference Include="Hangfire.PostgreSql" />
+        <PackageReference Include="StyleCop.Analyzers">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Serilog" />
+        <PackageReference Include="System.CodeDom" />
+        <PackageReference Include="ThaiBahtText" />
+        <PackageReference Include="System.Linq.Async" />
+        <PackageReference Include="PdfSharpCore" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\GHB.DP2.Infrastructure\GHB.DP2.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\fonts\**\*" CopyToOutputDirectory="PreserveNewest" LinkBase="fonts" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Features\AnnouncementInfo\**" />
+      <EmbeddedResource Remove="Features\AnnouncementInfo\**" />
+      <None Remove="Features\AnnouncementInfo\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Features\Announcement\AnnouncementReport\" />
+        <Folder Include="Features\Announcement\AnnouncementSorKorRor\" />
+        <Folder Include="Features\AttachmentFileAll\" />
+        <Folder Include="Features\Procurement\PurchaseOrderApproval\Abstract\" />
+        <Folder Include="Templates\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="Templates\DelegateUserReport.xlsx">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="EventHandlers\SenEmail\Templateds\NotificationTemplate.tt">
+            <Generator>TextTemplatingFilePreprocessor</Generator>
+            <LastGenOutput>NotificationTemplate.cs</LastGenOutput>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="EventHandlers\SenEmail\Templateds\PlanNotificationTemplate.tt">
+            <Generator>TextTemplatingFilePreprocessor</Generator>
+            <LastGenOutput>PlanNotificationTemplate.cs</LastGenOutput>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Features\Procurement\Invite\Templateds\InvitedContractTemplated.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>InvitedContractTemplated.cs</LastGenOutput>
+        </None>
+        <None Update="Features\ContractAgreement\ContractDraft\Templateds\InvitedContractTemplated.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>InvitedContractTemplated.cs</LastGenOutput>
+        </None>
+        <None Update="Features\Procurement\Invite\Templateds\InviteEntrepreneursTemplated.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>InviteEntrepreneursTemplated.cs</LastGenOutput>
+        </None>
+        <None Update="Features\ContractAgreement\ContractInvitation\Templateds\InvitedContractTemplated.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>InvitedContractTemplated.cs</LastGenOutput>
+        </None>
+        <None Update="EventHandlers\SenEmail\Templateds\PlanAnnouncementTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <LastGenOutput>PlanAnnouncementTemplate.cs</LastGenOutput>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="EventHandlers\SenEmail\Templateds\NotificationTemplate.cs">
+            <AutoGen>True</AutoGen>
+            <DesignTime>True</DesignTime>
+            <DependentUpon>NotificationTemplate.tt</DependentUpon>
+        </Compile>
+        <Compile Update="EventHandlers\SenEmail\Templateds\PlanNotificationTemplate.cs">
+            <AutoGen>True</AutoGen>
+            <DesignTime>True</DesignTime>
+            <DependentUpon>PlanNotificationTemplate.tt</DependentUpon>
+        </Compile>
+        <Compile Update="Features\Procurement\Invite\Templateds\InvitedContractTemplated.cs">
+          <AutoGen>True</AutoGen>
+          <DesignTime>True</DesignTime>
+          <DependentUpon>InvitedContractTemplated.tt</DependentUpon>
+        </Compile>
+        <Compile Update="Features\Procurement\Invite\Templateds\InviteEntrepreneursTemplated.cs">
+          <AutoGen>True</AutoGen>
+          <DesignTime>True</DesignTime>
+          <DependentUpon>InviteEntrepreneursTemplated.tt</DependentUpon>
+        </Compile>
+        <Compile Update="Features\ContractAgreement\ContractInvitation\Templateds\InvitedContractTemplated.cs">
+          <AutoGen>True</AutoGen>
+          <DesignTime>True</DesignTime>
+          <DependentUpon>InvitedContractTemplated.tt</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <!-- Skip dotnet format during CI builds (ContinuousIntegrationBuild=true) -->
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(ContinuousIntegrationBuild)' != 'true'">
+        <Exec Command="dotnet format" />
+    </Target>
+
+</Project>

@@ -1,0 +1,40 @@
+# Node modules ที่จะ install ใหม่ใน container อยู่แล้ว
+node_modules
+dist
+build
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Mac/Windows system files
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Docker
+.dockerignore
+Dockerfile
+
+# Editor/IDE
+.vscode
+.idea
+
+# Env config (อย่า hardcode .env ถ้ามี secrets)
+.env
+.env.local
+.env.*.local
+
+# Test
+coverage
+__tests__
+
+# Optional: ไฟล์ dev tools อื่นๆ
+*.swp
+*.bak
+*.tmp

@@ -1,0 +1,122 @@
+pool:
+  name: 'office-server'
+
+trigger:
+  tags:
+    include:
+      - '*'
+    exclude:
+      - 'STAGING'
+      - 'SIT'
+      - 'UAT'
+      - 'PROD'
+  branches:
+    include:
+      - 'refs/tags/*'
+
+resources:
+  - repo: self
+
+variables:
+  tag: '$(Build.SourceBranchName)'
+  buildContextBackend: '$(Build.SourcesDirectory)/Backend'
+  buildContextFrontend: '$(Build.SourcesDirectory)/Frontend'
+
+stages:
+- stage: BuildPush
+  displayName: Build & Push Docker Images
+  jobs:
+
+    - job: API
+      displayName: Build & Push API
+      steps:
+        - task: Docker@2
+          displayName: Build & Push API image
+          inputs:
+            repository: '$(api-image-reg)'
+            command: 'buildAndPush'
+            containerRegistry: $(docker-reg-service-cstr)
+            Dockerfile: '$(buildContextBackend)/GHB.DP2.Api/Dockerfile'
+            buildContext: '$(buildContextBackend)'
+            tags: |
+              latest
+              $(tag)
+
+    - job: Frontend
+      displayName: Build & Push Frontend
+      steps:
+        - bash: |
+            echo 'Replacing versioning constant'
+            sed -i "s/__version__/$(tag)/g" $(buildContextFrontend)/src/_version.ts
+            cat $(buildContextFrontend)/src/_version.ts
+        - task: Docker@2
+          displayName: Build & Push Frontend image
+          inputs:
+            repository: '$(frontend-image-reg)'
+            command: 'buildAndPush'
+            containerRegistry: $(docker-reg-service-cstr)
+            Dockerfile: '$(buildContextFrontend)/Dockerfile'
+            buildContext: '$(buildContextFrontend)'
+            tags: |
+              latest
+              $(tag)
+
+- stage: Deploy
+  dependsOn: BuildPush
+  displayName: Deploy to Kubernetes
+  # condition: and(succeeded(), startsWith(variables['tag'], 'STAGING'))
+  jobs:
+    - job: DeployStaging
+      displayName: Deploy Staging
+      steps:
+        - task: Kubernetes@1
+          displayName: Deploy API
+          inputs:
+            connectionType: 'None'
+            kubernetesCluster: '$(kubernetes-cluster)'
+            namespace: '$(aks-name-space)'
+            command: 'set'
+            arguments: >
+              image deployment/$(api-deployment-name) $(api-app-name)=ghbrepo.azurecr.io/$(api-image-reg):$(tag)
+            secretType: 'dockerRegistry'
+            containerRegistryType: 'Azure Container Registry'
+
+        - task: Kubernetes@1
+          displayName: Deploy Frontend
+          inputs:
+            connectionType: 'None'
+            kubernetesCluster: '$(kubernetes-cluster)'
+            namespace: '$(aks-name-space)'
+            command: 'set'
+            arguments: >
+              image deployment/$(frontend-deployment-name) $(frontend-app-name)=ghbrepo.azurecr.io/$(frontend-image-reg):$(tag)
+            secretType: 'dockerRegistry'
+            containerRegistryType: 'Azure Container Registry'
+    - job: HealthCheck
+      displayName: Health Check Staging
+      dependsOn: DeployStaging
+      steps:
+        - bash: |
+            echo "🔍 Checking API rollout..."
+            if ! kubectl rollout status deployment/$(api-deployment-name) -n $(aks-name-space) --timeout=2m; then
+              echo "❌ API rollout failed"
+              kubectl describe deployment $(api-deployment-name) -n $(aks-name-space)
+              kubectl get pods -n $(aks-name-space) -l app=$(api-app-name)
+              for pod in $(kubectl get pods -n $(aks-name-space) -l app=$(api-app-name) -o jsonpath="{.items[*].metadata.name}"); do
+                echo "📄 Logs from $pod"
+                kubectl logs $pod -n $(aks-name-space) --tail=100 || true
+              done
+              exit 1
+            fi
+        - bash: |
+            echo "🔍 Checking Frontend rollout..."
+            if ! kubectl rollout status deployment/$(frontend-deployment-name) -n $(aks-name-space) --timeout=2m; then
+              echo "❌ Frontend rollout failed"
+              kubectl describe deployment $(frontend-deployment-name) -n $(aks-name-space)
+              kubectl get pods -n $(aks-name-space) -l app=$(frontend-app-name)
+              for pod in $(kubectl get pods -n $(aks-name-space) -l app=$(frontend-app-name) -o jsonpath="{.items[*].metadata.name}"); do
+                echo "📄 Logs from $pod"
+                kubectl logs $pod -n $(aks-name-space) --tail=100 || true
+              done
+              exit 1
+            fi

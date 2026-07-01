@@ -1,0 +1,30 @@
+# SonarQube Configuration Example
+# Copy this file to sonar_config.env and update with your values
+
+# SonarQube Server Configuration
+SONAR_URL=http://192.168.20.97:9001
+SONAR_USERNAME=admin
+SONAR_PASSWORD=your_password_here
+
+# Project Configuration
+SONAR_PROJECT_KEY=your_project_key
+SONAR_OUTPUT_DIR=./reports
+
+# Optional: Azure DevOps Integration
+AZURE_DEVOPS_ORG=your_organization
+AZURE_DEVOPS_PROJECT=your_project
+AZURE_PAT_TOKEN=your_personal_access_token
+
+# Optional: File Service Configuration (for uploading reports)
+FILE_SERVICE_URL=file-service.ch-core.staging.codehard.co.th
+FILE_SERVICE_API_KEY=fs_RaDTest_Qy3uZpKhwLxqPnAfHSR9kr
+
+# Report Configuration
+REPORT_INCLUDE_SOURCE_CODE=true
+REPORT_MAX_ISSUES=500
+REPORT_SEVERITY_FILTER=BLOCKER,CRITICAL,MAJOR
+
+# CI/CD Integration
+CI_SKIP_ON_NO_ISSUES=true
+CI_FAIL_ON_CRITICAL=false
+CI_UPLOAD_TO_PR=true

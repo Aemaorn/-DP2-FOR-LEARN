@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: ghb-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      imagePullSecrets:
+        - name: acr-recyclebin-secret
+      containers:
+        - name: frontend
+          image: recyclebin.azurecr.io/ghb-dashboard:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "64Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ghb-dashboard-frontend-service
+  namespace: ghb-dashboard
+spec:
+  selector:
+    app: frontend
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
