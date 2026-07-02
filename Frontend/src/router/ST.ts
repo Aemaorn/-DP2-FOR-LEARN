@@ -119,6 +119,20 @@ export const STRoute: RouteRecordRaw = {
       meta: { skipPermission: true },
     },
     {
+      path: 'subdistrict',
+      name: 'subdistrict',
+      component: () => import('@/views/ST/Subdistrict/index.vue'),
+      // TODO: remove once /st/subdistrict is registered in the backend menu/permission list
+      meta: { skipPermission: true },
+    },
+    {
+      path: 'subdistrict/detail/:id?',
+      name: 'subdistrictDetail',
+      component: () => import('@/views/ST/Subdistrict/detail.vue'),
+      // TODO: remove once /st/subdistrict is registered in the backend menu/permission list
+      meta: { skipPermission: true },
+    },
+    {
       path: 'st099',
       name: 'st099',
       component: () => import('@/views/ST/ST099/index.vue'),
