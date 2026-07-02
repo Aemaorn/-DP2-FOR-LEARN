@@ -2,7 +2,7 @@
 import { onBeforeMount, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { Form } from 'vee-validate';
-import { useSt011ListStore } from '@/stores/ST/st011';
+import { useDistrictListStore } from '@/stores/ST/district';
 import { InputField } from '@/components/forms';
 import { TitleHeader } from '@/components/cosmetic';
 import Pagination from '@/components/Pagination.vue';
@@ -10,7 +10,7 @@ import { showConfirmDialogAsync } from '@/helpers/dialog';
 import { ConfirmDialogType } from '@/enums/dialog';
 
 const router = useRouter();
-const listStore = useSt011ListStore();
+const listStore = useDistrictListStore();
 
 onBeforeMount((): void => {
   listStore.onResetCriteria();
@@ -35,10 +35,10 @@ const onDeleteAsync = async (id: string): Promise<void> => {
 </script>
 
 <template>
-  <TitleHeader label="จังหวัด">
+  <TitleHeader label="อำเภอ/เขต">
     <template #action>
-      <Button label="เพิ่มจังหวัด" icon="pi pi-plus" severity="primary"
-        @click="() => router.push({ name: 'st011Detail' })" />
+      <Button label="เพิ่มอำเภอ/เขต" icon="pi pi-plus" severity="primary"
+        @click="() => router.push({ name: 'districtDetail' })" />
     </template>
   </TitleHeader>
   <Card class="my-4">
@@ -82,7 +82,7 @@ const onDeleteAsync = async (id: string): Promise<void> => {
         </Column>
         <Column field="nameTh" headerClass="bg-gray-200 !text-black font-bold">
           <template #header>
-            <p class="w-full font-bold">จังหวัด</p>
+            <p class="w-full font-bold">อำเภอ/เขต</p>
           </template>
           <template #body="{ data }">
             <p class="font-bold">{{ data.nameTh }}</p>
@@ -90,7 +90,7 @@ const onDeleteAsync = async (id: string): Promise<void> => {
         </Column>
         <Column field="nameEn" headerClass="bg-gray-200 !text-black font-bold">
           <template #header>
-            <p class="w-full font-bold">จังหวัด (EN)</p>
+            <p class="w-full font-bold">อำเภอ/เขต (EN)</p>
           </template>
           <template #body="{ data }">
             <p>{{ data.nameEn }}</p>
@@ -101,7 +101,7 @@ const onDeleteAsync = async (id: string): Promise<void> => {
             <div class="flex items-center justify-center gap-1.5">
               <Button icon="pi pi-pen-to-square" class="text-blue-600! hover:bg-blue-300/20! focus:bg-blue-300/20!"
                 size="small" variant="text"
-                @click="() => router.push({ name: 'st011Detail', params: { id: data.id } })" />
+                @click="() => router.push({ name: 'districtDetail', params: { id: data.id } })" />
               <Button icon="pi pi-trash" class="text-red-600! hover:bg-red-300/20! focus:bg-red-300/20!"
                 size="small" variant="text" @click="() => onDeleteAsync(data.id)" />
             </div>

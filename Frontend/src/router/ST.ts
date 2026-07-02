@@ -91,17 +91,31 @@ export const STRoute: RouteRecordRaw = {
       component: () => import('@/views/ST/ST010/detail.vue'),
     },
     {
-      path: 'st011',
-      name: 'st011',
-      component: () => import('@/views/ST/ST011/index.vue'),
-      // TODO: remove once /st/st011 is registered in the backend menu/permission list
+      path: 'province',
+      name: 'province',
+      component: () => import('@/views/ST/Province/index.vue'),
+      // TODO: remove once /st/province is registered in the backend menu/permission list
       meta: { skipPermission: true },
     },
     {
-      path: 'st011/detail/:id?',
-      name: 'st011Detail',
-      component: () => import('@/views/ST/ST011/detail.vue'),
-      // TODO: remove once /st/st011 is registered in the backend menu/permission list
+      path: 'province/detail/:id?',
+      name: 'provinceDetail',
+      component: () => import('@/views/ST/Province/detail.vue'),
+      // TODO: remove once /st/province is registered in the backend menu/permission list
+      meta: { skipPermission: true },
+    },
+    {
+      path: 'district',
+      name: 'district',
+      component: () => import('@/views/ST/District/index.vue'),
+      // TODO: remove once /st/district is registered in the backend menu/permission list
+      meta: { skipPermission: true },
+    },
+    {
+      path: 'district/detail/:id?',
+      name: 'districtDetail',
+      component: () => import('@/views/ST/District/detail.vue'),
+      // TODO: remove once /st/district is registered in the backend menu/permission list
       meta: { skipPermission: true },
     },
     {

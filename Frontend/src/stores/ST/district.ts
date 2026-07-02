@@ -1,42 +1,42 @@
 import ToastHelper from '@/helpers/toast';
 import type { TDataTableResult } from '@/models/shared/paginated';
-import type { TSt011Detail, TSt011Criteria, TSt011List } from '@/models/ST/st011';
+import type { TDistrictDetail, TDistrictCriteria, TDistrictList } from '@/models/ST/district';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-// Demo data only — backend endpoint /api/st/st011 does not exist yet.
-// Once it does, swap the bodies below for ST011Service calls (see ST010/ST004 stores for the pattern).
-const mockProvinces: TSt011List[] = [
-  { id: '101', code: '101', nameTh: 'กรุงเทพมหานคร', nameEn: 'Bangkok' },
-  { id: '102', code: '102', nameTh: 'สมุทรปราการ', nameEn: 'Samut Prakan' },
-  { id: '103', code: '103', nameTh: 'นนทบุรี', nameEn: 'Nonthaburi' },
-  { id: '104', code: '104', nameTh: 'ปทุมธานี', nameEn: 'Pathum Thani' },
-  { id: '105', code: '105', nameTh: 'พระนครศรีอยุธยา', nameEn: 'Phra Nakhon Si Ayutthaya' },
+// Demo data only — backend endpoint /api/st/district does not exist yet.
+// Once it does, swap the bodies below for DistrictService calls (see ST010/ST004 stores for the pattern).
+const mockDistricts: TDistrictList[] = [
+  { id: '1001', code: '1001', nameTh: 'เขตพระนคร', nameEn: 'Phra Nakhon' },
+  { id: '1002', code: '1002', nameTh: 'เขตดุสิต', nameEn: 'Dusit' },
+  { id: '1003', code: '1003', nameTh: 'เขตหนองจอก', nameEn: 'Nong Chok' },
+  { id: '1004', code: '1004', nameTh: 'เขตบางรัก', nameEn: 'Bang Rak' },
+  { id: '1005', code: '1005', nameTh: 'เขตบางเขน', nameEn: 'Bang Khen' },
 ];
 
-export const useSt011ListStore = defineStore('st-011-list-store', () => {
+export const useDistrictListStore = defineStore('district-list-store', () => {
   const searchCriteria = ref({
     pageNumber: 1,
     pageSize: 10,
     sort: [],
-  } as TSt011Criteria);
+  } as TDistrictCriteria);
 
   const table = ref({
-    data: [] as TSt011List[],
+    data: [] as TDistrictList[],
     totalRecords: 0,
-  } as TDataTableResult<TSt011List>);
+  } as TDataTableResult<TDistrictList>);
 
   const onGetListData = async (): Promise<void> => {
     const keyword = searchCriteria.value.keyword?.trim().toLowerCase();
 
     const filtered = keyword
-      ? mockProvinces.filter((p) =>
-        p.code.toLowerCase().includes(keyword) ||
-        p.nameTh.toLowerCase().includes(keyword) ||
-        p.nameEn.toLowerCase().includes(keyword)
+      ? mockDistricts.filter((d) =>
+        d.code.toLowerCase().includes(keyword) ||
+        d.nameTh.toLowerCase().includes(keyword) ||
+        d.nameEn.toLowerCase().includes(keyword)
       )
-      : mockProvinces;
+      : mockDistricts;
 
     const { pageNumber, pageSize } = searchCriteria.value;
     const start = (pageNumber - 1) * pageSize;
@@ -64,14 +64,14 @@ export const useSt011ListStore = defineStore('st-011-list-store', () => {
   };
 
   const onDeleteByIdAsync = async (id: string): Promise<void> => {
-    const index = mockProvinces.findIndex((p) => p.id === id);
+    const index = mockDistricts.findIndex((d) => d.id === id);
 
     if (index === -1) {
       ToastHelper.error('ไม่สำเร็จ', 'ลบไม่สำเร็จ');
       return;
     }
 
-    mockProvinces.splice(index, 1);
+    mockDistricts.splice(index, 1);
     ToastHelper.deletedMessageToast();
     await onGetListData();
   };
@@ -87,18 +87,18 @@ export const useSt011ListStore = defineStore('st-011-list-store', () => {
 });
 
 const generateNextCode = (): string => {
-  const maxCode = mockProvinces.reduce((max, p) => Math.max(max, Number(p.code) || 0), 100);
+  const maxCode = mockDistricts.reduce((max, d) => Math.max(max, Number(d.code) || 0), 1000);
   return String(maxCode + 1);
 };
 
-export const useSt011DetailStore = defineStore('st-011-detail-store', () => {
+export const useDistrictDetailStore = defineStore('district-detail-store', () => {
   const router = useRouter();
 
-  const body = ref({} as TSt011Detail);
+  const body = ref({} as TDistrictDetail);
   const isSubmitting = ref(false);
 
   const onResetBody = (): void => {
-    body.value = {} as TSt011Detail;
+    body.value = {} as TDistrictDetail;
   };
 
   const onInitCreate = (): void => {
@@ -106,7 +106,7 @@ export const useSt011DetailStore = defineStore('st-011-detail-store', () => {
   };
 
   const onGetByIdAsync = async (id: string): Promise<void> => {
-    const found = mockProvinces.find((p) => p.id === id);
+    const found = mockDistricts.find((d) => d.id === id);
 
     if (found) {
       body.value = { ...found };
@@ -116,17 +116,17 @@ export const useSt011DetailStore = defineStore('st-011-detail-store', () => {
   const onCreateAsync = async (): Promise<void> => {
     const id = crypto.randomUUID();
 
-    mockProvinces.push({ ...body.value, id });
+    mockDistricts.push({ ...body.value, id });
     ToastHelper.createdMessageToast();
-    router.replace({ name: 'st011Detail', params: { id } });
+    router.replace({ name: 'districtDetail', params: { id } });
   };
 
   const onUpdateAsync = async (id: string): Promise<void> => {
-    const index = mockProvinces.findIndex((p) => p.id === id);
+    const index = mockDistricts.findIndex((d) => d.id === id);
 
     if (index === -1) return;
 
-    mockProvinces[index] = { ...body.value, id };
+    mockDistricts[index] = { ...body.value, id };
     ToastHelper.updatedMessageToast();
   };
 

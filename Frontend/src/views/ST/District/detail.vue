@@ -5,17 +5,17 @@ import { Form } from 'vee-validate';
 import type { MenuItem } from 'primevue/menuitem';
 import { InputField } from '@/components/forms';
 import { TitleHeader } from '@/components/cosmetic';
-import { useSt011DetailStore } from '@/stores/ST/st011';
+import { useDistrictDetailStore } from '@/stores/ST/district';
 import ToastHelper from '@/helpers/toast';
 
 const route = useRoute();
-const detailStore = useSt011DetailStore();
+const detailStore = useDistrictDetailStore();
 
 const isEditMode = computed((): boolean => Boolean(route.params.id));
 
 const routeItems = computed((): MenuItem[] => [
-  { label: 'จังหวัด', url: '/st/st011' },
-  { label: isEditMode.value ? 'จังหวัด (แก้ไข)' : 'จังหวัด (เพิ่ม)' },
+  { label: 'อำเภอ/เขต', url: '/st/district' },
+  { label: isEditMode.value ? 'อำเภอ/เขต (แก้ไข)' : 'อำเภอ/เขต (เพิ่ม)' },
 ]);
 
 onMounted(async (): Promise<void> => {
@@ -38,7 +38,7 @@ const onSubmitAsync = async (): Promise<void> => {
 
 <template>
   <Form @submit="onSubmitAsync" @invalid-submit="() => ToastHelper.invalidMessageToast()">
-    <TitleHeader :label="isEditMode ? 'แก้ไขจังหวัด' : 'เพิ่มจังหวัด'" :route-items="routeItems">
+    <TitleHeader :label="isEditMode ? 'แก้ไขอำเภอ/เขต' : 'เพิ่มอำเภอ/เขต'" :route-items="routeItems">
       <template #breadcrumbAction>
         <Button label="บันทึก" icon="pi pi-save" severity="success" type="submit"
           :loading="detailStore.isSubmitting" :disabled="detailStore.isSubmitting" />
@@ -48,8 +48,8 @@ const onSubmitAsync = async (): Promise<void> => {
       <template #content>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mt-8">
           <InputField label="รหัส" v-model="detailStore.body.code" rules="required" disabled />
-          <InputField label="จังหวัด" v-model="detailStore.body.nameTh" rules="required" />
-          <InputField label="จังหวัด (EN)" v-model="detailStore.body.nameEn" rules="required" />
+          <InputField label="อำเภอ/เขต" v-model="detailStore.body.nameTh" rules="required" />
+          <InputField label="อำเภอ/เขต (EN)" v-model="detailStore.body.nameEn" rules="required" />
         </div>
       </template>
     </Card>
