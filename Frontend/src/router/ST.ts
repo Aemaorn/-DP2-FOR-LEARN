@@ -91,6 +91,20 @@ export const STRoute: RouteRecordRaw = {
       component: () => import('@/views/ST/ST010/detail.vue'),
     },
     {
+      path: 'st011',
+      name: 'st011',
+      component: () => import('@/views/ST/ST011/index.vue'),
+      // TODO: remove once /st/st011 is registered in the backend menu/permission list
+      meta: { skipPermission: true },
+    },
+    {
+      path: 'st011/detail/:id?',
+      name: 'st011Detail',
+      component: () => import('@/views/ST/ST011/detail.vue'),
+      // TODO: remove once /st/st011 is registered in the backend menu/permission list
+      meta: { skipPermission: true },
+    },
+    {
       path: 'st099',
       name: 'st099',
       component: () => import('@/views/ST/ST099/index.vue'),
