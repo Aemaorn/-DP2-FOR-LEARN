@@ -5,16 +5,16 @@ import { Form } from 'vee-validate';
 import type { MenuItem } from 'primevue/menuitem';
 import { InputField } from '@/components/forms';
 import { TitleHeader } from '@/components/cosmetic';
-import { useSubdistrictDetailStore } from '@/stores/ST/subdistrict';
+import { useSt013DetailStore } from '@/stores/ST/st013';
 import ToastHelper from '@/helpers/toast';
 
 const route = useRoute();
-const detailStore = useSubdistrictDetailStore();
+const detailStore = useSt013DetailStore();
 
 const isEditMode = computed((): boolean => Boolean(route.params.id));
 
 const routeItems = computed((): MenuItem[] => [
-  { label: 'ตำบล/แขวง', url: '/st/subdistrict' },
+  { label: 'ตำบล/แขวง', url: '/st/st013' },
   { label: isEditMode.value ? 'ตำบล/แขวง (แก้ไข)' : 'ตำบล/แขวง (เพิ่ม)' },
 ]);
 

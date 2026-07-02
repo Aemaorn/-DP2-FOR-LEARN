@@ -2,7 +2,7 @@
 import { onBeforeMount, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { Form } from 'vee-validate';
-import { useSubdistrictListStore } from '@/stores/ST/subdistrict';
+import { useSt013ListStore } from '@/stores/ST/st013';
 import { InputField } from '@/components/forms';
 import { TitleHeader } from '@/components/cosmetic';
 import Pagination from '@/components/Pagination.vue';
@@ -10,7 +10,7 @@ import { showConfirmDialogAsync } from '@/helpers/dialog';
 import { ConfirmDialogType } from '@/enums/dialog';
 
 const router = useRouter();
-const listStore = useSubdistrictListStore();
+const listStore = useSt013ListStore();
 
 onBeforeMount((): void => {
   listStore.onResetCriteria();
@@ -38,7 +38,7 @@ const onDeleteAsync = async (id: string): Promise<void> => {
   <TitleHeader label="ตำบล/แขวง">
     <template #action>
       <Button label="เพิ่มตำบล/แขวง" icon="pi pi-plus" severity="primary"
-        @click="() => router.push({ name: 'subdistrictDetail' })" />
+        @click="() => router.push({ name: 'st013Detail' })" />
     </template>
   </TitleHeader>
   <Card class="my-4">
@@ -101,7 +101,7 @@ const onDeleteAsync = async (id: string): Promise<void> => {
             <div class="flex items-center justify-center gap-1.5">
               <Button icon="pi pi-pen-to-square" class="text-blue-600! hover:bg-blue-300/20! focus:bg-blue-300/20!"
                 size="small" variant="text"
-                @click="() => router.push({ name: 'subdistrictDetail', params: { id: data.id } })" />
+                @click="() => router.push({ name: 'st013Detail', params: { id: data.id } })" />
               <Button icon="pi pi-trash" class="text-red-600! hover:bg-red-300/20! focus:bg-red-300/20!"
                 size="small" variant="text" @click="() => onDeleteAsync(data.id)" />
             </div>

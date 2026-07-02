@@ -91,45 +91,45 @@ export const STRoute: RouteRecordRaw = {
       component: () => import('@/views/ST/ST010/detail.vue'),
     },
     {
-      path: 'province',
-      name: 'province',
-      component: () => import('@/views/ST/Province/index.vue'),
-      // TODO: remove once /st/province is registered in the backend menu/permission list
+      path: 'st011',
+      name: 'st011',
+      component: () => import('@/views/ST/ST011/index.vue'),
+      // TODO: remove once /st/st011 is registered in the backend menu/permission list
       meta: { skipPermission: true },
     },
     {
-      path: 'province/detail/:id?',
-      name: 'provinceDetail',
-      component: () => import('@/views/ST/Province/detail.vue'),
-      // TODO: remove once /st/province is registered in the backend menu/permission list
+      path: 'st011/detail/:id?',
+      name: 'st011Detail',
+      component: () => import('@/views/ST/ST011/detail.vue'),
+      // TODO: remove once /st/st011 is registered in the backend menu/permission list
       meta: { skipPermission: true },
     },
     {
-      path: 'district',
-      name: 'district',
-      component: () => import('@/views/ST/District/index.vue'),
-      // TODO: remove once /st/district is registered in the backend menu/permission list
+      path: 'st012',
+      name: 'st012',
+      component: () => import('@/views/ST/ST012/index.vue'),
+      // TODO: remove once /st/st012 is registered in the backend menu/permission list
       meta: { skipPermission: true },
     },
     {
-      path: 'district/detail/:id?',
-      name: 'districtDetail',
-      component: () => import('@/views/ST/District/detail.vue'),
-      // TODO: remove once /st/district is registered in the backend menu/permission list
+      path: 'st012/detail/:id?',
+      name: 'st012Detail',
+      component: () => import('@/views/ST/ST012/detail.vue'),
+      // TODO: remove once /st/st012 is registered in the backend menu/permission list
       meta: { skipPermission: true },
     },
     {
-      path: 'subdistrict',
-      name: 'subdistrict',
-      component: () => import('@/views/ST/Subdistrict/index.vue'),
-      // TODO: remove once /st/subdistrict is registered in the backend menu/permission list
+      path: 'st013',
+      name: 'st013',
+      component: () => import('@/views/ST/ST013/index.vue'),
+      // TODO: remove once /st/st013 is registered in the backend menu/permission list
       meta: { skipPermission: true },
     },
     {
-      path: 'subdistrict/detail/:id?',
-      name: 'subdistrictDetail',
-      component: () => import('@/views/ST/Subdistrict/detail.vue'),
-      // TODO: remove once /st/subdistrict is registered in the backend menu/permission list
+      path: 'st013/detail/:id?',
+      name: 'st013Detail',
+      component: () => import('@/views/ST/ST013/detail.vue'),
+      // TODO: remove once /st/st013 is registered in the backend menu/permission list
       meta: { skipPermission: true },
     },
     {

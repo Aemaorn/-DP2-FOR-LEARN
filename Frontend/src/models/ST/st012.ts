@@ -1,17 +1,17 @@
 import type { TPaginated } from '../shared/paginated';
 
-export type TDistrictCriteria = {
+export type TSt012Criteria = {
   keyword?: string;
 } & TPaginated;
 
-export type TDistrictList = {
+export type TSt012List = {
   id: string;
   code: string;
   nameTh: string;
   nameEn: string;
 };
 
-export type TDistrictDetail = {
+export type TSt012Detail = {
   id?: string;
   code: string;
   nameTh: string;
