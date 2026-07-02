@@ -37,8 +37,8 @@ const onDeleteAsync = async (id: string): Promise<void> => {
 <template>
   <TitleHeader label="จังหวัด">
     <template #action>
-      <Button label="เพิ่มจังหวัด" icon="pi pi-plus" severity="primary"
-        @click="() => router.push({ name: 'st011Detail' })" />
+      <Button label="เพิ่มจังหวัด" icon="pi pi-plus" severity="primary" variant="outlined"
+        class="hover:bg-red-200 hover:text-red-900 bg-red-50" @click="() => router.push({ name: 'st011Detail' })" />
     </template>
   </TitleHeader>
   <Card class="my-4">
