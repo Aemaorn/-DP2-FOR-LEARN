@@ -9,6 +9,11 @@ export type TSt013List = {
   code: string;
   nameTh: string;
   nameEn: string;
+  postalCode: string;
+  provinceId: string;
+  districtId: string;
+  provinceName?: string;
+  districtName?: string;
 };
 
 export type TSt013Detail = {
@@ -16,4 +21,7 @@ export type TSt013Detail = {
   code: string;
   nameTh: string;
   nameEn: string;
+  postalCode: string;
+  provinceId: string;
+  districtId: string;
 };

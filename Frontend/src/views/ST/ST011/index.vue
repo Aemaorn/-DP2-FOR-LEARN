@@ -85,7 +85,7 @@ const onDeleteAsync = async (id: string): Promise<void> => {
             <p class="w-full font-bold">จังหวัด</p>
           </template>
           <template #body="{ data }">
-            <p class="font-bold">{{ data.nameTh }}</p>
+            <p>{{ data.nameTh }}</p>
           </template>
         </Column>
         <Column field="nameEn" headerClass="bg-gray-200 !text-black font-bold">
@@ -116,3 +116,13 @@ const onDeleteAsync = async (id: string): Promise<void> => {
     </template>
   </Card>
 </template>
+
+<style scoped>
+:deep(.p-datatable-thead > tr > th),
+:deep(.p-datatable-thead > tr > th p),
+:deep(thead > tr > th),
+:deep(thead > tr > th p) {
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+</style>

@@ -3,7 +3,7 @@ import { computed, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { Form } from 'vee-validate';
 import type { MenuItem } from 'primevue/menuitem';
-import { InputField } from '@/components/forms';
+import { InputField, Select } from '@/components/forms';
 import { TitleHeader } from '@/components/cosmetic';
 import { useSt013DetailStore } from '@/stores/ST/st013';
 import ToastHelper from '@/helpers/toast';
@@ -19,12 +19,14 @@ const routeItems = computed((): MenuItem[] => [
 ]);
 
 onMounted(async (): Promise<void> => {
+  await detailStore.onFetchProvinceOptions();
+
   if (isEditMode.value) {
     await detailStore.onGetByIdAsync(route.params.id as string);
     return;
   }
 
-  detailStore.onInitCreate();
+  await detailStore.onInitCreate();
 });
 
 onUnmounted((): void => {
@@ -46,10 +48,15 @@ const onSubmitAsync = async (): Promise<void> => {
     </TitleHeader>
     <Card class="my-4">
       <template #content>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mt-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-2 mt-8">
+          <Select label="จังหวัด" v-model="detailStore.body.provinceId" :options="detailStore.provinceOptions"
+            rules="required" :disabled="isEditMode" @update:model-value="detailStore.onChangeProvince" />
+          <Select label="อำเภอ/เขต" v-model="detailStore.body.districtId" :options="detailStore.districtOptions"
+            rules="required" :disabled="isEditMode || !detailStore.body.provinceId" />
           <InputField label="รหัส" v-model="detailStore.body.code" rules="required" disabled />
           <InputField label="ตำบล/แขวง" v-model="detailStore.body.nameTh" rules="required" />
           <InputField label="ตำบล/แขวง (EN)" v-model="detailStore.body.nameEn" rules="required" />
+          <InputField label="รหัสไปรษณีย์" v-model="detailStore.body.postalCode" rules="required" />
         </div>
       </template>
     </Card>
