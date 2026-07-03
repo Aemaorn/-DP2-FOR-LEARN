@@ -2,10 +2,14 @@
 
 using System;
 using Codehard.Common.DomainModel;
+using LanguageExt;
 using Vogen;
 
 [ValueObject<string>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson)]
-public partial struct ProvinceId;
+public partial struct ProvinceId
+{
+    public static ProvinceId New() => From(Guid.CreateVersion7().ToString());
+}
 
 public class RawProvinces : Entity<ProvinceId>
 {
@@ -24,4 +28,33 @@ public class RawProvinces : Entity<ProvinceId>
     public DateTimeOffset CreatedAt { get; init; }
 
     public DateTimeOffset? UpdatedAt { get; private set; }
+
+    public static RawProvinces Create(
+        string code,
+        string nameTh,
+        string? nameEn,
+        int sequence)
+    {
+        return new RawProvinces
+        {
+            Id = ProvinceId.New(),
+            Code = code,
+            NameTh = nameTh,
+            NameEn = nameEn,
+            Sequence = sequence,
+            IsActive = true,
+            CreatedAt = DateTimeOffset.UtcNow,
+        };
+    }
+
+    public Unit Update(
+        string nameTh,
+        string? nameEn)
+    {
+        this.NameTh = nameTh;
+        this.NameEn = nameEn;
+        this.UpdatedAt = DateTimeOffset.UtcNow;
+
+        return unit;
+    }
 }

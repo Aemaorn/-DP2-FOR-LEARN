@@ -4,46 +4,22 @@ import type { TSt012Detail, TSt012Criteria, TSt012List } from '@/models/ST/st012
 import type { Option } from '@/models/shared/option';
 import type { TSt011List } from '@/models/ST/st011';
 import { getAllProvinces } from './st011';
-import SharedService from '@/services/Shared/dropdown';
-import { loadMockList, saveMockList } from './mockStorage';
+import ST012Service from '@/services/ST/ST012';
 import { HttpStatusCode } from 'axios';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-// There is no create/update/delete endpoint for Raws.RawDistrict yet — only the read-only
-// GET /api/dropdown/districts used for dropdowns elsewhere. So "real" DB districts are fetched
-// for display/code-numbering, while additions made through this page are kept in localStorage
-// (see mockStorage.ts) until a real write endpoint exists.
-// Note: the unfiltered dropdown endpoint doesn't return which province each district belongs to,
-// so real (non-mock) rows show a blank "จังหวัด" column — only districts added on this page track it.
-let realDistricts: TSt012List[] = [];
-
-const fetchRealDistricts = async (): Promise<void> => {
-  const { data, status } = await SharedService.onGetDistrictsAsync();
-
-  if (status === HttpStatusCode.Ok) {
-    realDistricts = data.map((o) => ({
-      id: String(o.id ?? o.value),
-      code: String(o.value),
-      nameTh: o.label,
-      nameEn: '',
-      provinceId: '',
-    }));
-  }
-};
-
-export const mockDistricts: TSt012List[] = loadMockList('districts-v2', []);
-const persist = (): void => saveMockList('districts-v2', mockDistricts);
-
-// Exported so the st013 (subdistrict) store can build its "อำเภอ/เขต" dropdown from the same live list.
+// Exported so the st013 (subdistrict) store can build its "อำเภอ/เขต" dropdown/name lookups
+// from the same live list.
 export const getAllDistricts = async (): Promise<TSt012List[]> => {
-  await fetchRealDistricts();
-  return [...realDistricts, ...mockDistricts];
+  const { data, status } = await ST012Service.onGetListAsync({ pageNumber: 1, pageSize: 10000, sort: [] });
+
+  return status === HttpStatusCode.Ok ? data.data : [];
 };
 
-const provinceName = (provinceId: string, provinces: TSt011List[]): string | undefined =>
-  provinces.find((p) => p.id === provinceId)?.nameTh;
+const provinceName = (provinceCode: string, provinces: TSt011List[]): string | undefined =>
+  provinces.find((p) => p.code === provinceCode)?.nameTh;
 
 export const useSt012ListStore = defineStore('st-012-list-store', () => {
   const searchCriteria = ref({
@@ -58,24 +34,17 @@ export const useSt012ListStore = defineStore('st-012-list-store', () => {
   } as TDataTableResult<TSt012List>);
 
   const onGetListData = async (): Promise<void> => {
-    const [allDistricts, allProvinces] = await Promise.all([getAllDistricts(), getAllProvinces()]);
-    const keyword = searchCriteria.value.keyword?.trim().toLowerCase();
+    const [{ data, status }, allProvinces] = await Promise.all([
+      ST012Service.onGetListAsync(searchCriteria.value),
+      getAllProvinces(),
+    ]);
 
-    const filtered = keyword
-      ? allDistricts.filter((d) =>
-        d.code.toLowerCase().includes(keyword) ||
-        d.nameTh.toLowerCase().includes(keyword) ||
-        d.nameEn.toLowerCase().includes(keyword)
-      )
-      : allDistricts;
-
-    const { pageNumber, pageSize } = searchCriteria.value;
-    const start = (pageNumber - 1) * pageSize;
-
-    table.value = {
-      data: filtered.slice(start, start + pageSize).map((d) => ({ ...d, provinceName: provinceName(d.provinceId, allProvinces) })),
-      totalRecords: filtered.length,
-    };
+    if (status === HttpStatusCode.Ok) {
+      table.value = {
+        data: data.data.map((d) => ({ ...d, provinceName: provinceName(d.provinceCode, allProvinces) })),
+        totalRecords: data.totalRecords,
+      };
+    }
   };
 
   const onChangePageSize = (pageNumber: number, pageSize: number): void => {
@@ -95,17 +64,12 @@ export const useSt012ListStore = defineStore('st-012-list-store', () => {
   };
 
   const onDeleteByIdAsync = async (id: string): Promise<void> => {
-    const index = mockDistricts.findIndex((d) => d.id === id);
+    const { status } = await ST012Service.onDeleteAsync(id);
 
-    if (index === -1) {
-      ToastHelper.error('ไม่สำเร็จ', 'ลบไม่สำเร็จ (รายการนี้มาจากฐานข้อมูลจริง ยังลบผ่านหน้านี้ไม่ได้)');
-      return;
+    if (status === HttpStatusCode.NoContent) {
+      ToastHelper.deletedMessageToast();
+      await onGetListData();
     }
-
-    mockDistricts.splice(index, 1);
-    persist();
-    ToastHelper.deletedMessageToast();
-    await onGetListData();
   };
 
   return {
@@ -118,9 +82,21 @@ export const useSt012ListStore = defineStore('st-012-list-store', () => {
   };
 });
 
-const generateNextCode = (allDistricts: TSt012List[]): string => {
-  const maxCode = allDistricts.reduce((max, d) => Math.max(max, Number(d.code) || 0), 0);
-  return String(maxCode + 1);
+// District codes are 4-digit real Thai geographic codes — a 2-digit province prefix + a running
+// 2-digit sequence within that province (e.g. "1101", "1102" for Samut Prakan). Note this prefix
+// is NOT the same as RawProvinces.Code/provinceCode (that's just an internal row id — e.g.
+// province internal code "2" is Samut Prakan, whose real geo prefix is "11"). So the prefix has
+// to be read off an existing sibling district's own code rather than assumed from provinceCode.
+const generateNextCode = (allDistricts: TSt012List[], provinceCode: string): string => {
+  if (!provinceCode) return '';
+
+  const siblings = allDistricts.filter((d) => d.provinceCode === provinceCode);
+  if (siblings.length === 0) return '';
+
+  const prefix = siblings[0].code.slice(0, -2);
+  const maxSeq = siblings.reduce((max, d) => Math.max(max, Number(d.code.slice(-2)) || 0), 0);
+
+  return prefix + String(maxSeq + 1).padStart(2, '0');
 };
 
 export const useSt012DetailStore = defineStore('st-012-detail-store', () => {
@@ -136,48 +112,41 @@ export const useSt012DetailStore = defineStore('st-012-detail-store', () => {
 
   const onFetchProvinceOptions = async (): Promise<void> => {
     const allProvinces = await getAllProvinces();
-    provinceOptions.value = allProvinces.map((p) => ({ value: p.id, label: p.nameTh }));
+    provinceOptions.value = allProvinces.map((p) => ({ value: p.code, label: p.nameTh }));
   };
 
   const onInitCreate = async (): Promise<void> => {
+    body.value = { code: '', nameTh: '', nameEn: '', provinceCode: '' };
+  };
+
+  const onChangeProvince = async (): Promise<void> => {
     const allDistricts = await getAllDistricts();
-    body.value = { code: generateNextCode(allDistricts), nameTh: '', nameEn: '', provinceId: '' };
+    body.value.code = generateNextCode(allDistricts, body.value.provinceCode);
   };
 
   const onGetByIdAsync = async (id: string): Promise<void> => {
-    const allDistricts = await getAllDistricts();
-    const found = allDistricts.find((d) => d.id === id);
+    const { data, status } = await ST012Service.onGetByIdAsync(id);
 
-    if (found) {
-      body.value = { ...found };
+    if (status === HttpStatusCode.Ok) {
+      body.value = { ...data, nameEn: data.nameEn ?? '', provinceCode: data.provinceCode ?? '' };
     }
   };
 
   const onCreateAsync = async (): Promise<void> => {
-    const id = crypto.randomUUID();
+    const { status } = await ST012Service.onCreateAsync(body.value);
 
-    mockDistricts.push({ ...body.value, id });
-    persist();
-    ToastHelper.createdMessageToast();
-    router.replace({ name: 'st012Detail', params: { id } });
+    if (status === HttpStatusCode.Created) {
+      ToastHelper.createdMessageToast();
+      router.replace({ name: 'st012' });
+    }
   };
 
   const onUpdateAsync = async (id: string): Promise<void> => {
-    const index = mockDistricts.findIndex((d) => d.id === id);
+    const { status } = await ST012Service.onUpdateAsync(id, body.value);
 
-    if (index === -1) {
-      ToastHelper.error('ไม่สำเร็จ', 'แก้ไขไม่ได้ (รายการนี้มาจากฐานข้อมูลจริง ยังแก้ไขผ่านหน้านี้ไม่ได้)');
-      return;
+    if (status === HttpStatusCode.NoContent) {
+      ToastHelper.updatedMessageToast();
     }
-
-    // Province is locked once created — only the district's own name fields can change.
-    mockDistricts[index] = {
-      ...mockDistricts[index],
-      nameTh: body.value.nameTh,
-      nameEn: body.value.nameEn,
-    };
-    persist();
-    ToastHelper.updatedMessageToast();
   };
 
   const onSubmitAsync = async (id?: string): Promise<void> => {
@@ -203,6 +172,7 @@ export const useSt012DetailStore = defineStore('st-012-detail-store', () => {
     provinceOptions,
     onResetBody,
     onFetchProvinceOptions,
+    onChangeProvince,
     onInitCreate,
     onGetByIdAsync,
     onSubmitAsync,

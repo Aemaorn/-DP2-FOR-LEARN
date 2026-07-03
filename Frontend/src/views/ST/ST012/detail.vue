@@ -48,12 +48,15 @@ const onSubmitAsync = async (): Promise<void> => {
     </TitleHeader>
     <Card class="my-4">
       <template #content>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mt-8">
-          <Select label="จังหวัด" v-model="detailStore.body.provinceId" :options="detailStore.provinceOptions"
-            rules="required" :disabled="isEditMode" />
-          <InputField label="รหัส" v-model="detailStore.body.code" rules="required" disabled />
-          <InputField label="อำเภอ/เขต" v-model="detailStore.body.nameTh" rules="required" />
-          <InputField label="อำเภอ/เขต (EN)" v-model="detailStore.body.nameEn" rules="required" />
+        <div class="mt-8 space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <Select label="จังหวัด" v-model="detailStore.body.provinceCode" :options="detailStore.provinceOptions"
+              rules="required" :disabled="isEditMode" @update:model-value="detailStore.onChangeProvince" />
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <InputField label="อำเภอ/เขต" v-model="detailStore.body.nameTh" rules="required" />
+            <InputField label="อำเภอ/เขต (EN)" v-model="detailStore.body.nameEn" rules="required" />
+          </div>
         </div>
       </template>
     </Card>

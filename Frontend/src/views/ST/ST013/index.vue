@@ -112,6 +112,14 @@ const onDeleteAsync = async (id: string): Promise<void> => {
             <p>{{ data.nameEn }}</p>
           </template>
         </Column>
+        <Column field="postalCode" style="width: 8rem" headerClass="bg-gray-200 !text-black font-bold">
+          <template #header>
+            <p class="w-full font-bold text-center">รหัสไปรษณีย์</p>
+          </template>
+          <template #body="{ data }">
+            <p class="text-center">{{ data.postalCode }}</p>
+          </template>
+        </Column>
         <Column style="width: 8rem" headerClass="bg-gray-200 !text-black font-bold">
           <template #body="{ data }">
             <div class="flex items-center justify-center gap-1.5">

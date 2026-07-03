@@ -9,7 +9,7 @@ export type TSt012List = {
   code: string;
   nameTh: string;
   nameEn: string;
-  provinceId: string;
+  provinceCode: string;
   provinceName?: string;
 };
 
@@ -18,5 +18,5 @@ export type TSt012Detail = {
   code: string;
   nameTh: string;
   nameEn: string;
-  provinceId: string;
+  provinceCode: string;
 };

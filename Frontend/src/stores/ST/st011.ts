@@ -1,39 +1,18 @@
 import ToastHelper from '@/helpers/toast';
 import type { TDataTableResult } from '@/models/shared/paginated';
 import type { TSt011Detail, TSt011Criteria, TSt011List } from '@/models/ST/st011';
-import SharedService from '@/services/Shared/dropdown';
-import { loadMockList, saveMockList } from './mockStorage';
+import ST011Service from '@/services/ST/ST011';
 import { HttpStatusCode } from 'axios';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-// There is no create/update/delete endpoint for Raws.RawProvinces yet — only the read-only
-// GET /api/dropdown/provinces used for dropdowns elsewhere. So "real" DB provinces are fetched
-// for display/code-numbering, while additions made through this page are kept in localStorage
-// (see mockStorage.ts) until a real write endpoint exists.
-let realProvinces: TSt011List[] = [];
-
-const fetchRealProvinces = async (): Promise<void> => {
-  const { data, status } = await SharedService.onGetProvincesAsync();
-
-  if (status === HttpStatusCode.Ok) {
-    realProvinces = data.map((o) => ({
-      id: String(o.id ?? o.value),
-      code: String(o.value),
-      nameTh: o.label,
-      nameEn: '',
-    }));
-  }
-};
-
-export const mockProvinces: TSt011List[] = loadMockList('provinces-v2', []);
-const persist = (): void => saveMockList('provinces-v2', mockProvinces);
-
-// Exported so the st012 (district) store can build its "จังหวัด" dropdown from the same live list.
+// Exported so the st012 (district) and st013 (subdistrict) stores can build their "จังหวัด"
+// dropdown/name lookups from the same live list.
 export const getAllProvinces = async (): Promise<TSt011List[]> => {
-  await fetchRealProvinces();
-  return [...realProvinces, ...mockProvinces];
+  const { data, status } = await ST011Service.onGetListAsync({ pageNumber: 1, pageSize: 10000, sort: [] });
+
+  return status === HttpStatusCode.Ok ? data.data : [];
 };
 
 export const useSt011ListStore = defineStore('st-011-list-store', () => {
@@ -49,24 +28,11 @@ export const useSt011ListStore = defineStore('st-011-list-store', () => {
   } as TDataTableResult<TSt011List>);
 
   const onGetListData = async (): Promise<void> => {
-    const allProvinces = await getAllProvinces();
-    const keyword = searchCriteria.value.keyword?.trim().toLowerCase();
+    const { data, status } = await ST011Service.onGetListAsync(searchCriteria.value);
 
-    const filtered = keyword
-      ? allProvinces.filter((p) =>
-        p.code.toLowerCase().includes(keyword) ||
-        p.nameTh.toLowerCase().includes(keyword) ||
-        p.nameEn.toLowerCase().includes(keyword)
-      )
-      : allProvinces;
-
-    const { pageNumber, pageSize } = searchCriteria.value;
-    const start = (pageNumber - 1) * pageSize;
-
-    table.value = {
-      data: filtered.slice(start, start + pageSize),
-      totalRecords: filtered.length,
-    };
+    if (status === HttpStatusCode.Ok) {
+      table.value = data;
+    }
   };
 
   const onChangePageSize = (pageNumber: number, pageSize: number): void => {
@@ -86,17 +52,12 @@ export const useSt011ListStore = defineStore('st-011-list-store', () => {
   };
 
   const onDeleteByIdAsync = async (id: string): Promise<void> => {
-    const index = mockProvinces.findIndex((p) => p.id === id);
+    const { status } = await ST011Service.onDeleteAsync(id);
 
-    if (index === -1) {
-      ToastHelper.error('ไม่สำเร็จ', 'ลบไม่สำเร็จ (รายการนี้มาจากฐานข้อมูลจริง ยังลบผ่านหน้านี้ไม่ได้)');
-      return;
+    if (status === HttpStatusCode.NoContent) {
+      ToastHelper.deletedMessageToast();
+      await onGetListData();
     }
-
-    mockProvinces.splice(index, 1);
-    persist();
-    ToastHelper.deletedMessageToast();
-    await onGetListData();
   };
 
   return {
@@ -111,7 +72,7 @@ export const useSt011ListStore = defineStore('st-011-list-store', () => {
 
 const generateNextCode = (allProvinces: TSt011List[]): string => {
   const maxCode = allProvinces.reduce((max, p) => Math.max(max, Number(p.code) || 0), 0);
-  return String(maxCode + 1);
+  return String(maxCode + 1).padStart(2, '0');
 };
 
 export const useSt011DetailStore = defineStore('st-011-detail-store', () => {
@@ -130,34 +91,28 @@ export const useSt011DetailStore = defineStore('st-011-detail-store', () => {
   };
 
   const onGetByIdAsync = async (id: string): Promise<void> => {
-    const allProvinces = await getAllProvinces();
-    const found = allProvinces.find((p) => p.id === id);
+    const { data, status } = await ST011Service.onGetByIdAsync(id);
 
-    if (found) {
-      body.value = { ...found };
+    if (status === HttpStatusCode.Ok) {
+      body.value = { ...data, nameEn: data.nameEn ?? '' };
     }
   };
 
   const onCreateAsync = async (): Promise<void> => {
-    const id = crypto.randomUUID();
+    const { status } = await ST011Service.onCreateAsync(body.value);
 
-    mockProvinces.push({ ...body.value, id });
-    persist();
-    ToastHelper.createdMessageToast();
-    router.replace({ name: 'st011Detail', params: { id } });
+    if (status === HttpStatusCode.Created) {
+      ToastHelper.createdMessageToast();
+      router.replace({ name: 'st011' });
+    }
   };
 
   const onUpdateAsync = async (id: string): Promise<void> => {
-    const index = mockProvinces.findIndex((p) => p.id === id);
+    const { status } = await ST011Service.onUpdateAsync(id, body.value);
 
-    if (index === -1) {
-      ToastHelper.error('ไม่สำเร็จ', 'แก้ไขไม่ได้ (รายการนี้มาจากฐานข้อมูลจริง ยังแก้ไขผ่านหน้านี้ไม่ได้)');
-      return;
+    if (status === HttpStatusCode.NoContent) {
+      ToastHelper.updatedMessageToast();
     }
-
-    mockProvinces[index] = { ...body.value, id };
-    persist();
-    ToastHelper.updatedMessageToast();
   };
 
   const onSubmitAsync = async (id?: string): Promise<void> => {

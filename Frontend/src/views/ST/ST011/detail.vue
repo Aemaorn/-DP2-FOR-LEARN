@@ -46,9 +46,8 @@ const onSubmitAsync = async (): Promise<void> => {
     </TitleHeader>
     <Card class="my-4">
       <template #content>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mt-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-8">
           <InputField label="จังหวัด" v-model="detailStore.body.nameTh" rules="required" />
-          <InputField label="รหัส" v-model="detailStore.body.code" rules="required" disabled />
           <InputField label="จังหวัด (EN)" v-model="detailStore.body.nameEn" rules="required" />
         </div>
       </template>
