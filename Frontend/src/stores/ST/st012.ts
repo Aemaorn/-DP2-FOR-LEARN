@@ -91,7 +91,11 @@ const generateNextCode = (allDistricts: TSt012List[], provinceCode: string): str
   if (!provinceCode) return '';
 
   const siblings = allDistricts.filter((d) => d.provinceCode === provinceCode);
-  if (siblings.length === 0) return '';
+
+  // No districts exist under this province yet (e.g. a newly-created province with no real
+  // TIS geocode to derive) — fall back to the province's own code as the prefix so the first
+  // district still gets a usable, non-empty code.
+  if (siblings.length === 0) return `${provinceCode}01`;
 
   const prefix = siblings[0].code.slice(0, -2);
   const maxSeq = siblings.reduce((max, d) => Math.max(max, Number(d.code.slice(-2)) || 0), 0);
