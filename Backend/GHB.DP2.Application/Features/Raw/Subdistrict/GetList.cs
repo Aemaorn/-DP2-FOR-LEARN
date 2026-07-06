@@ -1,4 +1,4 @@
-namespace GHB.DP2.Application.Features.Raws.Subdistrict;
+namespace GHB.DP2.Application.Features.Raw.Subdistrict;
 
 using Codehard.Infrastructure.EntityFramework;
 using GHB.DP2.Application.Common;

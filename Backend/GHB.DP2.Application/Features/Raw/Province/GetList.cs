@@ -1,4 +1,4 @@
-namespace GHB.DP2.Application.Features.Raws.Province;
+namespace GHB.DP2.Application.Features.Raw.Province;
 
 using Codehard.Infrastructure.EntityFramework;
 using GHB.DP2.Application.Common;

@@ -1,4 +1,4 @@
-namespace GHB.DP2.Application.Features.Raws.District;
+namespace GHB.DP2.Application.Features.Raw.District;
 
 using GHB.DP2.Domain.Raws;
 using GHB.DP2.Infrastructure;
